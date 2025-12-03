@@ -61,12 +61,16 @@
                     method: 'POST',
                     body: formData
                 });
-                if (!response.ok) throw new Error('Resize failed!');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Resize failed!');
+                }
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 document.getElementById('result').innerHTML = `<a href='${url}' download='resized.pdf' style='color:#4ade80;font-weight:600;'>Download resized PDF</a>`;
             } catch (err) {
-                document.getElementById('result').textContent = 'Resize failed!';
+                document.getElementById('result').textContent = err.message;
+                document.getElementById('result').style.color = '#fca5a5';
             }
         };
     </script>

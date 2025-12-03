@@ -83,12 +83,16 @@
                     method: 'POST',
                     body: formData
                 });
-                if (!response.ok) throw new Error(lang === 'en' ? 'Conversion failed!' : 'Chuyển đổi thất bại!');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || (lang === 'en' ? 'Conversion failed!' : 'Chuyển đổi thất bại!'));
+                }
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 document.getElementById('result').innerHTML = `<a href='${url}' download='converted.xlsx' style='color:#4ade80;font-weight:600;'>${lang === 'en' ? 'Download Excel file' : 'Tải file Excel về'}</a>`;
             } catch (err) {
                 document.getElementById('result').textContent = err.message;
+                document.getElementById('result').style.color = '#fca5a5';
             }
             convertBtn.disabled = false;
             convertBtn.textContent = langData[lang].convert;
