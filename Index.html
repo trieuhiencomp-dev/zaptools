@@ -3,13 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZapTools - Lightning-Fast Online Tools</title>
-    <meta name="description" content="Free online tools for everyone. Image compression, PDF conversion, QR codes, and more coming soon!">
+    <title>ZapTools - Lightning-Fast Online Tools | Free PDF, Image & Unit Converter</title>
+    <meta name="description" content="Free online tools for everyone. Compress images, convert PDFs, generate QR codes, convert units instantly. No signup required, 100% free!">
+    <meta name="keywords" content="online tools, free tools, PDF converter, image compressor, QR code generator, unit converter, image resize, PDF merge, online utilities">
+    <meta name="author" content="ZapTools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://zaptools.org/">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.org/">
+    <meta property="og:title" content="ZapTools - Lightning-Fast Online Tools">
+    <meta property="og:description" content="Free online tools for everyone. Compress images, convert PDFs, generate QR codes, convert units instantly. No signup required!">
+    <meta property="og:image" content="https://zaptools.org/og-image.png">
+    <meta property="og:site_name" content="ZapTools">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="vi_VN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://zaptools.org/">
+    <meta name="twitter:title" content="ZapTools - Lightning-Fast Online Tools">
+    <meta name="twitter:description" content="Free online tools for everyone. Compress images, convert PDFs, generate QR codes, convert units instantly.">
+    <meta name="twitter:image" content="https://zaptools.org/og-image.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-TileColor" content="#667eea">
+
+    <!-- Language Alternates -->
+    <link rel="alternate" hreflang="en" href="https://zaptools.org/">
+    <link rel="alternate" hreflang="vi" href="https://zaptools.org/">
+    <link rel="alternate" hreflang="x-default" href="https://zaptools.org/">
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251"
      crossorigin="anonymous"></script>
+
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ZapTools",
+      "url": "https://zaptools.org",
+      "description": "Free online tools for image compression, PDF conversion, QR code generation, and unit conversion",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Image Compression",
+        "PDF Conversion",
+        "QR Code Generator",
+        "Unit Converter",
+        "Image Resize",
+        "PDF Merge"
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "ZapTools",
+        "url": "https://zaptools.org"
+      }
+    }
+    </script>
 
 
     <style>
@@ -224,6 +284,14 @@
                 <div class="feature-name" id="qrCodeBtn" style="cursor:pointer; text-decoration:underline;">QR Codes</div>
             </div>
             <div class="feature">
+                <div class="feature-icon">🔄</div>
+                <div class="feature-name" id="unitConverterBtn" style="cursor:pointer; text-decoration:underline;">Unit Converter</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📝</div>
+                <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
+            </div>
+            <div class="feature">
                 <div class="feature-icon">🔧</div>
                 <div class="feature-name" id="moreToolsBtn">More Tools</div>
             </div>
@@ -255,6 +323,18 @@
                         window.location.href = 'QRcode.html';
                     };
                 }
+                var unitConverterBtn = document.getElementById('unitConverterBtn');
+                if (unitConverterBtn) {
+                    unitConverterBtn.onclick = function() {
+                        window.location.href = 'unit-converter.html';
+                    };
+                }
+                var blogBtn = document.getElementById('blogBtn');
+                if (blogBtn) {
+                    blogBtn.onclick = function() {
+                        window.location.href = 'blog.html';
+                    };
+                }
             });
             // Language switcher
             const langData = {
@@ -265,6 +345,8 @@
                     image: 'Công cụ ảnh',
                     pdf: 'Công cụ PDF',
                     qr: 'Mã QR',
+                    unitConverter: 'Chuyển đổi đơn vị',
+                    blog: 'Blog',
                     more: 'Thêm công cụ',
                     status: '<span class="pulse"></span> Chào mừng bạn đến với ZapTools'
                 },
@@ -275,6 +357,8 @@
                     image: 'Image Tools',
                     pdf: 'PDF Tools',
                     qr: 'QR Codes',
+                    unitConverter: 'Unit Converter',
+                    blog: 'Blog',
                     more: 'More Tools',
                     status: '<span class="pulse"></span> Welcome to ZapTools'
                 }
@@ -286,6 +370,8 @@
                 document.getElementById('imageToolsBtn').textContent = langData[lang].image;
                 document.getElementById('pdfToolsBtn').textContent = langData[lang].pdf;
                 document.getElementById('qrCodeBtn').textContent = langData[lang].qr;
+                document.getElementById('unitConverterBtn').textContent = langData[lang].unitConverter;
+                document.getElementById('blogBtn').textContent = langData[lang].blog;
                 document.getElementById('moreToolsBtn').textContent = langData[lang].more;
                 document.getElementById('status').innerHTML = langData[lang].status;
             }

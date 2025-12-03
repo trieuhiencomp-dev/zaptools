@@ -9,7 +9,10 @@
       "Bash(netlify api listSiteDeploys:*)",
       "Bash(gcloud app deploy:*)",
       "Bash(python add-feedback-widget.py:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(if [ ! -d \"Y:/zaptools/blog\" ])",
+      "Bash(then mkdir -p \"Y:/zaptools/blog\")",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []
