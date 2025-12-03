@@ -31,6 +31,15 @@
             </div>
             <button type="submit" class="tool-btn" id="convertBtn">Convert</button>
         </form>
+        <div id="instructions" style="margin-top:1.5rem;padding:1rem;background:rgba(255,255,255,0.1);border-radius:10px;text-align:left;font-size:0.9rem;">
+            <strong id="instrTitle">📋 Hướng dẫn sử dụng:</strong>
+            <ul id="instrList" style="margin:0.5rem 0 0 1.2rem;line-height:1.8;">
+                <li>Chuyển đổi giữa: <strong>PNG, JPG, WEBP, BMP</strong></li>
+                <li>File tối đa: <strong>50MB</strong></li>
+                <li>WEBP = file nhỏ nhất, chất lượng tốt</li>
+                <li>PNG = hỗ trợ trong suốt (transparency)</li>
+            </ul>
+        </div>
         <div id="result" style="margin-top:1.5rem;color:#fde68a;"></div>
         <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='image-tool.html'">← Back to Image Tools</button>
     </div>
@@ -45,14 +54,28 @@
                 file: 'Chọn ảnh:',
                 format: 'Định dạng đích:',
                 convert: 'Chuyển đổi',
-                back: '← Quay lại Công cụ ảnh'
+                back: '← Quay lại Công cụ ảnh',
+                instrTitle: '📋 Hướng dẫn sử dụng:',
+                instrList: [
+                    'Chuyển đổi giữa: <strong>PNG, JPG, WEBP, BMP</strong>',
+                    'File tối đa: <strong>50MB</strong>',
+                    'WEBP = file nhỏ nhất, chất lượng tốt',
+                    'PNG = hỗ trợ trong suốt (transparency)'
+                ]
             },
             en: {
                 title: 'Convert Image',
                 file: 'Select image:',
                 format: 'Target Format:',
                 convert: 'Convert',
-                back: '← Back to Image Tools'
+                back: '← Back to Image Tools',
+                instrTitle: '📋 Usage Guide:',
+                instrList: [
+                    'Convert between: <strong>PNG, JPG, WEBP, BMP</strong>',
+                    'Max file: <strong>50MB</strong>',
+                    'WEBP = smallest file, good quality',
+                    'PNG = supports transparency'
+                ]
             }
         };
         function setLang(lang) {
@@ -61,6 +84,8 @@
             document.getElementById('formatLabel').textContent = langData[lang].format;
             document.getElementById('convertBtn').textContent = langData[lang].convert;
             document.getElementById('btnBack').textContent = langData[lang].back;
+            document.getElementById('instrTitle').innerHTML = langData[lang].instrTitle;
+            document.getElementById('instrList').innerHTML = langData[lang].instrList.map(item => `<li>${item}</li>`).join('');
         }
         document.getElementById('langSwitcher').addEventListener('change', function(e) {
             setLang(e.target.value);
