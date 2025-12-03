@@ -27,6 +27,15 @@
             </div>
             <button type="submit" class="tool-btn" id="compressBtn">Compress</button>
         </form>
+        <div id="instructions" style="margin-top:1.5rem;padding:1rem;background:rgba(255,255,255,0.1);border-radius:10px;text-align:left;font-size:0.9rem;">
+            <strong id="instrTitle">📋 Hướng dẫn sử dụng:</strong>
+            <ul id="instrList" style="margin:0.5rem 0 0 1.2rem;line-height:1.8;">
+                <li>Định dạng hỗ trợ: <strong>JPG, PNG, WEBP, BMP, GIF</strong></li>
+                <li>Kích thước tối đa: <strong>50MB</strong></li>
+                <li>Chất lượng 85-90 là tốt nhất (cân bằng size & chất lượng)</li>
+                <li>Chất lượng thấp hơn = file nhỏ hơn nhưng mờ hơn</li>
+            </ul>
+        </div>
         <div id="result" style="margin-top:1.5rem;color:#fde68a;"></div>
         <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='image-tool.html'">← Back to Image Tools</button>
     </div>
@@ -41,14 +50,28 @@
                 file: 'Chọn ảnh:',
                 quality: 'Chất lượng (1-100):',
                 compress: 'Nén ảnh',
-                back: '← Quay lại Công cụ ảnh'
+                back: '← Quay lại Công cụ ảnh',
+                instrTitle: '📋 Hướng dẫn sử dụng:',
+                instrList: [
+                    'Định dạng hỗ trợ: <strong>JPG, PNG, WEBP, BMP, GIF</strong>',
+                    'Kích thước tối đa: <strong>50MB</strong>',
+                    'Chất lượng 85-90 là tốt nhất (cân bằng size & chất lượng)',
+                    'Chất lượng thấp hơn = file nhỏ hơn nhưng mờ hơn'
+                ]
             },
             en: {
                 title: 'Compress Image',
                 file: 'Select image:',
                 quality: 'Quality (1-100):',
                 compress: 'Compress',
-                back: '← Back to Image Tools'
+                back: '← Back to Image Tools',
+                instrTitle: '📋 Usage Guide:',
+                instrList: [
+                    'Supported formats: <strong>JPG, PNG, WEBP, BMP, GIF</strong>',
+                    'Max file size: <strong>50MB</strong>',
+                    'Quality 85-90 is best (balances size & quality)',
+                    'Lower quality = smaller file but blurrier'
+                ]
             }
         };
         function setLang(lang) {
@@ -57,6 +80,8 @@
             document.getElementById('qualityLabel').textContent = langData[lang].quality;
             document.getElementById('compressBtn').textContent = langData[lang].compress;
             document.getElementById('btnBack').textContent = langData[lang].back;
+            document.getElementById('instrTitle').innerHTML = langData[lang].instrTitle;
+            document.getElementById('instrList').innerHTML = langData[lang].instrList.map(item => `<li>${item}</li>`).join('');
         }
         document.getElementById('langSwitcher').addEventListener('change', function(e) {
             setLang(e.target.value);

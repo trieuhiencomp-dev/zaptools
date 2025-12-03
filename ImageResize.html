@@ -32,6 +32,15 @@
             </div>
             <button type="submit" class="tool-btn" id="resizeBtn">Resize</button>
         </form>
+        <div id="instructions" style="margin-top:1.5rem;padding:1rem;background:rgba(255,255,255,0.1);border-radius:10px;text-align:left;font-size:0.9rem;">
+            <strong id="instrTitle">📋 Hướng dẫn sử dụng:</strong>
+            <ul id="instrList" style="margin:0.5rem 0 0 1.2rem;line-height:1.8;">
+                <li>Kích thước: <strong>1-10,000 pixels</strong></li>
+                <li>File tối đa: <strong>50MB</strong></li>
+                <li>Format gốc được giữ nguyên</li>
+                <li>Tỷ lệ ảnh có thể bị thay đổi nếu không nhập đúng</li>
+            </ul>
+        </div>
         <div id="result" style="margin-top:1.5rem;color:#fde68a;"></div>
         <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='image-tool.html'">← Back to Image Tools</button>
     </div>
@@ -47,7 +56,14 @@
                 width: 'Chiều rộng (px):',
                 height: 'Chiều cao (px):',
                 resize: 'Đổi kích thước',
-                back: '← Quay lại Công cụ ảnh'
+                back: '← Quay lại Công cụ ảnh',
+                instrTitle: '📋 Hướng dẫn sử dụng:',
+                instrList: [
+                    'Kích thước: <strong>1-10,000 pixels</strong>',
+                    'File tối đa: <strong>50MB</strong>',
+                    'Format gốc được giữ nguyên',
+                    'Tỷ lệ ảnh có thể bị thay đổi nếu không nhập đúng'
+                ]
             },
             en: {
                 title: 'Resize Image',
@@ -55,7 +71,14 @@
                 width: 'Width (px):',
                 height: 'Height (px):',
                 resize: 'Resize',
-                back: '← Back to Image Tools'
+                back: '← Back to Image Tools',
+                instrTitle: '📋 Usage Guide:',
+                instrList: [
+                    'Dimensions: <strong>1-10,000 pixels</strong>',
+                    'Max file: <strong>50MB</strong>',
+                    'Original format is preserved',
+                    'Aspect ratio may change if not entered correctly'
+                ]
             }
         };
         function setLang(lang) {
@@ -65,6 +88,8 @@
             document.getElementById('heightLabel').textContent = langData[lang].height;
             document.getElementById('resizeBtn').textContent = langData[lang].resize;
             document.getElementById('btnBack').textContent = langData[lang].back;
+            document.getElementById('instrTitle').innerHTML = langData[lang].instrTitle;
+            document.getElementById('instrList').innerHTML = langData[lang].instrList.map(item => `<li>${item}</li>`).join('');
         }
         document.getElementById('langSwitcher').addEventListener('change', function(e) {
             setLang(e.target.value);

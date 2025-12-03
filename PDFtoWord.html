@@ -26,6 +26,15 @@
             </div>
             <button type="submit" class="tool-btn" id="convertBtn">Chuyển đổi PDF sang Word</button>
         </form>
+        <div id="instructions" style="margin-top:1.5rem;padding:1rem;background:rgba(255,255,255,0.1);border-radius:10px;text-align:left;font-size:0.9rem;">
+            <strong id="instrTitle">📋 Hướng dẫn sử dụng:</strong>
+            <ul id="instrList" style="margin:0.5rem 0 0 1.2rem;line-height:1.8;">
+                <li>Kích thước tối đa: <strong>50MB</strong></li>
+                <li>Số trang tối đa: <strong>50 trang</strong></li>
+                <li>Format sẽ được giữ tốt nhất cho PDF từ văn bản</li>
+                <li>PDF scan có thể mất format gốc</li>
+            </ul>
+        </div>
         <div id="result" style="margin-top:1.5rem;color:#fde68a;"></div>
         <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='pdf-tools.html'">← Quay lại PDF Tools</button>
     </div>
@@ -40,14 +49,28 @@
                 file: 'Chọn file PDF:',
                 convert: 'Chuyển đổi',
                 result: '',
-                back: '← Quay lại PDF Tools'
+                back: '← Quay lại PDF Tools',
+                instrTitle: '📋 Hướng dẫn sử dụng:',
+                instrList: [
+                    'Kích thước tối đa: <strong>50MB</strong>',
+                    'Số trang tối đa: <strong>50 trang</strong>',
+                    'Format sẽ được giữ tốt nhất cho PDF từ văn bản',
+                    'PDF scan có thể mất format gốc'
+                ]
             },
             en: {
                 title: 'PDF to Word',
                 file: 'Select PDF file:',
                 convert: 'Convert',
                 result: '',
-                back: '← Back to PDF Tools'
+                back: '← Back to PDF Tools',
+                instrTitle: '📋 Usage Guide:',
+                instrList: [
+                    'Max file size: <strong>50MB</strong>',
+                    'Max pages: <strong>50 pages</strong>',
+                    'Best formatting for text-based PDFs',
+                    'Scanned PDFs may lose original formatting'
+                ]
             }
         };
         function setLang(lang) {
@@ -55,6 +78,8 @@
             document.getElementById('fileLabel').textContent = langData[lang].file;
             document.getElementById('convertBtn').textContent = langData[lang].convert;
             document.getElementById('btnBack').textContent = langData[lang].back;
+            document.getElementById('instrTitle').innerHTML = langData[lang].instrTitle;
+            document.getElementById('instrList').innerHTML = langData[lang].instrList.map(item => `<li>${item}</li>`).join('');
         }
         document.getElementById('langSwitcher').addEventListener('change', function(e) {
             setLang(e.target.value);
