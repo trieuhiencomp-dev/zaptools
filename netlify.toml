@@ -1,0 +1,99 @@
+[build]
+  publish = "."
+
+[build.environment]
+
+[[redirects]]
+  from = "/pdf-to-word"
+  to = "/PDFtoWord.html"
+  status = 200
+
+[[redirects]]
+  from = "/pdf-to-excel"
+  to = "/PDFtoExcel.html"
+  status = 200
+
+[[redirects]]
+  from = "/pdf-to-image"
+  to = "/PDFtoImage.html"
+  status = 200
+
+[[redirects]]
+  from = "/merge-pdfs"
+  to = "/MergePDFs.html"
+  status = 200
+
+[[redirects]]
+  from = "/split-pdf"
+  to = "/SplitPDF.html"
+  status = 200
+
+[[redirects]]
+  from = "/resize-pdf"
+  to = "/PDFresize.html"
+  status = 200
+
+[[redirects]]
+  from = "/image-tools"
+  to = "/image-tool.html"
+  status = 200
+
+[[redirects]]
+  from = "/image-compress"
+  to = "/ImageCompress.html"
+  status = 200
+
+[[redirects]]
+  from = "/image-resize"
+  to = "/ImageResize.html"
+  status = 200
+
+[[redirects]]
+  from = "/image-convert"
+  to = "/ImageConvert.html"
+  status = 200
+
+[[redirects]]
+  from = "/qr-code-tools"
+  to = "/QRcode.html"
+  status = 200
+
+[[redirects]]
+  from = "/qr-wifi"
+  to = "/QRwifi.html"
+  status = 200
+
+[[redirects]]
+  from = "/qr-web"
+  to = "/QRlinkweb.html"
+  status = 200
+
+[[redirects]]
+  from = "/qr-product"
+  to = "/QRproduct.html"
+  status = 200
+
+[[redirects]]
+  from = "/qr-event"
+  to = "/QRevent.html"
+  status = 200
+
+[[redirects]]
+  from = "/qr-contact"
+  to = "/QRcontact.html"
+  status = 200
+
+[[redirects]]
+  from = "/qr-decode"
+  to = "/GiaiMaQR.html"
+  status = 200
+
+[[redirects]]
+  from = "/pdf-tools"
+  to = "/pdf-tools.html"
+  status = 200
+
+[[redirects]]
+  from = "/danhsach-tao-qr"
+  to = "/DanhSachTaoQR.html"
+  status = 200

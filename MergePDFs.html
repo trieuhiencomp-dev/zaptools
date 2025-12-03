@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDFs</title>
+    <style>body{font-family:sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;color:white;}.container{text-align:center;max-width:400px;padding:2rem;background:rgba(255,255,255,0.07);border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);}h1{font-size:1.7rem;margin-bottom:1rem;font-weight:700;}.form-group{margin-bottom:1rem;text-align:left;}.form-group label{font-weight:600;}.form-group input{width:100%;padding:0.5rem;border-radius:6px;border:none;margin-top:0.3rem;}.tool-btn{margin-top:1rem;padding:0.7rem 1.5rem;border-radius:10px;border:none;background:#4ade80;color:#222;font-weight:600;cursor:pointer;transition:background 0.2s;}.tool-btn:hover{background:#22c55e;}.back-btn{margin-top:2rem;background:#818cf8;color:#fff;}.zaptools-header{position:absolute;top:18px;left:18px;z-index:20;display:flex;align-items:center;gap:8px;}@keyframes bounce {0%, 100% { transform: translateY(0); }50% { transform: translateY(-10px); }}
+
+    .zaptools-logo{font-size:1.5rem;animation:bounce 2s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));}
+    .zaptools-header span{font-size:1.1rem;font-weight:600;letter-spacing:-1px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+            <select id="langSwitcher" style="padding: 0.4rem 1rem; border-radius: 20px; border: none; font-size: 1rem;">
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+        <h1 id="title">Merge PDFs</h1>
+        <form id="pdfForm">
+            <div class="form-group">
+                <label id="fileLabel" for="pdfFiles">Chọn các file PDF:</label>
+                <input type="file" id="pdfFiles" name="pdfFiles" accept="application/pdf" multiple required>
+            </div>
+            <button type="submit" class="tool-btn" id="mergeBtn">Gộp file (Demo)</button>
+        </form>
+        <div id="result" style="margin-top:1.5rem;color:#fde68a;"></div>
+        <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='pdf-tools.html'">← Quay lại PDF Tools</button>
+    </div>
+    <div class="zaptools-header" style="position:absolute;top:18px;left:18px;z-index:20;display:flex;align-items:center;gap:8px;">
+      <span class="zaptools-logo" style="font-size:1.5rem;animation:bounce 2s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));">⚡</span>
+      <span style="font-size:1.1rem;font-weight:600;letter-spacing:-1px;">ZapTools</span>
+    </div>
+    <script>
+        const langData = {
+            vi: {
+                title: 'Gộp nhiều PDF',
+                file: 'Chọn các file PDF:',
+                merge: 'Gộp file (Demo)',
+                result: 'Demo: Chức năng gộp file PDF sẽ cập nhật sau!',
+                back: '← Quay lại PDF Tools'
+            },
+            en: {
+                title: 'Merge PDFs',
+                file: 'Select PDF files:',
+                merge: 'Merge (Demo)',
+                result: 'Demo: Merge PDF feature will be updated soon!',
+                back: '← Back to PDF Tools'
+            }
+        };
+        function setLang(lang) {
+            document.getElementById('title').textContent = langData[lang].title;
+            document.getElementById('fileLabel').textContent = langData[lang].file;
+            document.getElementById('mergeBtn').textContent = langData[lang].merge;
+            document.getElementById('btnBack').textContent = langData[lang].back;
+        }
+        document.getElementById('langSwitcher').addEventListener('change', function(e) {
+            setLang(e.target.value);
+            localStorage.setItem('zaptools_lang', e.target.value);
+        });
+        // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+        const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
+        document.getElementById('langSwitcher').value = savedLang;
+        setLang(savedLang);
+        document.getElementById('pdfForm').onsubmit = function(e) {
+            e.preventDefault();
+            document.getElementById('result').textContent = langData[savedLang].result;
+        };
+    </script>
+</body>
+</html>

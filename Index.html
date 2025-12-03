@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZapTools - Lightning-Fast Online Tools</title>
+    <meta name="description" content="Free online tools for everyone. Image compression, PDF conversion, QR codes, and more coming soon!">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 1rem;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        
+        .logo {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            animation: fadeInDown 1s;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            animation: fadeInUp 1s;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1.4s;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .status {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            display: inline-block;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            animation: fadeInUp 1.6s;
+        }
+        
+        .pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        footer {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            animation: fadeIn 2s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 4rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+            
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+            <select id="langSwitcher" style="padding: 0.4rem 1rem; border-radius: 20px; border: none; font-size: 1rem;">
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+        <div class="logo">⚡</div>
+        <h1 id="title">ZapTools</h1>
+        <p class="tagline" id="tagline">Lightning-Fast Online Tools</p>
+        <p class="description" id="desc">
+            We're building a suite of free, fast, and easy-to-use tools 
+            to make your digital life easier. No signup required, no cost, 
+            just tools that work.
+        </p>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🖼️</div>
+                <div class="feature-name" id="imageToolsBtn" style="cursor:pointer; text-decoration:underline;">Image Tools</div>
+            </div>
+            <div class="feature" id="pdf-tools">
+                <div class="feature-icon">📄</div>
+                <div class="feature-name" id="pdfToolsBtn" style="cursor:pointer; text-decoration:underline;">PDF Tools</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <div class="feature-name" id="qrCodeBtn" style="cursor:pointer; text-decoration:underline;">QR Codes</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔧</div>
+                <div class="feature-name" id="moreToolsBtn">More Tools</div>
+            </div>
+        </div>
+        <div class="status" id="status">
+            <span class="pulse"></span>
+            Currently in development • Launching Soon
+        </div>
+        <footer>
+            &copy; 2025 ZapTools.org • Built with ❤️
+            <script>
+            // Chuyển hướng sang các trang công cụ khi nhấn vào các nút
+            document.addEventListener('DOMContentLoaded', function() {
+                var pdfToolsBtn = document.getElementById('pdfToolsBtn');
+                if (pdfToolsBtn) {
+                    pdfToolsBtn.onclick = function() {
+                        window.location.href = 'pdf-tools.html';
+                    };
+                }
+                var imageToolsBtn = document.getElementById('imageToolsBtn');
+                if (imageToolsBtn) {
+                    imageToolsBtn.onclick = function() {
+                        window.location.href = 'image-tool.html';
+                    };
+                }
+                var qrCodeBtn = document.getElementById('qrCodeBtn');
+                if (qrCodeBtn) {
+                    qrCodeBtn.onclick = function() {
+                        window.location.href = 'QRcode.html';
+                    };
+                }
+            });
+            // Language switcher
+            const langData = {
+                vi: {
+                    title: 'ZapTools',
+                    tagline: 'Bộ công cụ trực tuyến siêu tốc',
+                    desc: 'Chúng tôi xây dựng bộ công cụ miễn phí, nhanh chóng và dễ sử dụng\nđể giúp cuộc sống số của bạn dễ dàng hơn. Không cần đăng ký, không tốn phí,\nchỉ đơn giản là công cụ hữu ích.',
+                    image: 'Công cụ ảnh',
+                    pdf: 'Công cụ PDF',
+                    qr: 'Mã QR',
+                    more: 'Thêm công cụ',
+                    status: '<span class="pulse"></span> Đang phát triển • Sắp ra mắt'
+                },
+                en: {
+                    title: 'ZapTools',
+                    tagline: 'Lightning-Fast Online Tools',
+                    desc: "We're building a suite of free, fast, and easy-to-use tools \nto make your digital life easier. No signup required, no cost, \njust tools that work.",
+                    image: 'Image Tools',
+                    pdf: 'PDF Tools',
+                    qr: 'QR Codes',
+                    more: 'More Tools',
+                    status: '<span class="pulse"></span> Currently in development • Launching Soon'
+                }
+            };
+            function setLang(lang) {
+                document.getElementById('title').textContent = langData[lang].title;
+                document.getElementById('tagline').textContent = langData[lang].tagline;
+                document.getElementById('desc').textContent = langData[lang].desc;
+                document.getElementById('imageToolsBtn').textContent = langData[lang].image;
+                document.getElementById('pdfToolsBtn').textContent = langData[lang].pdf;
+                document.getElementById('qrCodeBtn').textContent = langData[lang].qr;
+                document.getElementById('moreToolsBtn').textContent = langData[lang].more;
+                document.getElementById('status').innerHTML = langData[lang].status;
+            }
+            document.getElementById('langSwitcher').addEventListener('change', function(e) {
+                setLang(e.target.value);
+                localStorage.setItem('zaptools_lang', e.target.value);
+            });
+            // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+            const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
+            document.getElementById('langSwitcher').value = savedLang;
+            setLang(savedLang);
+            </script>
+        </footer>
+    </div>
+</body>
+</html>

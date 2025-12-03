@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giải mã QR</title>
+    <meta name="description" content="Giải mã QR code từ ảnh hoặc camera.">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
+        .container { text-align: center; max-width: 500px; padding: 2rem; background: rgba(255,255,255,0.07); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        h1 { font-size: 2.2rem; margin-bottom: 1rem; font-weight: 700; }
+        .tool-btn { display: block; width: 80%; margin: 1rem auto; padding: 1rem; font-size: 1.1rem; border-radius: 10px; border: none; background: #4ade80; color: #222; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .tool-btn:hover { background: #22c55e; }
+        .back-btn { margin-top: 2rem; background: #818cf8; color: #fff; }
+        #qrResult { margin-top: 1.5rem; }
+        #preview { margin-top: 1rem; max-width: 220px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+            <select id="langSwitcher" style="padding: 0.4rem 1rem; border-radius: 20px; border: none; font-size: 1rem;">
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+        <h1 id="title">Giải mã QR</h1>
+        <input type="file" id="qrInput" accept="image/*" class="tool-btn" style="background:#818cf8;color:#fff;">
+        <img id="preview" src="" alt="Preview" style="display:none;">
+        <div id="qrResult"></div>
+        <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='QRcode.html'">← Quay lại QR Code Tools</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script>
+        const langData = {
+            vi: {
+                title: 'Giải mã QR',
+                back: '← Quay lại QR Code Tools',
+                qrContent: 'Nội dung QR:',
+                qrFail: 'Không nhận diện được mã QR!'
+            },
+            en: {
+                title: 'Decode QR',
+                back: '← Back to QR Code Tools',
+                qrContent: 'QR Content:',
+                qrFail: 'Could not detect QR code!'
+            }
+        };
+        function setLang(lang) {
+            document.getElementById('title').textContent = langData[lang].title;
+            document.getElementById('btnBack').textContent = langData[lang].back;
+        }
+        document.getElementById('langSwitcher').addEventListener('change', function(e) {
+            setLang(e.target.value);
+            localStorage.setItem('zaptools_lang', e.target.value);
+        });
+        // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+        const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
+        document.getElementById('langSwitcher').value = savedLang;
+        setLang(savedLang);
+        document.getElementById('qrInput').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                var img = document.getElementById('preview');
+                img.src = evt.target.result;
+                img.style.display = 'block';
+                var image = new Image();
+                image.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(image, 0, 0);
+                    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    var code = jsQR(imageData.data, canvas.width, canvas.height);
+                    if (code) {
+                        document.getElementById('qrResult').innerHTML = `<div style='color:#4ade80;font-weight:600;'>${langData[savedLang].qrContent}</div><div style='margin-top:0.5rem;'>${code.data}</div>`;
+                    } else {
+                        document.getElementById('qrResult').innerHTML = `<div style='color:#fde68a;'>${langData[savedLang].qrFail}</div>`;
+                    }
+                };
+                image.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>

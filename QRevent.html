@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo QR Sự kiện</title>
+    <style>body{font-family:sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;color:white;}.container{text-align:center;max-width:400px;padding:2rem;background:rgba(255,255,255,0.07);border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);}h1{font-size:1.7rem;margin-bottom:1rem;font-weight:700;}.form-group{margin-bottom:1rem;text-align:left;}.form-group label{font-weight:600;}.form-group input{width:100%;padding:0.5rem;border-radius:6px;border:none;margin-top:0.3rem;}.tool-btn{margin-top:1rem;padding:0.7rem 1.5rem;border-radius:10px;border:none;background:#4ade80;color:#222;font-weight:600;cursor:pointer;transition:background 0.2s;}.tool-btn:hover{background:#22c55e;}.back-btn{margin-top:2rem;background:#818cf8;color:#fff;}@keyframes bounce {0%, 100% { transform: translateY(0); }50% { transform: translateY(-10px); }}.zaptools-logo{font-size:1.5rem;animation:bounce 2s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));}.zaptools-header{position:absolute;top:18px;left:18px;z-index:20;display:flex;align-items:center;gap:8px;}.zaptools-header span{font-size:1.1rem;font-weight:600;letter-spacing:-1px;}</style>
+</head>
+<body>
+        <div class="zaptools-header">
+            <span class="zaptools-logo">⚡</span>
+            <span>ZapTools</span>
+        </div>
+        <div class="container">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+            <select id="langSwitcher" style="padding: 0.4rem 1rem; border-radius: 20px; border: none; font-size: 1rem;">
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+        <h1 id="title">Tạo QR Sự kiện</h1>
+        <form id="eventForm">
+            <div class="form-group">
+                <label id="eventLabel" for="event">Tên sự kiện:</label>
+                <input type="text" id="event" name="event" required>
+            </div>
+            <div class="form-group">
+                <label id="timeLabel" for="time">Thời gian:</label>
+                <input type="text" id="time" name="time">
+            </div>
+            <div class="form-group">
+                <label id="locationLabel" for="location">Địa điểm:</label>
+                <input type="text" id="location" name="location">
+            </div>
+            <button type="submit" class="tool-btn" id="createBtn">Tạo mã QR</button>
+        </form>
+        <div id="qrResult" style="margin-top:1.5rem;"></div>
+        <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='DanhSachTaoQR.html'">← Quay lại danh sách</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script>
+    const content = {
+        vi: {
+            title: "Tạo QR Sự kiện",
+            event: "Tên sự kiện:",
+            time: "Thời gian:",
+            location: "Địa điểm:",
+            create: "Tạo mã QR",
+            result: "Mã QR Sự kiện của bạn:",
+            download: "Tải về",
+            back: "← Quay lại danh sách"
+        },
+        en: {
+            title: "Create QR Event",
+            event: "Event name:",
+            time: "Time:",
+            location: "Location:",
+            create: "Create QR code",
+            result: "Your Event QR code:",
+            download: "Download",
+            back: "← Back to list"
+        }
+    };
+    function setLang(lang) {
+        document.getElementById('title').textContent = content[lang].title;
+        document.getElementById('eventLabel').textContent = content[lang].event;
+        document.getElementById('timeLabel').textContent = content[lang].time;
+        document.getElementById('locationLabel').textContent = content[lang].location;
+        document.getElementById('createBtn').textContent = content[lang].create;
+        document.getElementById('btnBack').textContent = content[lang].back;
+    }
+    document.getElementById('langSwitcher').addEventListener('change', function(e) {
+        setLang(e.target.value);
+        localStorage.setItem('zaptools_lang', e.target.value);
+    });
+    // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+    const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
+    document.getElementById('langSwitcher').value = savedLang;
+    setLang(savedLang);
+    document.getElementById('eventForm').onsubmit = function(e) {
+        e.preventDefault();
+        var event = document.getElementById('event').value;
+        var time = document.getElementById('time').value;
+        var location = document.getElementById('location').value;
+        var qrText = `Event: ${event}${time ? ' | Time: ' + time : ''}${location ? ' | Location: ' + location : ''}`;
+        var qr = new QRious({ value: qrText, size: 220 });
+        document.getElementById('qrResult').innerHTML = `<div>${content[savedLang].result}</div><img src='${qr.toDataURL()}' alt='QR Event'><div style='margin-top:0.5rem;'><a href='${qr.toDataURL()}' download='qr_event.png' style='color:#4ade80;font-weight:600;'>${content[savedLang].download}</a></div>`;
+    };
+    </script>
+</body>
+</html>

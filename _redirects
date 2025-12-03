@@ -1,0 +1,15 @@
+/pdf-to-word      /PDFtoWord.html      200
+/pdf-to-excel     /PDFtoExcel.html     200
+/pdf-to-image     /PDFtoImage.html     200
+/merge-pdfs       /MergePDFs.html      200
+/split-pdf        /SplitPDF.html       200
+/image-tools      /image-tool.html     200
+/qr-code-tools    /QRcode.html         200
+/qr-wifi          /QRwifi.html         200
+/qr-web           /QRlinkweb.html      200
+/qr-product       /QRproduct.html      200
+/qr-event         /QRevent.html        200
+/qr-contact       /QRcontact.html      200
+/qr-decode        /GiaiMaQR.html       200
+/pdf-tools        /pdf-tools.html      200
+/danhsach-tao-qr  /DanhSachTaoQR.html  200

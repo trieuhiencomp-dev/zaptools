@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZapTools - PDF Tools</title>
+    <meta name="description" content="Convert PDF to Word, Excel, and more! Free online PDF tools.">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 1rem;
+        }
+        .container {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+            background: rgba(255,255,255,0.07);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .tool-btn {
+            display: block;
+            width: 80%;
+            margin: 1rem auto;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: none;
+            background: #4ade80;
+            color: #222;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .tool-btn:hover {
+            background: #22c55e;
+        }
+        .back-btn {
+            margin-top: 2rem;
+            background: #818cf8;
+            color: #fff;
+        }
+        .status {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #fde68a;
+        }
+        .zaptools-header {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .zaptools-logo {
+            font-size: 1.5rem;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .pdf-tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 600px) {
+            .pdf-tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="zaptools-header">
+          <span class="zaptools-logo">⚡</span>
+          <span style="font-size:1.1rem;font-weight:600;letter-spacing:-1px;">ZapTools</span>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+            <select id="langSwitcher" style="padding: 0.4rem 1rem; border-radius: 20px; border: none; font-size: 1rem;">
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+        <h1 id="title">PDF Tools</h1>
+        <div class="pdf-tools-grid">
+            <button class="tool-btn" id="pdfToWordBtn">PDF to Word</button>
+            <button class="tool-btn" id="pdfToPowerpointBtn">PDF to PowerPoint</button>
+            <button class="tool-btn" id="pdfToExcelBtn">PDF to Excel</button>
+            <button class="tool-btn" id="pdfToImageBtn">PDF to Image</button>
+            <button class="tool-btn" id="mergePdfBtn">Merge PDFs</button>
+            <button class="tool-btn" id="splitPdfBtn">Split PDF</button>
+            <button class="tool-btn" id="pdfResizeBtn">Resize PDF</button>
+        </div>
+        <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='index.html'">← Back to Home</button>
+        <div class="status" id="statusMsg"></div>
+    </div>
+    <script>
+        document.getElementById('pdfToWordBtn').onclick = function() {
+            window.location.href = 'PDFtoWord.html';
+        };
+        document.getElementById('pdfToPowerpointBtn').onclick = function() {
+            window.location.href = 'PDFtoPowerpoint.html';
+        };
+        document.getElementById('pdfToExcelBtn').onclick = function() {
+            window.location.href = 'PDFtoExcel.html';
+        };
+        document.getElementById('pdfToImageBtn').onclick = function() {
+            window.location.href = 'PDFtoImage.html';
+        };
+        document.getElementById('mergePdfBtn').onclick = function() {
+            window.location.href = 'MergePDFs.html';
+        };
+        document.getElementById('splitPdfBtn').onclick = function() {
+            window.location.href = 'SplitPDF.html';
+        };
+        document.getElementById('pdfResizeBtn').onclick = function() {
+            window.location.href = 'PDFresize.html';
+        };
+        // Language switcher
+        const langData = {
+            vi: {
+                title: 'Công cụ PDF',
+                pdfToWord: 'PDF sang Word',
+                pdfToPowerpoint: 'PDF sang PowerPoint',
+                pdfToExcel: 'PDF sang Excel',
+                pdfToImage: 'PDF sang Ảnh',
+                mergePdf: 'Ghép nhiều PDF',
+                splitPdf: 'Tách PDF',
+                back: '← Quay lại Trang chủ'
+            },
+            en: {
+                title: 'PDF Tools',
+                pdfToWord: 'PDF to Word',
+                pdfToPowerpoint: 'PDF to PowerPoint',
+                pdfToExcel: 'PDF to Excel',
+                pdfToImage: 'PDF to Image',
+                mergePdf: 'Merge PDFs',
+                splitPdf: 'Split PDF',
+                back: '← Back to Home'
+            }
+        };
+        function setLang(lang) {
+            document.getElementById('title').textContent = langData[lang].title;
+            document.getElementById('pdfToWordBtn').textContent = langData[lang].pdfToWord;
+            document.getElementById('pdfToPowerpointBtn').textContent = langData[lang].pdfToPowerpoint;
+            document.getElementById('pdfToExcelBtn').textContent = langData[lang].pdfToExcel;
+            document.getElementById('pdfToImageBtn').textContent = langData[lang].pdfToImage;
+            document.getElementById('mergePdfBtn').textContent = langData[lang].mergePdf;
+            document.getElementById('splitPdfBtn').textContent = langData[lang].splitPdf;
+            document.getElementById('btnBack').textContent = langData[lang].back;
+        }
+        document.getElementById('langSwitcher').addEventListener('change', function(e) {
+            setLang(e.target.value);
+            localStorage.setItem('zaptools_lang', e.target.value);
+        });
+        // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+        const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
+        document.getElementById('langSwitcher').value = savedLang;
+        setLang(savedLang);
+    </script>
+</body>
+</html>

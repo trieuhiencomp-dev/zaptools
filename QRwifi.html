@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo QR Wifi</title>
+    <style>body{font-family:sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;color:white;}.container{text-align:center;max-width:400px;padding:2rem;background:rgba(255,255,255,0.07);border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);}h1{font-size:1.7rem;margin-bottom:1rem;font-weight:700;}.form-group{margin-bottom:1rem;text-align:left;}.form-group label{font-weight:600;}.form-group input,.form-group select{width:100%;padding:0.5rem;border-radius:6px;border:none;margin-top:0.3rem;}.tool-btn{margin-top:1rem;padding:0.7rem 1.5rem;border-radius:10px;border:none;background:#4ade80;color:#222;font-weight:600;cursor:pointer;transition:background 0.2s;}.tool-btn:hover{background:#22c55e;}.back-btn{margin-top:2rem;background:#818cf8;color:#fff;} .lang-switcher{position:absolute;top:18px;right:18px;z-index:10;} .lang-switcher select{padding:0.3rem 0.7rem;border-radius:8px;border:none;font-weight:600;}@keyframes bounce {0%, 100% { transform: translateY(0); }50% { transform: translateY(-10px); }}.zaptools-logo{font-size:1.5rem;animation:bounce 2s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));}.zaptools-header{position:absolute;top:18px;left:18px;z-index:20;display:flex;align-items:center;gap:8px;}.zaptools-header span{font-size:1.1rem;font-weight:600;letter-spacing:-1px;}</style>
+</head>
+<body>
+        <div class="zaptools-header">
+            <span class="zaptools-logo">⚡</span>
+            <span>ZapTools</span>
+        </div>
+        <div class="lang-switcher">
+        <select id="langSelect">
+            <option value="vi">Tiếng Việt</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+    <div class="container" id="mainContent">
+        <h1>Tạo QR Wifi</h1>
+        <div id="guideBox" style="background:rgba(255,255,255,0.15);color:#fff;padding:1rem 0.7rem;border-radius:10px;margin-bottom:1.2rem;font-size:1rem;"></div>
+        <form id="wifiForm">
+            <div class="form-group">
+                <label id="ssidLabel" for="ssid">Tên Wifi (SSID):</label>
+                <input type="text" id="ssid" name="ssid" required>
+            </div>
+            <div class="form-group">
+                <label id="passwordLabel" for="password">Mật khẩu:</label>
+                <input type="text" id="password" name="password">
+            </div>
+            <div class="form-group">
+                <label id="encryptionLabel" for="encryption">Bảo mật:</label>
+                <select id="encryption" name="encryption">
+                    <option value="WPA">WPA/WPA2</option>
+                    <option value="WEP">WEP</option>
+                    <option value="nopass">Không mật khẩu</option>
+                </select>
+            </div>
+            <button type="submit" class="tool-btn" id="createBtn">Tạo mã QR</button>
+        </form>
+        <div id="qrResult" style="margin-top:1.5rem;"></div>
+        <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='DanhSachTaoQR.html'">← Quay lại danh sách</button>
+    </div>
+    <script>
+    // Nội dung song ngữ
+    const content = {
+        vi: {
+            title: "Tạo QR Wifi",
+            guide: `<strong>Hướng dẫn sử dụng:</strong><br>1. Nhập tên Wifi (SSID), mật khẩu và chọn loại bảo mật.<br>2. Nhấn nút <b>Tạo mã QR</b> để sinh mã.<br>3. Mã QR sẽ hiển thị bên dưới, bạn có thể tải về và chia sẻ.<br><span style='color:#fde68a;'>Lưu ý: Khi quét mã QR, điện thoại sẽ tự động kết nối vào mạng Wifi nếu hỗ trợ.</span>`,
+            ssid: "Tên Wifi (SSID):",
+            password: "Mật khẩu:",
+            encryption: "Bảo mật:",
+            create: "Tạo mã QR",
+            result: "Mã QR Wifi của bạn:",
+            download: "Tải về",
+            back: "← Quay lại danh sách"
+        },
+        en: {
+            title: "Create Wifi QR",
+            guide: `<strong>Instructions:</strong><br>1. Enter Wifi name (SSID), password and select encryption type.<br>2. Click <b>Create QR code</b> to generate.<br>3. The QR code will appear below, you can download and share it.<br><span style='color:#fde68a;'>Note: When scanning, your phone will automatically connect to Wifi if supported.</span>`,
+            ssid: "Wifi Name (SSID):",
+            password: "Password:",
+            encryption: "Encryption:",
+            create: "Create QR code",
+            result: "Your Wifi QR code:",
+            download: "Download",
+            back: "← Back to list"
+        }
+    };
+    function setLang(lang) {
+        document.querySelector('h1').textContent = content[lang].title;
+        document.getElementById('guideBox').innerHTML = content[lang].guide;
+        document.getElementById('ssidLabel').textContent = content[lang].ssid;
+        document.getElementById('passwordLabel').textContent = content[lang].password;
+        document.getElementById('encryptionLabel').textContent = content[lang].encryption;
+        document.getElementById('createBtn').textContent = content[lang].create;
+        document.getElementById('btnBack').textContent = content[lang].back;
+    }
+    document.getElementById('langSelect').addEventListener('change', function(e) {
+        setLang(e.target.value);
+        localStorage.setItem('zaptools_lang', e.target.value);
+    });
+    // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+    const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
+    document.getElementById('langSelect').value = savedLang;
+    setLang(savedLang);
+    document.getElementById('wifiForm').onsubmit = function(e) {
+        e.preventDefault();
+        var ssid = document.getElementById('ssid').value;
+        var password = document.getElementById('password').value;
+        var encryption = document.getElementById('encryption').value;
+        var lang = document.getElementById('langSelect').value;
+        fetch('https://zaptools-backend.as.r.appspot.com/api/qrwifi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ssid, password, encryption })
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            document.getElementById('qrResult').innerHTML = `<div>${content[lang].result}</div><img src='${url}' alt='QR Wifi'><div style='margin-top:0.5rem;'><a href='${url}' download='qr_wifi.png' style='color:#4ade80;font-weight:600;'>${content[lang].download}</a></div>`;
+        });
+    };
+    </script>
+</body>
+</html>

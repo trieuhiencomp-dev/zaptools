@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Tạo QR</title>
+    <meta name="description" content="Chọn loại QR bạn muốn tạo.">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%,#764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
+        .container { text-align: center; max-width: 500px; padding: 2rem; background: rgba(255,255,255,0.07); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        h1 { font-size: 2.2rem; margin-bottom: 1rem; font-weight: 700; }
+        .tool-btn { display: block; width: 80%; margin: 1rem auto; padding: 1rem; font-size: 1.1rem; border-radius: 10px; border: none; background: #4ade80; color: #222; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .tool-btn:hover { background: #22c55e; }
+        .back-btn { margin-top: 2rem; background: #818cf8; color: #fff; }
+        @keyframes bounce {0%, 100% { transform: translateY(0); }50% { transform: translateY(-10px); }}
+        .zaptools-logo{font-size:1.5rem;animation:bounce 2s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));}
+        .zaptools-header{position:absolute;top:18px;left:18px;z-index:20;display:flex;align-items:center;gap:8px;}
+        .zaptools-header span{font-size:1.1rem;font-weight:600;letter-spacing:-1px;}
+    </style>
+</head>
+<body>
+        <div class="zaptools-header">
+            <span class="zaptools-logo">⚡</span>
+            <span>ZapTools</span>
+        </div>
+        <div class="container">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+            <select id="langSwitcher" style="padding: 0.4rem 1rem; border-radius: 20px; border: none; font-size: 1rem;">
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
+        <h1 id="title">Chọn loại QR để tạo</h1>
+        <button class="tool-btn" id="btnWifi">Tạo QR Wifi</button>
+        <button class="tool-btn" id="btnWeb">Tạo QR Website</button>
+        <button class="tool-btn" id="btnProduct">Tạo QR Sản phẩm</button>
+        <button class="tool-btn" id="btnEvent">Tạo QR Sự kiện</button>
+        <button class="tool-btn" id="btnContact">Tạo QR Thông tin cá nhân</button>
+        <button class="tool-btn back-btn" id="btnBack" onclick="window.location.href='QRcode.html'">← Quay lại QR Code Tools</button>
+    </div>
+    <script>
+        const langData = {
+            vi: {
+                title: 'Chọn loại QR để tạo',
+                wifi: 'Tạo QR Wifi',
+                web: 'Tạo QR Website',
+                product: 'Tạo QR Sản phẩm',
+                event: 'Tạo QR Sự kiện',
+                contact: 'Tạo QR Thông tin cá nhân',
+                back: '← Quay lại QR Code Tools'
+            },
+            en: {
+                title: 'Choose QR Type',
+                wifi: 'Create QR Wifi',
+                web: 'Create QR Website',
+                product: 'Create QR Product',
+                event: 'Create QR Event',
+                contact: 'Create QR Contact',
+                back: '← Back to QR Code Tools'
+            }
+        };
+        function setLang(lang) {
+            document.getElementById('title').textContent = langData[lang].title;
+            document.getElementById('btnWifi').textContent = langData[lang].wifi;
+            document.getElementById('btnWeb').textContent = langData[lang].web;
+            document.getElementById('btnProduct').textContent = langData[lang].product;
+            document.getElementById('btnEvent').textContent = langData[lang].event;
+            document.getElementById('btnContact').textContent = langData[lang].contact;
+            document.getElementById('btnBack').textContent = langData[lang].back;
+        }
+        document.getElementById('langSwitcher').addEventListener('change', function(e) {
+            setLang(e.target.value);
+            localStorage.setItem('zaptools_lang', e.target.value);
+        });
+        // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+        const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
+        document.getElementById('langSwitcher').value = savedLang;
+        setLang(savedLang);
+        // Chuyển trang giữ ngôn ngữ
+        document.getElementById('btnWifi').onclick = function() { window.location.href = 'QRwifi.html'; };
+        document.getElementById('btnWeb').onclick = function() { window.location.href = 'QRlinkweb.html'; };
+        document.getElementById('btnProduct').onclick = function() { window.location.href = 'QRproduct.html'; };
+        document.getElementById('btnEvent').onclick = function() { window.location.href = 'QRevent.html'; };
+        document.getElementById('btnContact').onclick = function() { window.location.href = 'QRcontact.html'; };
+    </script>
+</body>
+</html>
