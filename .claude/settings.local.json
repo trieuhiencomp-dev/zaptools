@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(gcloud app logs read:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(netlify api listSiteDeploys:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
