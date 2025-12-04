@@ -12,7 +12,8 @@
       "Bash(python:*)",
       "Bash(if [ ! -d \"Y:/zaptools/blog\" ])",
       "Bash(then mkdir -p \"Y:/zaptools/blog\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

@@ -312,6 +312,12 @@ def main():
             "icon": "✨",
             "filename": "og-images/og-image-DanhSachTaoQR.png"
         },
+        {
+            "title": "Privacy Policy",
+            "subtitle": "Your Privacy Matters to Us",
+            "icon": "🔒",
+            "filename": "og-images/og-image-privacy-policy.png"
+        },
     ]
 
     # Generate all images
