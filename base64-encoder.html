@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder & Decoder - Encode Decode Base64 Online | ZapTools</title>
+    <meta name="description" content="Free Base64 encoder and decoder. Convert text to Base64 and decode Base64 to text instantly. Perfect for developers working with API data and encoded strings!">
+    <meta name="keywords" content="base64 encoder, base64 decoder, encode base64, decode base64, base64 converter, base64 tool, text to base64, base64 to text">
+    <meta name="author" content="ZapTools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://zaptools.org/base64-encoder.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.org/base64-encoder.html">
+    <meta property="og:title" content="Base64 Encoder & Decoder - Free Online Tool">
+    <meta property="og:description" content="Encode and decode Base64 strings instantly. Free tool for developers!">
+    <meta property="og:image" content="https://zaptools.org/og-images/og-image-base64-encoder.png">
+    <meta property="og:site_name" content="ZapTools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://zaptools.org/base64-encoder.html">
+    <meta name="twitter:title" content="Base64 Encoder & Decoder - ZapTools">
+    <meta name="twitter:description" content="Encode and decode Base64 strings instantly!">
+    <meta name="twitter:image" content="https://zaptools.org/og-images/og-image-base64-encoder.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251"
+     crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .editor-section {
+            margin-bottom: 20px;
+        }
+
+        .editor-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #667eea;
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: #4ade80;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #22c55e;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .info-section p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .copied-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4ade80;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .error-alert {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #ef4444;
+        }
+
+        .error-alert.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .main-card, .info-section {
+                padding: 20px;
+            }
+
+            textarea {
+                min-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to ZapTools</a>
+
+        <header>
+            <h1>🔐 Base64 Encoder/Decoder</h1>
+            <p class="subtitle">Encode and decode Base64 strings instantly</p>
+        </header>
+
+        <div class="main-card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('encode')">Encode</button>
+                <button class="tab" onclick="switchTab('decode')">Decode</button>
+            </div>
+
+            <div class="error-alert" id="errorAlert"></div>
+
+            <!-- Encode Tab -->
+            <div id="encodeTab" class="tab-content active">
+                <div class="editor-section">
+                    <label class="editor-label">Text to Encode:</label>
+                    <textarea id="textToEncode" placeholder="Enter text to encode to Base64..."></textarea>
+                </div>
+
+                <div class="editor-section">
+                    <label class="editor-label">Base64 Output:</label>
+                    <textarea id="base64Output" placeholder="Base64 encoded output will appear here..." readonly></textarea>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-primary" onclick="encodeToBase64()">🔒 Encode to Base64</button>
+                    <button class="btn-success" onclick="copyOutput('base64Output')">📋 Copy</button>
+                    <button class="btn-secondary" onclick="clearEncode()">🗑️ Clear</button>
+                </div>
+            </div>
+
+            <!-- Decode Tab -->
+            <div id="decodeTab" class="tab-content">
+                <div class="editor-section">
+                    <label class="editor-label">Base64 to Decode:</label>
+                    <textarea id="base64ToDecode" placeholder="Enter Base64 string to decode..."></textarea>
+                </div>
+
+                <div class="editor-section">
+                    <label class="editor-label">Decoded Text:</label>
+                    <textarea id="decodedOutput" placeholder="Decoded text will appear here..." readonly></textarea>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-primary" onclick="decodeFromBase64()">🔓 Decode from Base64</button>
+                    <button class="btn-success" onclick="copyOutput('decodedOutput')">📋 Copy</button>
+                    <button class="btn-secondary" onclick="clearDecode()">🗑️ Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>What is Base64?</h2>
+            <p>Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It's commonly used to encode data that needs to be stored and transferred over media designed to handle text.</p>
+
+            <div class="features">
+                <div class="feature">
+                    <h3>📧 Email Attachments</h3>
+                    <p>Encode files and images to send via email or APIs.</p>
+                </div>
+                <div class="feature">
+                    <h3>🌐 Web Development</h3>
+                    <p>Embed images directly in HTML/CSS using data URIs.</p>
+                </div>
+                <div class="feature">
+                    <h3>🔐 API Authentication</h3>
+                    <p>Encode credentials for basic authentication headers.</p>
+                </div>
+                <div class="feature">
+                    <h3>🔒 Data Security</h3>
+                    <p>Encode sensitive data for safe transmission (not encryption!).</p>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 30px;">How to Use</h2>
+            <p><strong>Encode:</strong> Enter plain text in the first box and click "Encode" to convert to Base64.</p>
+            <p><strong>Decode:</strong> Switch to "Decode" tab, paste Base64 string, and click "Decode" to see original text.</p>
+            <p><strong>Note:</strong> Base64 is NOT encryption. It's encoding for data transfer, not security!</p>
+        </div>
+    </div>
+
+    <div class="copied-notification" id="copiedNotification">
+        ✅ Copied to clipboard!
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            if (tab === 'encode') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('encodeTab').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('decodeTab').classList.add('active');
+            }
+
+            hideError();
+        }
+
+        function encodeToBase64() {
+            const text = document.getElementById('textToEncode').value;
+
+            if (!text) {
+                showError('Please enter text to encode');
+                return;
+            }
+
+            try {
+                const encoded = btoa(unescape(encodeURIComponent(text)));
+                document.getElementById('base64Output').value = encoded;
+                hideError();
+            } catch (e) {
+                showError('Error encoding text: ' + e.message);
+            }
+        }
+
+        function decodeFromBase64() {
+            const base64 = document.getElementById('base64ToDecode').value.trim();
+
+            if (!base64) {
+                showError('Please enter Base64 string to decode');
+                return;
+            }
+
+            try {
+                const decoded = decodeURIComponent(escape(atob(base64)));
+                document.getElementById('decodedOutput').value = decoded;
+                hideError();
+            } catch (e) {
+                showError('Invalid Base64 string: ' + e.message);
+            }
+        }
+
+        function copyOutput(elementId) {
+            const output = document.getElementById(elementId).value;
+
+            if (!output) {
+                showError('Nothing to copy! Encode or decode first.');
+                return;
+            }
+
+            navigator.clipboard.writeText(output).then(() => {
+                showCopiedNotification();
+            }).catch(() => {
+                const textarea = document.getElementById(elementId);
+                textarea.select();
+                document.execCommand('copy');
+                showCopiedNotification();
+            });
+        }
+
+        function clearEncode() {
+            document.getElementById('textToEncode').value = '';
+            document.getElementById('base64Output').value = '';
+            hideError();
+        }
+
+        function clearDecode() {
+            document.getElementById('base64ToDecode').value = '';
+            document.getElementById('decodedOutput').value = '';
+            hideError();
+        }
+
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            errorAlert.textContent = '❌ ' + message;
+            errorAlert.classList.add('show');
+        }
+
+        function hideError() {
+            document.getElementById('errorAlert').classList.remove('show');
+        }
+
+        function showCopiedNotification() {
+            const notification = document.getElementById('copiedNotification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

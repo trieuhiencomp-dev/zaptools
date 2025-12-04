@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-2QEQX2T9JX')</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoder Decoder - Encode Decode URL Online | ZapTools</title>
+    <meta name="description" content="Free URL encoder and decoder. Encode special characters for URLs and decode URL-encoded strings instantly. Perfect for web developers and API testing!">
+    <meta name="keywords" content="url encoder, url decoder, encode url, decode url, url encode online, percent encoding, url escape, urlencode">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://zaptools.org/url-encoder.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.org/url-encoder.html">
+    <meta property="og:title" content="URL Encoder & Decoder - Free Online Tool">
+    <meta property="og:description" content="Encode and decode URLs instantly. Handle special characters and percent encoding!">
+    <meta property="og:image" content="https://zaptools.org/og-images/og-image-url-encoder.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#667eea">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1.6;color:#333;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}.container{max-width:1000px;margin:0 auto}header{text-align:center;color:white;margin-bottom:30px}h1{font-size:2.5rem;margin-bottom:10px}.subtitle{font-size:1.1rem;opacity:.9}.main-card{background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.3);margin-bottom:30px}.tabs{display:flex;gap:10px;margin-bottom:20px;border-bottom:2px solid #e0e0e0}.tab{padding:12px 24px;background:none;border:none;cursor:pointer;font-size:16px;font-weight:600;color:#666;border-bottom:3px solid transparent;transition:all .3s}.tab.active{color:#667eea;border-bottom-color:#667eea}.tab:hover{color:#667eea}.tab-content{display:none}.tab-content.active{display:block}.editor-section{margin-bottom:20px}label{display:block;font-weight:600;margin-bottom:10px;color:#667eea}textarea{width:100%;min-height:200px;padding:15px;border:2px solid #e0e0e0;border-radius:10px;font-family:'Courier New',monospace;font-size:14px;resize:vertical;transition:border-color .3s}textarea:focus{outline:none;border-color:#667eea}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}button{padding:12px 24px;border:none;border-radius:8px;font-size:16px;cursor:pointer;transition:all .3s;font-weight:600}.btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,.4)}.btn-secondary{background:#f5f5f5;color:#333}.btn-secondary:hover{background:#e0e0e0}.btn-success{background:#4ade80;color:white}.btn-success:hover{background:#22c55e}.info-section{background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.3)}.info-section h2{color:#667eea;margin-bottom:15px}.info-section p{margin-bottom:10px;line-height:1.8}.examples{background:#f8f9ff;padding:20px;border-radius:10px;margin-top:20px;border-left:4px solid #667eea}.examples code{background:white;padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace}.back-link{display:inline-block;color:white;text-decoration:none;margin-bottom:20px;font-size:1.1rem}.back-link:hover{text-decoration:underline}.copied-notification{position:fixed;top:20px;right:20px;background:#4ade80;color:white;padding:15px 25px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,.3);display:none;animation:slideIn .3s}@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}@media (max-width:768px){h1{font-size:2rem}.main-card,.info-section{padding:20px}textarea{min-height:150px}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to ZapTools</a>
+        <header>
+            <h1>🔗 URL Encoder/Decoder</h1>
+            <p class="subtitle">Encode and decode URLs instantly</p>
+        </header>
+
+        <div class="main-card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('encode')">Encode</button>
+                <button class="tab" onclick="switchTab('decode')">Decode</button>
+            </div>
+
+            <div id="encodeTab" class="tab-content active">
+                <div class="editor-section">
+                    <label>Text/URL to Encode:</label>
+                    <textarea id="textToEncode" placeholder="Enter text or URL to encode..."></textarea>
+                </div>
+                <div class="editor-section">
+                    <label>Encoded URL:</label>
+                    <textarea id="encodedOutput" placeholder="Encoded URL will appear here..." readonly></textarea>
+                </div>
+                <div class="actions">
+                    <button class="btn-primary" onclick="encodeURL()">🔒 Encode URL</button>
+                    <button class="btn-success" onclick="copyOutput('encodedOutput')">📋 Copy</button>
+                    <button class="btn-secondary" onclick="clearEncode()">🗑️ Clear</button>
+                </div>
+            </div>
+
+            <div id="decodeTab" class="tab-content">
+                <div class="editor-section">
+                    <label>URL to Decode:</label>
+                    <textarea id="textToDecode" placeholder="Enter URL-encoded string to decode..."></textarea>
+                </div>
+                <div class="editor-section">
+                    <label>Decoded Text:</label>
+                    <textarea id="decodedOutput" placeholder="Decoded text will appear here..." readonly></textarea>
+                </div>
+                <div class="actions">
+                    <button class="btn-primary" onclick="decodeURL()">🔓 Decode URL</button>
+                    <button class="btn-success" onclick="copyOutput('decodedOutput')">📋 Copy</button>
+                    <button class="btn-secondary" onclick="clearDecode()">🗑️ Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>What is URL Encoding?</h2>
+            <p>URL encoding (percent encoding) converts special characters into a format that can be transmitted over the Internet. Special characters are replaced with % followed by two hexadecimal digits.</p>
+
+            <div class="examples">
+                <h3 style="color:#667eea;margin-bottom:15px">Common Encodings:</h3>
+                <p>Space → <code>%20</code> or <code>+</code></p>
+                <p>! → <code>%21</code></p>
+                <p># → <code>%23</code></p>
+                <p>& → <code>%26</code></p>
+                <p>? → <code>%3F</code></p>
+                <p>= → <code>%3D</code></p>
+            </div>
+
+            <h2 style="margin-top:30px">When to Use URL Encoding</h2>
+            <p><strong>🌐 Query Parameters:</strong> Encode values in URL query strings.</p>
+            <p><strong>🔗 API Requests:</strong> Safely pass data in GET requests.</p>
+            <p><strong>📧 Email Links:</strong> Encode mailto: links with subjects and bodies.</p>
+            <p><strong>🔍 Search Queries:</strong> Encode search terms for search engines.</p>
+
+            <p style="margin-top:15px"><strong>Example:</strong></p>
+            <p style="background:#f8f9ff;padding:10px;border-radius:8px;font-family:'Courier New',monospace;font-size:.9rem">
+                Before: https://example.com?name=John Doe&city=New York<br>
+                After: https://example.com?name=John%20Doe&city=New%20York
+            </p>
+        </div>
+    </div>
+
+    <div class="copied-notification" id="copiedNotification">✅ Copied to clipboard!</div>
+
+    <script>
+        function switchTab(tab){
+            document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+            if(tab==='encode'){
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('encodeTab').classList.add('active');
+            }else{
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('decodeTab').classList.add('active');
+            }
+        }
+
+        function encodeURL(){
+            const text=document.getElementById('textToEncode').value;
+            if(!text){alert('Please enter text to encode');return}
+            try{
+                document.getElementById('encodedOutput').value=encodeURIComponent(text);
+            }catch(e){
+                alert('Error encoding: '+e.message);
+            }
+        }
+
+        function decodeURL(){
+            const text=document.getElementById('textToDecode').value.trim();
+            if(!text){alert('Please enter URL to decode');return}
+            try{
+                document.getElementById('decodedOutput').value=decodeURIComponent(text);
+            }catch(e){
+                alert('Error decoding: '+e.message);
+            }
+        }
+
+        function copyOutput(id){
+            const output=document.getElementById(id).value;
+            if(!output){alert('Nothing to copy!');return}
+            navigator.clipboard.writeText(output).then(()=>{
+                document.getElementById('copiedNotification').style.display='block';
+                setTimeout(()=>{document.getElementById('copiedNotification').style.display='none'},2000);
+            });
+        }
+
+        function clearEncode(){
+            document.getElementById('textToEncode').value='';
+            document.getElementById('encodedOutput').value='';
+        }
+
+        function clearDecode(){
+            document.getElementById('textToDecode').value='';
+            document.getElementById('decodedOutput').value='';
+        }
+    </script>
+</body>
+</html>

@@ -299,6 +299,38 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">📝</div>
+                <div class="feature-name" id="wordCounterBtn" style="cursor:pointer; text-decoration:underline;">Word Counter</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-name" id="passwordGenBtn" style="cursor:pointer; text-decoration:underline;">Password Generator</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-name" id="colorPickerBtn" style="cursor:pointer; text-decoration:underline;">Color Picker</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📋</div>
+                <div class="feature-name" id="jsonFormatterBtn" style="cursor:pointer; text-decoration:underline;">JSON Formatter</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-name" id="base64EncoderBtn" style="cursor:pointer; text-decoration:underline;">Base64 Encoder</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">#️⃣</div>
+                <div class="feature-name" id="hashGeneratorBtn" style="cursor:pointer; text-decoration:underline;">Hash Generator</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔤</div>
+                <div class="feature-name" id="caseConverterBtn" style="cursor:pointer; text-decoration:underline;">Case Converter</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-name" id="urlEncoderBtn" style="cursor:pointer; text-decoration:underline;">URL Encoder</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📰</div>
                 <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
             </div>
             <div class="feature">
@@ -337,6 +369,54 @@
                 if (unitConverterBtn) {
                     unitConverterBtn.onclick = function() {
                         window.location.href = 'unit-converter.html';
+                    };
+                }
+                var wordCounterBtn = document.getElementById('wordCounterBtn');
+                if (wordCounterBtn) {
+                    wordCounterBtn.onclick = function() {
+                        window.location.href = 'word-counter.html';
+                    };
+                }
+                var passwordGenBtn = document.getElementById('passwordGenBtn');
+                if (passwordGenBtn) {
+                    passwordGenBtn.onclick = function() {
+                        window.location.href = 'password-generator.html';
+                    };
+                }
+                var colorPickerBtn = document.getElementById('colorPickerBtn');
+                if (colorPickerBtn) {
+                    colorPickerBtn.onclick = function() {
+                        window.location.href = 'color-picker.html';
+                    };
+                }
+                var jsonFormatterBtn = document.getElementById('jsonFormatterBtn');
+                if (jsonFormatterBtn) {
+                    jsonFormatterBtn.onclick = function() {
+                        window.location.href = 'json-formatter.html';
+                    };
+                }
+                var base64EncoderBtn = document.getElementById('base64EncoderBtn');
+                if (base64EncoderBtn) {
+                    base64EncoderBtn.onclick = function() {
+                        window.location.href = 'base64-encoder.html';
+                    };
+                }
+                var hashGeneratorBtn = document.getElementById('hashGeneratorBtn');
+                if (hashGeneratorBtn) {
+                    hashGeneratorBtn.onclick = function() {
+                        window.location.href = 'hash-generator.html';
+                    };
+                }
+                var caseConverterBtn = document.getElementById('caseConverterBtn');
+                if (caseConverterBtn) {
+                    caseConverterBtn.onclick = function() {
+                        window.location.href = 'case-converter.html';
+                    };
+                }
+                var urlEncoderBtn = document.getElementById('urlEncoderBtn');
+                if (urlEncoderBtn) {
+                    urlEncoderBtn.onclick = function() {
+                        window.location.href = 'url-encoder.html';
                     };
                 }
                 var blogBtn = document.getElementById('blogBtn');

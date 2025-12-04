@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-2QEQX2T9JX')</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Converter - UPPER, lower, Title, camelCase | ZapTools</title>
+    <meta name="description" content="Free text case converter. Convert text to UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case instantly. Perfect for developers and writers!">
+    <meta name="keywords" content="case converter, text converter, uppercase, lowercase, title case, camelCase, snake_case, kebab-case, text transformation">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://zaptools.org/case-converter.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.org/case-converter.html">
+    <meta property="og:title" content="Case Converter - Transform Text Case">
+    <meta property="og:description" content="Convert text to any case format instantly. UPPER, lower, Title, camelCase, and more!">
+    <meta property="og:image" content="https://zaptools.org/og-images/og-image-case-converter.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#667eea">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1.6;color:#333;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}.container{max-width:1000px;margin:0 auto}header{text-align:center;color:white;margin-bottom:30px}h1{font-size:2.5rem;margin-bottom:10px}.subtitle{font-size:1.1rem;opacity:.9}.main-card{background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.3);margin-bottom:30px}textarea{width:100%;min-height:200px;padding:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:16px;resize:vertical;transition:border-color .3s;font-family:inherit}textarea:focus{outline:none;border-color:#667eea}.converters{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:25px}.converter-btn{padding:15px;background:#f8f9ff;border:2px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:all .3s;text-align:center}.converter-btn:hover{border-color:#667eea;background:#fff;transform:translateY(-2px)}.converter-title{font-weight:600;color:#667eea;margin-bottom:5px}.converter-example{font-size:.85rem;color:#666}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}button{padding:12px 24px;border:none;border-radius:8px;font-size:16px;cursor:pointer;transition:all .3s;font-weight:600}.btn-success{background:#4ade80;color:white}.btn-success:hover{background:#22c55e}.btn-secondary{background:#f5f5f5;color:#333}.btn-secondary:hover{background:#e0e0e0}.info-section{background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.3)}.info-section h2{color:#667eea;margin-bottom:15px}.info-section p{margin-bottom:10px;line-height:1.8}.back-link{display:inline-block;color:white;text-decoration:none;margin-bottom:20px;font-size:1.1rem}.back-link:hover{text-decoration:underline}.copied-notification{position:fixed;top:20px;right:20px;background:#4ade80;color:white;padding:15px 25px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,.3);display:none;animation:slideIn .3s}@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}@media (max-width:768px){h1{font-size:2rem}.main-card,.info-section{padding:20px}.converters{grid-template-columns:1fr 1fr}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to ZapTools</a>
+        <header>
+            <h1>🔤 Case Converter</h1>
+            <p class="subtitle">Transform text to any case format</p>
+        </header>
+
+        <div class="main-card">
+            <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+
+            <div class="converters">
+                <div class="converter-btn" onclick="convert('upper')">
+                    <div class="converter-title">UPPERCASE</div>
+                    <div class="converter-example">HELLO WORLD</div>
+                </div>
+                <div class="converter-btn" onclick="convert('lower')">
+                    <div class="converter-title">lowercase</div>
+                    <div class="converter-example">hello world</div>
+                </div>
+                <div class="converter-btn" onclick="convert('title')">
+                    <div class="converter-title">Title Case</div>
+                    <div class="converter-example">Hello World</div>
+                </div>
+                <div class="converter-btn" onclick="convert('sentence')">
+                    <div class="converter-title">Sentence case</div>
+                    <div class="converter-example">Hello world</div>
+                </div>
+                <div class="converter-btn" onclick="convert('camel')">
+                    <div class="converter-title">camelCase</div>
+                    <div class="converter-example">helloWorld</div>
+                </div>
+                <div class="converter-btn" onclick="convert('pascal')">
+                    <div class="converter-title">PascalCase</div>
+                    <div class="converter-example">HelloWorld</div>
+                </div>
+                <div class="converter-btn" onclick="convert('snake')">
+                    <div class="converter-title">snake_case</div>
+                    <div class="converter-example">hello_world</div>
+                </div>
+                <div class="converter-btn" onclick="convert('kebab')">
+                    <div class="converter-title">kebab-case</div>
+                    <div class="converter-example">hello-world</div>
+                </div>
+                <div class="converter-btn" onclick="convert('constant')">
+                    <div class="converter-title">CONSTANT_CASE</div>
+                    <div class="converter-example">HELLO_WORLD</div>
+                </div>
+                <div class="converter-btn" onclick="convert('alternating')">
+                    <div class="converter-title">aLtErNaTiNg</div>
+                    <div class="converter-example">hElLo WoRlD</div>
+                </div>
+                <div class="converter-btn" onclick="convert('inverse')">
+                    <div class="converter-title">InVeRsE CaSe</div>
+                    <div class="converter-example">hELLO wORLD</div>
+                </div>
+                <div class="converter-btn" onclick="convert('capitalize')">
+                    <div class="converter-title">Capitalize Each</div>
+                    <div class="converter-example">Hello World</div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn-success" onclick="copyText()">📋 Copy Text</button>
+                <button class="btn-secondary" onclick="clearText()">🗑️ Clear</button>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Text Case Converter</h2>
+            <p>Transform your text into different case formats with one click. Perfect for programmers, writers, and anyone working with text formatting.</p>
+
+            <h2 style="margin-top:20px">Popular Case Formats</h2>
+            <p><strong>camelCase:</strong> First word lowercase, subsequent words capitalized. Used in JavaScript, Java.</p>
+            <p><strong>PascalCase:</strong> Every word capitalized. Used in C#, TypeScript classes.</p>
+            <p><strong>snake_case:</strong> Words separated by underscores. Used in Python, Ruby.</p>
+            <p><strong>kebab-case:</strong> Words separated by hyphens. Used in URLs, CSS.</p>
+            <p><strong>CONSTANT_CASE:</strong> Uppercase with underscores. Used for constants in code.</p>
+        </div>
+    </div>
+
+    <div class="copied-notification" id="copiedNotification">✅ Copied to clipboard!</div>
+
+    <script>
+        const textInput=document.getElementById('textInput');
+
+        function convert(type){
+            let text=textInput.value;
+            if(!text){alert('Please enter some text');return}
+
+            switch(type){
+                case'upper':text=text.toUpperCase();break;
+                case'lower':text=text.toLowerCase();break;
+                case'title':text=text.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());break;
+                case'sentence':text=text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g,c=>c.toUpperCase());break;
+                case'camel':text=text.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g,(m,c)=>c.toUpperCase());break;
+                case'pascal':text=text.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g,(m,c)=>c.toUpperCase()).replace(/^./,c=>c.toUpperCase());break;
+                case'snake':text=text.toLowerCase().replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'');break;
+                case'kebab':text=text.toLowerCase().replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'');break;
+                case'constant':text=text.toUpperCase().replace(/[^A-Z0-9]+/g,'_').replace(/^_|_$/g,'');break;
+                case'alternating':text=text.split('').map((c,i)=>i%2===0?c.toLowerCase():c.toUpperCase()).join('');break;
+                case'inverse':text=text.split('').map(c=>c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join('');break;
+                case'capitalize':text=text.toLowerCase().split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');break;
+            }
+            textInput.value=text;
+        }
+
+        function copyText(){
+            if(!textInput.value){alert('Nothing to copy!');return}
+            textInput.select();
+            document.execCommand('copy');
+            navigator.clipboard.writeText(textInput.value).then(()=>{
+                document.getElementById('copiedNotification').style.display='block';
+                setTimeout(()=>{document.getElementById('copiedNotification').style.display='none'},2000);
+            });
+        }
+
+        function clearText(){
+            textInput.value='';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker - HEX, RGB, HSL Color Converter | ZapTools</title>
+    <meta name="description" content="Free online color picker and converter. Pick colors, convert between HEX, RGB, HSL formats. Get color codes instantly for web design and development!">
+    <meta name="keywords" content="color picker, hex to rgb, rgb to hex, hsl converter, color converter, color code, hex color, rgb color, color tool, web colors">
+    <meta name="author" content="ZapTools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://zaptools.org/color-picker.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.org/color-picker.html">
+    <meta property="og:title" content="Color Picker - HEX, RGB, HSL Converter">
+    <meta property="og:description" content="Pick colors and convert between HEX, RGB, HSL formats instantly. Perfect tool for designers and developers!">
+    <meta property="og:image" content="https://zaptools.org/og-images/og-image-color-picker.png">
+    <meta property="og:site_name" content="ZapTools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://zaptools.org/color-picker.html">
+    <meta name="twitter:title" content="Color Picker - ZapTools">
+    <meta name="twitter:description" content="Pick colors and convert between HEX, RGB, HSL formats instantly!">
+    <meta name="twitter:image" content="https://zaptools.org/og-images/og-image-color-picker.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251"
+     crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .color-display {
+            width: 100%;
+            height: 200px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 3px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .picker-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .color-input-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        input[type="color"] {
+            width: 150px;
+            height: 150px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .format-card {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .format-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .color-value {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .color-value span {
+            flex: 1;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+        }
+
+        .sliders {
+            margin-bottom: 30px;
+        }
+
+        .slider-group {
+            margin-bottom: 20px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .presets {
+            margin-bottom: 30px;
+        }
+
+        .presets h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .preset-colors {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px;
+        }
+
+        .preset-color {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .preset-color:hover {
+            transform: scale(1.1);
+            border-color: #667eea;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .info-section p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .copied-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4ade80;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .main-card, .info-section {
+                padding: 20px;
+            }
+
+            .formats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to ZapTools</a>
+
+        <header>
+            <h1>🎨 Color Picker</h1>
+            <p class="subtitle">Pick colors and convert between HEX, RGB, HSL</p>
+        </header>
+
+        <div class="main-card">
+            <div class="color-display" id="colorDisplay"></div>
+
+            <div class="picker-container">
+                <div class="color-input-wrapper">
+                    <input type="color" id="colorPicker" value="#667eea">
+                </div>
+            </div>
+
+            <div class="formats-grid">
+                <div class="format-card">
+                    <h3>HEX</h3>
+                    <div class="color-value">
+                        <span id="hexValue">#667eea</span>
+                        <button class="copy-btn" onclick="copyValue('hex')">Copy</button>
+                    </div>
+                </div>
+                <div class="format-card">
+                    <h3>RGB</h3>
+                    <div class="color-value">
+                        <span id="rgbValue">rgb(102, 126, 234)</span>
+                        <button class="copy-btn" onclick="copyValue('rgb')">Copy</button>
+                    </div>
+                </div>
+                <div class="format-card">
+                    <h3>HSL</h3>
+                    <div class="color-value">
+                        <span id="hslValue">hsl(230, 76%, 66%)</span>
+                        <button class="copy-btn" onclick="copyValue('hsl')">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sliders">
+                <h3 style="margin-bottom: 20px;">RGB Sliders</h3>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Red</span>
+                        <span class="slider-value" id="rValue">102</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="rSlider" min="0" max="255" value="102">
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Green</span>
+                        <span class="slider-value" id="gValue">126</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="gSlider" min="0" max="255" value="126">
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Blue</span>
+                        <span class="slider-value" id="bValue">234</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" id="bSlider" min="0" max="255" value="234">
+                    </div>
+                </div>
+            </div>
+
+            <div class="presets">
+                <h3>Popular Colors</h3>
+                <div class="preset-colors" id="presetColors"></div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>About Color Picker</h2>
+            <p>Our color picker tool helps you find and convert colors between different formats. Perfect for web designers, developers, and digital artists.</p>
+
+            <h2 style="margin-top: 20px;">Color Formats Explained</h2>
+            <p><strong>HEX (Hexadecimal):</strong> Most common format for web colors. Format: #RRGGBB (e.g., #667eea)</p>
+            <p><strong>RGB (Red Green Blue):</strong> Uses three values 0-255 for red, green, and blue channels.</p>
+            <p><strong>HSL (Hue Saturation Lightness):</strong> More intuitive way to describe colors. Hue (0-360°), Saturation (0-100%), Lightness (0-100%).</p>
+        </div>
+    </div>
+
+    <div class="copied-notification" id="copiedNotification">
+        ✅ Copied to clipboard!
+    </div>
+
+    <script>
+        const colorPicker = document.getElementById('colorPicker');
+        const colorDisplay = document.getElementById('colorDisplay');
+        const hexValue = document.getElementById('hexValue');
+        const rgbValue = document.getElementById('rgbValue');
+        const hslValue = document.getElementById('hslValue');
+        const rSlider = document.getElementById('rSlider');
+        const gSlider = document.getElementById('gSlider');
+        const bSlider = document.getElementById('bSlider');
+        const rValue = document.getElementById('rValue');
+        const gValue = document.getElementById('gValue');
+        const bValue = document.getElementById('bValue');
+        const copiedNotification = document.getElementById('copiedNotification');
+
+        // Popular color presets
+        const presetColors = [
+            '#667eea', '#764ba2', '#f093fb', '#4facfe',
+            '#43e97b', '#38f9d7', '#fa709a', '#fee140',
+            '#30cfd0', '#330867', '#ff6b6b', '#4ecdc4',
+            '#45b7d1', '#f7b731', '#5f27cd', '#00d2d3',
+            '#1e3799', '#0a3d62', '#ee5a6f', '#f53b57'
+        ];
+
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+                    case g: h = ((b - r) / d + 2) / 6; break;
+                    case b: h = ((r - g) / d + 4) / 6; break;
+                }
+            }
+
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+
+        function updateColor() {
+            const r = parseInt(rSlider.value);
+            const g = parseInt(gSlider.value);
+            const b = parseInt(bSlider.value);
+
+            const hex = rgbToHex(r, g, b);
+            const hsl = rgbToHsl(r, g, b);
+
+            colorPicker.value = hex;
+            colorDisplay.style.backgroundColor = hex;
+            hexValue.textContent = hex;
+            rgbValue.textContent = `rgb(${r}, ${g}, ${b})`;
+            hslValue.textContent = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+
+            rValue.textContent = r;
+            gValue.textContent = g;
+            bValue.textContent = b;
+        }
+
+        function updateFromPicker() {
+            const hex = colorPicker.value;
+            const rgb = hexToRgb(hex);
+
+            rSlider.value = rgb.r;
+            gSlider.value = rgb.g;
+            bSlider.value = rgb.b;
+
+            updateColor();
+        }
+
+        function copyValue(format) {
+            let text;
+            if (format === 'hex') text = hexValue.textContent;
+            else if (format === 'rgb') text = rgbValue.textContent;
+            else if (format === 'hsl') text = hslValue.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                showCopiedNotification();
+            });
+        }
+
+        function showCopiedNotification() {
+            copiedNotification.style.display = 'block';
+            setTimeout(() => {
+                copiedNotification.style.display = 'none';
+            }, 2000);
+        }
+
+        function loadPresets() {
+            const container = document.getElementById('presetColors');
+            presetColors.forEach(color => {
+                const div = document.createElement('div');
+                div.className = 'preset-color';
+                div.style.backgroundColor = color;
+                div.title = color;
+                div.onclick = () => {
+                    colorPicker.value = color;
+                    updateFromPicker();
+                };
+                container.appendChild(div);
+            });
+        }
+
+        // Event listeners
+        colorPicker.addEventListener('input', updateFromPicker);
+        rSlider.addEventListener('input', updateColor);
+        gSlider.addEventListener('input', updateColor);
+        bSlider.addEventListener('input', updateColor);
+
+        // Initialize
+        updateColor();
+        loadPresets();
+    </script>
+</body>
+</html>

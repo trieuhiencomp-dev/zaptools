@@ -318,6 +318,58 @@ def main():
             "icon": "🔒",
             "filename": "og-images/og-image-privacy-policy.png"
         },
+
+        # New Tier 1 Tools
+        {
+            "title": "Word Counter",
+            "subtitle": "Count Words, Characters & More",
+            "icon": "📝",
+            "filename": "og-images/og-image-word-counter.png"
+        },
+        {
+            "title": "Password Generator",
+            "subtitle": "Create Strong Secure Passwords",
+            "icon": "🔐",
+            "filename": "og-images/og-image-password-generator.png"
+        },
+        {
+            "title": "Color Picker",
+            "subtitle": "HEX, RGB, HSL Converter",
+            "icon": "🎨",
+            "filename": "og-images/og-image-color-picker.png"
+        },
+        {
+            "title": "JSON Formatter",
+            "subtitle": "Validate, Format & Minify JSON",
+            "icon": "📋",
+            "filename": "og-images/og-image-json-formatter.png"
+        },
+
+        # Tier 2 Tools
+        {
+            "title": "Base64 Encoder",
+            "subtitle": "Encode & Decode Base64",
+            "icon": "🔐",
+            "filename": "og-images/og-image-base64-encoder.png"
+        },
+        {
+            "title": "Hash Generator",
+            "subtitle": "MD5, SHA-1, SHA-256, SHA-512",
+            "icon": "#️⃣",
+            "filename": "og-images/og-image-hash-generator.png"
+        },
+        {
+            "title": "Case Converter",
+            "subtitle": "UPPER, lower, Title, camelCase",
+            "icon": "🔤",
+            "filename": "og-images/og-image-case-converter.png"
+        },
+        {
+            "title": "URL Encoder",
+            "subtitle": "Encode & Decode URLs",
+            "icon": "🔗",
+            "filename": "og-images/og-image-url-encoder.png"
+        },
     ]
 
     # Generate all images
