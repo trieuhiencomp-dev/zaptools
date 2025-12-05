@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: zaptools-tts-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: AZURE_TTS_KEY
+        sync: false
+      - key: AZURE_TTS_REGION
+        value: southeastasia
+      - key: ADMIN_KEY
+        sync: false
+    healthCheckPath: /health

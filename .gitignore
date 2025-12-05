@@ -1,5 +1,7 @@
 # Local Netlify folder
 .netlify
 
-# Backend folder (deployed separately to Google Cloud)
-backend/
+# Backend node_modules and cache (backend code is now tracked)
+backend/node_modules/
+backend/.env
+backend/cache/

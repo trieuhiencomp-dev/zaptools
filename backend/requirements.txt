@@ -1,0 +1,14 @@
+Flask
+qrcode
+gunicorn
+flask_cors
+Pillow
+pdf2image
+PyPDF2
+pdf2docx
+tabula-py
+pandas
+python-pptx
+pdfplumber
+openpyxl
+Flask-Limiter

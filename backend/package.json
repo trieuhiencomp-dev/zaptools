@@ -1,0 +1,32 @@
+{
+  "name": "zaptools-tts-backend",
+  "version": "1.0.0",
+  "description": "ZapTools TTS Backend - FREE Azure TTS with caching",
+  "main": "tts-api.js",
+  "scripts": {
+    "start": "node tts-api.js",
+    "dev": "nodemon tts-api.js",
+    "test": "node test-tts.js"
+  },
+  "keywords": [
+    "tts",
+    "text-to-speech",
+    "azure",
+    "vietnamese",
+    "free"
+  ],
+  "author": "ZapTools",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
