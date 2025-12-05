@@ -13,7 +13,8 @@
       "Bash(if [ ! -d \"Y:/zaptools/blog\" ])",
       "Bash(then mkdir -p \"Y:/zaptools/blog\")",
       "Bash(fi)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
