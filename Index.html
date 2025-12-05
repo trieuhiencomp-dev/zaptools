@@ -388,6 +388,10 @@
                 <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
             </div>
             <div class="feature">
+                <div class="feature-icon">🔊</div>
+                <div class="feature-name" id="ttsToolBtn" style="cursor:pointer; text-decoration:underline;">TTS Tool</div>
+            </div>
+            <div class="feature">
                 <div class="feature-icon">🔧</div>
                 <div class="feature-name" id="moreToolsBtn">More Tools</div>
             </div>
@@ -546,6 +550,12 @@
                         window.location.href = 'blog.html';
                     };
                 }
+                var ttsToolBtn = document.getElementById('ttsToolBtn');
+                if (ttsToolBtn) {
+                    ttsToolBtn.onclick = function() {
+                        window.location.href = 'tts-tool.html';
+                    };
+                }
             });
             // Language switcher
             const langData = {
@@ -566,6 +576,7 @@
                     caseConverter: 'Chuyển đổi chữ',
                     urlEncoder: 'Mã hóa URL',
                     blog: 'Blog',
+                    ttsTool: 'Công cụ TTS',
                     more: 'Thêm công cụ',
                     status: '<span class="pulse"></span> Chào mừng bạn đến với ZapTools'
                 },
@@ -586,6 +597,7 @@
                     caseConverter: 'Case Converter',
                     urlEncoder: 'URL Encoder',
                     blog: 'Blog',
+                    ttsTool: 'TTS Tool',
                     more: 'More Tools',
                     status: '<span class="pulse"></span> Welcome to ZapTools'
                 }
@@ -607,6 +619,7 @@
                 document.getElementById('caseConverterBtn').textContent = langData[lang].caseConverter;
                 document.getElementById('urlEncoderBtn').textContent = langData[lang].urlEncoder;
                 document.getElementById('blogBtn').textContent = langData[lang].blog;
+                document.getElementById('ttsToolBtn').textContent = langData[lang].ttsTool;
                 document.getElementById('moreToolsBtn').textContent = langData[lang].more;
                 document.getElementById('status').innerHTML = langData[lang].status;
             }

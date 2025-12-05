@@ -97,3 +97,8 @@
   from = "/danhsach-tao-qr"
   to = "/DanhSachTaoQR.html"
   status = 200
+
+[[redirects]]
+  from = "/tts-tool"
+  to = "/tts-tool.html"
+  status = 200

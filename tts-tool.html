@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech Tiếng Việt Miễn Phí | ZapTools</title>
+    <meta name="description" content="Chuyển văn bản thành giọng nói tiếng Việt tự nhiên. Miễn phí, không giới hạn, không cần đăng ký. ZapTools - Lightning-fast free tools.">
+    <meta name="keywords" content="text to speech, tts tiếng việt, chuyển văn bản thành giọng nói, đọc văn bản, tts online, free tts">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+
+    <!-- Dark Mode CSS -->
+    <link rel="stylesheet" href="dark-mode.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 1rem;
+        }
+
+        .page-wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .sidebar-ad {
+            width: 160px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .ad-container {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .ad-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tool-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .textarea-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .textarea-input:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        .textarea-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .char-counter {
+            text-align: right;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .char-counter.warning {
+            color: #ffeb3b;
+        }
+
+        .char-counter.danger {
+            color: #ff5252;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        select option {
+            background: #764ba2;
+            color: white;
+        }
+
+        .convert-btn {
+            background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin: 1rem 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255,0,128,0.3);
+        }
+
+        .convert-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,0,128,0.4);
+        }
+
+        .convert-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .convert-btn:disabled {
+            background: rgba(255,255,255,0.2);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 15px;
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-section h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        audio {
+            width: 100%;
+            margin: 1rem 0;
+            border-radius: 10px;
+        }
+
+        .download-btn {
+            padding: 0.75rem 2rem;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            border: 2px solid #f44336;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .tips-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+        }
+
+        .tips-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .tips-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-section li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tips-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .cross-sell {
+            margin-top: 2rem;
+        }
+
+        .cross-sell h3 {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tool-card {
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .tool-card:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-5px);
+        }
+
+        .tool-card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card .name {
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .page-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar-ad {
+                width: 100%;
+                position: static;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tool-container {
+                padding: 1.5rem;
+            }
+        }
+
+        .stats-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .stats-info span {
+            display: inline-block;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Left Sidebar Ad -->
+        <div class="sidebar-ad">
+            <div class="ad-container">
+                <div class="ad-label">Advertisement</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6389544196145251"
+                     data-ad-slot="3131107512"
+                     data-ad-format="vertical"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+
+            <div class="header">
+                <h1>🎙️ Text to Speech Tiếng Việt</h1>
+                <p>Chuyển văn bản thành giọng nói tự nhiên - Miễn phí, không giới hạn!</p>
+            </div>
+
+            <!-- TTS Tool -->
+            <div class="tool-container">
+                <div class="form-group">
+                    <label for="text-input">📝 Nhập văn bản (Tối đa 1,000 ký tự):</label>
+                    <textarea
+                        id="text-input"
+                        class="textarea-input"
+                        maxlength="1000"
+                        placeholder="Nhập văn bản cần chuyển đổi thành giọng nói...&#10;&#10;Ví dụ: Xin chào, đây là công cụ Text to Speech miễn phí của ZapTools. Chúng tôi cung cấp giọng đọc tiếng Việt tự nhiên, hoàn toàn miễn phí!"></textarea>
+                    <div class="char-counter" id="char-counter">0/1,000 ký tự</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="voice-select">🎤 Chọn giọng đọc:</label>
+                    <select id="voice-select">
+                        <option value="vi-VN-HoaiMyNeural">Hoài My (Nữ - Tự nhiên)</option>
+                        <option value="vi-VN-NamMinhNeural">Nam Minh (Nam - Tự nhiên)</option>
+                    </select>
+                </div>
+
+                <button class="convert-btn" id="convert-btn" onclick="convertTTS()">
+                    🔊 Chuyển Đổi Ngay - Miễn Phí
+                </button>
+
+                <!-- Loading -->
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 1rem;">Đang chuyển đổi...</p>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message" id="error-message"></div>
+
+                <!-- Result -->
+                <div class="result-section" id="result-section">
+                    <h3>✅ Chuyển đổi thành công!</h3>
+                    <audio id="audio-player" controls>
+                        <source id="audio-source" type="audio/mpeg">
+                        Trình duyệt của bạn không hỗ trợ audio.
+                    </audio>
+                    <button class="download-btn" onclick="downloadAudio()">
+                        ⬇️ Tải về MP3
+                    </button>
+                    <div class="stats-info" id="stats-info"></div>
+                </div>
+            </div>
+
+            <!-- Middle Ad (After Result) -->
+            <div class="ad-container" style="margin: 2rem 0;">
+                <div class="ad-label">Advertisement</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-format="auto"
+                     data-ad-client="ca-pub-6389544196145251"
+                     data-ad-slot="3131107512"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Ý tưởng sử dụng Text to Speech:</h3>
+                <ul>
+                    <li>📚 Tạo audiobook từ ebook hoặc PDF</li>
+                    <li>🎬 Voiceover cho video YouTube, TikTok</li>
+                    <li>📖 Nghe bài viết, tin tức khi đang lái xe</li>
+                    <li>🎓 Học phát âm tiếng Việt chuẩn</li>
+                    <li>📱 Tạo nội dung cho podcast</li>
+                    <li>👨‍🏫 Giáo viên tạo bài giảng audio</li>
+                </ul>
+            </div>
+
+            <!-- Cross-sell -->
+            <div class="cross-sell">
+                <h3>🔥 Công cụ khác bạn có thể thích:</h3>
+                <div class="tools-grid">
+                    <a href="pdf-tools.html" class="tool-card">
+                        <div class="icon">📄</div>
+                        <div class="name">Công cụ PDF</div>
+                    </a>
+                    <a href="image-tool.html" class="tool-card">
+                        <div class="icon">🖼️</div>
+                        <div class="name">Nén ảnh</div>
+                    </a>
+                    <a href="QRcode.html" class="tool-card">
+                        <div class="icon">📱</div>
+                        <div class="name">Tạo QR Code</div>
+                    </a>
+                    <a href="word-counter.html" class="tool-card">
+                        <div class="icon">📝</div>
+                        <div class="name">Đếm từ</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar Ad -->
+        <div class="sidebar-ad">
+            <div class="ad-container">
+                <div class="ad-label">Advertisement</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6389544196145251"
+                     data-ad-slot="3131107512"
+                     data-ad-format="vertical"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_URL = 'http://localhost:3000'; // Change to production URL when deployed
+
+        let currentAudioUrl = '';
+
+        // Character counter
+        const textInput = document.getElementById('text-input');
+        const charCounter = document.getElementById('char-counter');
+
+        textInput.addEventListener('input', function() {
+            const count = this.value.length;
+            charCounter.textContent = `${count}/1,000 ký tự`;
+
+            if (count > 900) {
+                charCounter.classList.add('danger');
+                charCounter.classList.remove('warning');
+            } else if (count > 700) {
+                charCounter.classList.add('warning');
+                charCounter.classList.remove('danger');
+            } else {
+                charCounter.classList.remove('warning', 'danger');
+            }
+        });
+
+        // Convert TTS function
+        async function convertTTS() {
+            const text = textInput.value.trim();
+            const voice = document.getElementById('voice-select').value;
+
+            // Validation
+            if (!text) {
+                showError('Vui lòng nhập văn bản cần chuyển đổi!');
+                return;
+            }
+
+            if (text.length > 1000) {
+                showError('Văn bản quá dài! Tối đa 1,000 ký tự.');
+                return;
+            }
+
+            // Show loading
+            showLoading(true);
+            hideError();
+            hideResult();
+
+            try {
+                const response = await fetch(`${API_URL}/api/tts/convert`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text, voice })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Success
+                    currentAudioUrl = `${API_URL}${data.audioUrl}`;
+                    showResult(data);
+                } else {
+                    // Error from API
+                    showError(data.error || 'Chuyển đổi thất bại. Vui lòng thử lại!');
+                }
+
+            } catch (error) {
+                console.error('TTS Error:', error);
+                showError('Không thể kết nối đến server. Vui lòng kiểm tra xem backend đã chạy chưa.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Show result
+        function showResult(data) {
+            const resultSection = document.getElementById('result-section');
+            const audioPlayer = document.getElementById('audio-player');
+            const audioSource = document.getElementById('audio-source');
+            const statsInfo = document.getElementById('stats-info');
+
+            // Set audio source
+            audioSource.src = currentAudioUrl;
+            audioPlayer.load();
+
+            // Show stats
+            const cacheStatus = data.fromCache ? '✅ Từ cache (nhanh!)' : '⚡ Mới tạo';
+            const remaining = data.remaining ?
+                `Còn ${data.remaining.hourly}/10 lượt/giờ` : '';
+
+            statsInfo.innerHTML = `
+                <span>${cacheStatus}</span>
+                <span>📊 ${data.charCount} ký tự</span>
+                <span>${remaining}</span>
+            `;
+
+            resultSection.classList.add('show');
+        }
+
+        // Hide result
+        function hideResult() {
+            document.getElementById('result-section').classList.remove('show');
+        }
+
+        // Show loading
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            const btn = document.getElementById('convert-btn');
+
+            if (show) {
+                loading.classList.add('show');
+                btn.disabled = true;
+            } else {
+                loading.classList.remove('show');
+                btn.disabled = false;
+            }
+        }
+
+        // Show error
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = '❌ ' + message;
+            errorDiv.classList.add('show');
+        }
+
+        // Hide error
+        function hideError() {
+            document.getElementById('error-message').classList.remove('show');
+        }
+
+        // Download audio
+        function downloadAudio() {
+            if (!currentAudioUrl) return;
+
+            const a = document.createElement('a');
+            a.href = currentAudioUrl;
+            a.download = `zaptools-tts-${Date.now()}.mp3`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Enter key to convert
+        textInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                convertTTS();
+            }
+        });
+    </script>
+
+    <!-- Dark Mode -->
+    <script src="dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+/* Dark Mode Styles - Optional Enhancement */
+
+:root {
+    --bg-gradient-start: #667eea;
+    --bg-gradient-end: #764ba2;
+    --text-color: white;
+}
+
+body.dark-mode {
+    --bg-gradient-start: #1a1a2e;
+    --bg-gradient-end: #16213e;
+}
+
+/* Dark mode is default for this tool, so minimal changes needed */
