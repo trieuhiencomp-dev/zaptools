@@ -1,0 +1,33 @@
+<!-- File History Widget -->
+<!-- Add this before closing 
+    <!-- Feedback Widget -->
+    <script src="feedback-widget.js"></script>
+</body> tag in all tool pages -->
+
+<div class="file-history-widget collapsed" id="historyWidget">
+    <div class="history-header" onclick="document.getElementById('historyWidget').classList.toggle('collapsed')">
+        <div class="history-title">
+            <span>📋</span>
+            <span>Recent Files</span>
+        </div>
+        <div class="history-toggle">▼</div>
+    </div>
+    <div class="history-content" id="fileHistory">
+        <div class="history-empty">No recent files</div>
+    </div>
+</div>
+
+<!-- Add these to <head> section -->
+<!--
+<link rel="stylesheet" href="file-history.css">
+<link rel="stylesheet" href="dark-mode.css">
+-->
+
+<!-- Add these before 
+    <!-- Feedback Widget -->
+    <script src="feedback-widget.js"></script>
+</body> tag -->
+<!--
+<script src="file-history.js"></script>
+<script src="dark-mode.js"></script>
+-->

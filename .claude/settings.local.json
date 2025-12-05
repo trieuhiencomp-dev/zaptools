@@ -14,7 +14,9 @@
       "Bash(then mkdir -p \"Y:/zaptools/blog\")",
       "Bash(fi)",
       "Bash(grep:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(iconv:*)",
+      "Bash(echo:*)"
     ],
     "deny": [],
     "ask": []

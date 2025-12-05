@@ -21,6 +21,7 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1.6;color:#333;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}.container{max-width:1000px;margin:0 auto}header{text-align:center;color:white;margin-bottom:30px}h1{font-size:2.5rem;margin-bottom:10px}.subtitle{font-size:1.1rem;opacity:.9}.main-card{background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.3);margin-bottom:30px}.tabs{display:flex;gap:10px;margin-bottom:20px;border-bottom:2px solid #e0e0e0}.tab{padding:12px 24px;background:none;border:none;cursor:pointer;font-size:16px;font-weight:600;color:#666;border-bottom:3px solid transparent;transition:all .3s}.tab.active{color:#667eea;border-bottom-color:#667eea}.tab:hover{color:#667eea}.tab-content{display:none}.tab-content.active{display:block}.editor-section{margin-bottom:20px}label{display:block;font-weight:600;margin-bottom:10px;color:#667eea}textarea{width:100%;min-height:200px;padding:15px;border:2px solid #e0e0e0;border-radius:10px;font-family:'Courier New',monospace;font-size:14px;resize:vertical;transition:border-color .3s}textarea:focus{outline:none;border-color:#667eea}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}button{padding:12px 24px;border:none;border-radius:8px;font-size:16px;cursor:pointer;transition:all .3s;font-weight:600}.btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,.4)}.btn-secondary{background:#f5f5f5;color:#333}.btn-secondary:hover{background:#e0e0e0}.btn-success{background:#4ade80;color:white}.btn-success:hover{background:#22c55e}.info-section{background:white;border-radius:20px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.3)}.info-section h2{color:#667eea;margin-bottom:15px}.info-section p{margin-bottom:10px;line-height:1.8}.examples{background:#f8f9ff;padding:20px;border-radius:10px;margin-top:20px;border-left:4px solid #667eea}.examples code{background:white;padding:4px 8px;border-radius:4px;font-family:'Courier New',monospace}.back-link{display:inline-block;color:white;text-decoration:none;margin-bottom:20px;font-size:1.1rem}.back-link:hover{text-decoration:underline}.copied-notification{position:fixed;top:20px;right:20px;background:#4ade80;color:white;padding:15px 25px;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,.3);display:none;animation:slideIn .3s}@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}@media (max-width:768px){h1{font-size:2rem}.main-card,.info-section{padding:20px}textarea{min-height:150px}}
     </style>
+    <link rel="stylesheet" href="file-history.css">
 </head>
 <body>
     <div class="container">
@@ -151,5 +152,22 @@
             document.getElementById('decodedOutput').value='';
         }
     </script>
+
+<!-- File History Widget -->
+<div class="file-history-widget collapsed" id="historyWidget">
+    <div class="history-header" onclick="document.getElementById('historyWidget').classList.toggle('collapsed')">
+        <div class="history-title">
+            <span>📋</span>
+            <span>Recent Files</span>
+        </div>
+        <div class="history-toggle">▼</div>
+    </div>
+    <div class="history-content" id="fileHistory">
+        <div class="history-empty">No recent files</div>
+    </div>
+</div>
+
+<script src="file-history.js"></script>
+<!-- Feedback Widget -->
 </body>
 </html>

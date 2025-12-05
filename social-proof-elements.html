@@ -1,0 +1,101 @@
+<!-- INSERT THIS SECTION INTO Index.html AFTER THE .features DIV AND BEFORE THE .status DIV -->
+
+<!-- Stats Counter -->
+<div class="stats-container">
+    <div class="stat-box">
+        <div class="stat-number">0</div>
+        <div class="stat-label" id="statLabel1">Tools Used</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number">0</div>
+        <div class="stat-label" id="statLabel2">Users Today</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-number">0</div>
+        <div class="stat-label" id="statLabel3">Happy Users</div>
+    </div>
+</div>
+
+<!-- Trust Badges -->
+<div class="trust-badges">
+    <div class="badge">
+        <span class="badge-icon">✅</span>
+        <span id="badge1">100% Free</span>
+    </div>
+    <div class="badge">
+        <span class="badge-icon">🔒</span>
+        <span id="badge2">Secure & Private</span>
+    </div>
+    <div class="badge">
+        <span class="badge-icon">⚡</span>
+        <span id="badge3">Lightning Fast</span>
+    </div>
+    <div class="badge">
+        <span class="badge-icon">🚫</span>
+        <span id="badge4">No Registration</span>
+    </div>
+</div>
+
+<!-- Activity Feed -->
+<div class="activity-feed">
+    <div class="activity-feed-title" id="activityTitle">Recent Activity</div>
+    <div id="activityFeed"></div>
+</div>
+
+<!-- Testimonials -->
+<div class="testimonials">
+    <div class="testimonial">
+        <div class="testimonial-text" id="testimonial1">
+            "ZapTools saved me hours of work! The PDF converter is incredibly fast and easy to use."
+        </div>
+        <div class="testimonial-author">
+            <span class="testimonial-rating">⭐⭐⭐⭐⭐</span>
+            <span>- Sarah N., Designer</span>
+        </div>
+    </div>
+    <div class="testimonial">
+        <div class="testimonial-text" id="testimonial2">
+            "Best free tool suite I've found. Image compression works perfectly!"
+        </div>
+        <div class="testimonial-author">
+            <span class="testimonial-rating">⭐⭐⭐⭐⭐</span>
+            <span>- Mike T., Developer</span>
+        </div>
+    </div>
+</div>
+
+<!-- ADD THESE LINES TO THE <head> SECTION -->
+<!--
+<link rel="stylesheet" href="social-proof.css">
+-->
+
+<!-- ADD THIS LINE BEFORE THE CLOSING 
+<!-- File History Widget -->
+<div class="file-history-widget collapsed" id="historyWidget">
+    <div class="history-header" onclick="document.getElementById('historyWidget').classList.toggle('collapsed')">
+        <div class="history-title">
+            <span>📋</span>
+            <span>Recent Files</span>
+        </div>
+        <div class="history-toggle">▼</div>
+    </div>
+    <div class="history-content" id="fileHistory">
+        <div class="history-empty">No recent files</div>
+    </div>
+</div>
+
+<!-- Dark Mode Toggle -->
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <span id="themeIcon">🌙</span>
+    <span class="theme-toggle-text" id="themeText">Dark</span>
+</button>
+
+    <script src="file-history.js"></script>
+    <script src="dark-mode.js"></script>
+
+    <!-- Feedback Widget -->
+    <script src="feedback-widget.js"></script>
+</body> TAG -->
+<!--
+<script src="social-proof.js"></script>
+-->

@@ -268,6 +268,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="file-history.css">
 </head>
 <body>
     <div class="container">
@@ -420,5 +421,22 @@
     <div style="text-align: center; padding: 20px;">
         <!-- Ad space -->
     </div>
+
+<!-- File History Widget -->
+<div class="file-history-widget collapsed" id="historyWidget">
+    <div class="history-header" onclick="document.getElementById('historyWidget').classList.toggle('collapsed')">
+        <div class="history-title">
+            <span>📋</span>
+            <span>Recent Files</span>
+        </div>
+        <div class="history-toggle">▼</div>
+    </div>
+    <div class="history-content" id="fileHistory">
+        <div class="history-empty">No recent files</div>
+    </div>
+</div>
+
+<script src="file-history.js"></script>
+<!-- Feedback Widget -->
 </body>
 </html>

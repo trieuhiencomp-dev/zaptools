@@ -82,6 +82,7 @@
         #qrResult { margin-top: 1.5rem; }
         #preview { margin-top: 1rem; max-width: 220px; }
     </style>
+    <link rel="stylesheet" href="file-history.css">
 </head>
 <body>
     <div class="container">
@@ -155,6 +156,20 @@
     </script>
 
     <!-- Feedback Widget -->
-    <script src="feedback-widget.js"></script>
+<!-- File History Widget -->
+<div class="file-history-widget collapsed" id="historyWidget">
+    <div class="history-header" onclick="document.getElementById('historyWidget').classList.toggle('collapsed')">
+        <div class="history-title">
+            <span>📋</span>
+            <span>Recent Files</span>
+        </div>
+        <div class="history-toggle">▼</div>
+    </div>
+    <div class="history-content" id="fileHistory">
+        <div class="history-empty">No recent files</div>
+    </div>
+</div>
+
+<script src="file-history.js"></script>
 </body>
 </html>
