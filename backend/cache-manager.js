@@ -32,12 +32,12 @@ class CacheManager {
     }
 
     /**
-     * Generate cache key from text + voice + style
+     * Generate cache key from text + voice + speed + pitch + volume
      */
-    getCacheKey(text, voice, style = '') {
+    getCacheKey(text, voice, speed = 'medium', pitch = 'medium', volume = 'medium') {
         const hash = crypto
             .createHash('md5')
-            .update(`${text}_${voice}_${style}`)
+            .update(`${text}_${voice}_${speed}_${pitch}_${volume}`)
             .digest('hex');
         return hash;
     }
@@ -47,11 +47,13 @@ class CacheManager {
      *
      * @param {string} text
      * @param {string} voice
-     * @param {string} style
+     * @param {string} speed
+     * @param {string} pitch
+     * @param {string} volume
      * @returns {Promise<Buffer|null>} - Audio buffer or null if not cached
      */
-    async get(text, voice, style = '') {
-        const key = this.getCacheKey(text, voice, style);
+    async get(text, voice, speed = 'medium', pitch = 'medium', volume = 'medium') {
+        const key = this.getCacheKey(text, voice, speed, pitch, volume);
         const filePath = path.join(this.cacheDir, `${key}.mp3`);
 
         try {
@@ -87,10 +89,12 @@ class CacheManager {
      * @param {string} text
      * @param {string} voice
      * @param {Buffer} audioBuffer
-     * @param {string} style
+     * @param {string} speed
+     * @param {string} pitch
+     * @param {string} volume
      */
-    async set(text, voice, audioBuffer, style = '') {
-        const key = this.getCacheKey(text, voice, style);
+    async set(text, voice, audioBuffer, speed = 'medium', pitch = 'medium', volume = 'medium') {
+        const key = this.getCacheKey(text, voice, speed, pitch, volume);
         const filePath = path.join(this.cacheDir, `${key}.mp3`);
 
         try {

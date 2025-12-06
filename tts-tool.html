@@ -506,16 +506,35 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="style-select">🎭 Phong cách giọng đọc (Tùy chọn):</label>
-                    <select id="style-select">
-                        <option value="">Mặc định (Tự nhiên)</option>
-                        <option value="cheerful">Vui vẻ 😊</option>
-                        <option value="sad">Buồn 😢</option>
-                        <option value="angry">Giận dữ 😠</option>
-                        <option value="friendly">Thân thiện 🤝</option>
-                        <option value="terrified">Sợ hãi 😱</option>
-                        <option value="shouting">La hét 📢</option>
-                        <option value="whispering">Thì thầm 🤫</option>
+                    <label for="speed-select">⚡ Tốc độ đọc:</label>
+                    <select id="speed-select">
+                        <option value="x-slow">Rất chậm (0.75x)</option>
+                        <option value="slow">Chậm (0.9x)</option>
+                        <option value="medium" selected>Bình thường (1x)</option>
+                        <option value="fast">Nhanh (1.25x)</option>
+                        <option value="x-fast">Rất nhanh (1.5x)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pitch-select">🎵 Cao độ giọng:</label>
+                    <select id="pitch-select">
+                        <option value="x-low">Rất thấp (-30%)</option>
+                        <option value="low">Thấp (-15%)</option>
+                        <option value="medium" selected>Bình thường (0%)</option>
+                        <option value="high">Cao (+15%)</option>
+                        <option value="x-high">Rất cao (+30%)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="volume-select">🔊 Âm lượng:</label>
+                    <select id="volume-select">
+                        <option value="x-soft">Rất nhỏ</option>
+                        <option value="soft">Nhỏ</option>
+                        <option value="medium" selected>Trung bình</option>
+                        <option value="loud">Lớn</option>
+                        <option value="x-loud">Rất lớn</option>
                     </select>
                 </div>
 
@@ -642,7 +661,9 @@
         async function convertTTS() {
             const text = textInput.value.trim();
             const voice = document.getElementById('voice-select').value;
-            const style = document.getElementById('style-select').value;
+            const speed = document.getElementById('speed-select').value;
+            const pitch = document.getElementById('pitch-select').value;
+            const volume = document.getElementById('volume-select').value;
 
             // Validation
             if (!text) {
@@ -666,7 +687,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ text, voice, style })
+                    body: JSON.stringify({ text, voice, speed, pitch, volume })
                 });
 
                 const data = await response.json();

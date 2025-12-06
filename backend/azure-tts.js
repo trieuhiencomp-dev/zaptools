@@ -21,10 +21,10 @@ class AzureTTS {
     /**
      * Generate hash for caching
      */
-    generateHash(text, voice, style = '') {
+    generateHash(text, voice, speed = 'medium', pitch = 'medium', volume = 'medium') {
         return crypto
             .createHash('md5')
-            .update(text + voice + style)
+            .update(text + voice + speed + pitch + volume)
             .digest('hex');
     }
 
@@ -33,10 +33,12 @@ class AzureTTS {
      *
      * @param {string} text - Text to convert (max 1000 chars)
      * @param {string} voice - Voice name (default: vi-VN-HoaiMyNeural)
-     * @param {string} style - Speaking style (optional: cheerful, sad, angry, etc.)
+     * @param {string} speed - Speaking speed (x-slow, slow, medium, fast, x-fast)
+     * @param {string} pitch - Voice pitch (x-low, low, medium, high, x-high)
+     * @param {string} volume - Voice volume (x-soft, soft, medium, loud, x-loud)
      * @returns {Promise<Buffer>} - Audio buffer (MP3)
      */
-    async textToSpeech(text, voice = 'vi-VN-HoaiMyNeural', style = '') {
+    async textToSpeech(text, voice = 'vi-VN-HoaiMyNeural', speed = 'medium', pitch = 'medium', volume = 'medium') {
         // Validate input
         if (!text || text.length === 0) {
             throw new Error('Text is required');
@@ -47,7 +49,7 @@ class AzureTTS {
         }
 
         // Build SSML (Speech Synthesis Markup Language)
-        const ssml = this.buildSSML(text, voice, style);
+        const ssml = this.buildSSML(text, voice, speed, pitch, volume);
 
         try {
             const response = await fetch(this.endpoint, {
@@ -77,9 +79,9 @@ class AzureTTS {
     }
 
     /**
-     * Build SSML markup with optional style
+     * Build SSML markup with prosody controls (speed, pitch, volume)
      */
-    buildSSML(text, voice, style = '') {
+    buildSSML(text, voice, speed = 'medium', pitch = 'medium', volume = 'medium') {
         // Escape XML special characters
         const escapedText = text
             .replace(/&/g, '&amp;')
@@ -88,24 +90,13 @@ class AzureTTS {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&apos;');
 
-        // If style is provided, wrap in mstts:express-as tag
-        if (style && style.trim() !== '') {
-            return `
-                <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='vi-VN'>
-                    <voice name='${voice}'>
-                        <mstts:express-as style='${style}'>
-                            ${escapedText}
-                        </mstts:express-as>
-                    </voice>
-                </speak>
-            `.trim();
-        }
-
-        // Default SSML without style
+        // Use prosody tags for speed, pitch, volume (supported by all voices)
         return `
             <speak version='1.0' xml:lang='vi-VN'>
                 <voice name='${voice}'>
-                    ${escapedText}
+                    <prosody rate='${speed}' pitch='${pitch}' volume='${volume}'>
+                        ${escapedText}
+                    </prosody>
                 </voice>
             </speak>
         `.trim();
