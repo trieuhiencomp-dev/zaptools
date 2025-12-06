@@ -496,8 +496,26 @@
                 <div class="form-group">
                     <label for="voice-select">🎤 Chọn giọng đọc:</label>
                     <select id="voice-select">
-                        <option value="vi-VN-HoaiMyNeural">Hoài My (Nữ - Tự nhiên)</option>
-                        <option value="vi-VN-NamMinhNeural">Nam Minh (Nam - Tự nhiên)</option>
+                        <optgroup label="👩 Giọng Nữ">
+                            <option value="vi-VN-HoaiMyNeural">Hoài My - Tự nhiên (Nữ)</option>
+                        </optgroup>
+                        <optgroup label="👨 Giọng Nam">
+                            <option value="vi-VN-NamMinhNeural">Nam Minh - Tự nhiên (Nam)</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="style-select">🎭 Phong cách giọng đọc (Tùy chọn):</label>
+                    <select id="style-select">
+                        <option value="">Mặc định (Tự nhiên)</option>
+                        <option value="cheerful">Vui vẻ 😊</option>
+                        <option value="sad">Buồn 😢</option>
+                        <option value="angry">Giận dữ 😠</option>
+                        <option value="friendly">Thân thiện 🤝</option>
+                        <option value="terrified">Sợ hãi 😱</option>
+                        <option value="shouting">La hét 📢</option>
+                        <option value="whispering">Thì thầm 🤫</option>
                     </select>
                 </div>
 
@@ -624,6 +642,7 @@
         async function convertTTS() {
             const text = textInput.value.trim();
             const voice = document.getElementById('voice-select').value;
+            const style = document.getElementById('style-select').value;
 
             // Validation
             if (!text) {
@@ -647,7 +666,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ text, voice })
+                    body: JSON.stringify({ text, voice, style })
                 });
 
                 const data = await response.json();

@@ -51,7 +51,7 @@ function getClientIP(req) {
  * }
  */
 app.post('/api/tts/convert', async (req, res) => {
-    const { text, voice = 'vi-VN-HoaiMyNeural' } = req.body;
+    const { text, voice = 'vi-VN-HoaiMyNeural', style = '' } = req.body;
     const clientIP = getClientIP(req);
 
     console.log(`🎙️ TTS Request from ${clientIP}: ${text.substring(0, 50)}...`);
@@ -81,7 +81,7 @@ app.post('/api/tts/convert', async (req, res) => {
         }
 
         // Check cache first
-        let audioBuffer = await cache.get(text, voice);
+        let audioBuffer = await cache.get(text, voice, style);
 
         if (audioBuffer) {
             // Cache HIT - Free!
@@ -91,7 +91,7 @@ app.post('/api/tts/convert', async (req, res) => {
             rateLimiter.recordRequest(clientIP, charCount);
 
             // Return cached audio
-            const cacheKey = cache.getCacheKey(text, voice);
+            const cacheKey = cache.getCacheKey(text, voice, style);
             return res.json({
                 success: true,
                 fromCache: true,
@@ -105,16 +105,16 @@ app.post('/api/tts/convert', async (req, res) => {
             // Cache MISS - Call Azure API (uses free tier quota)
             console.log('⚡ Calling Azure TTS API...');
 
-            audioBuffer = await azureTTS.textToSpeech(text, voice);
+            audioBuffer = await azureTTS.textToSpeech(text, voice, style);
 
             // Save to cache for future use
-            await cache.set(text, voice, audioBuffer);
+            await cache.set(text, voice, audioBuffer, style);
 
             // Record request
             rateLimiter.recordRequest(clientIP, charCount);
 
             // Return audio URL
-            const cacheKey = cache.getCacheKey(text, voice);
+            const cacheKey = cache.getCacheKey(text, voice, style);
             return res.json({
                 success: true,
                 fromCache: false,

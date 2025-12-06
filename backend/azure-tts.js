@@ -21,10 +21,10 @@ class AzureTTS {
     /**
      * Generate hash for caching
      */
-    generateHash(text, voice) {
+    generateHash(text, voice, style = '') {
         return crypto
             .createHash('md5')
-            .update(text + voice)
+            .update(text + voice + style)
             .digest('hex');
     }
 
@@ -33,9 +33,10 @@ class AzureTTS {
      *
      * @param {string} text - Text to convert (max 1000 chars)
      * @param {string} voice - Voice name (default: vi-VN-HoaiMyNeural)
+     * @param {string} style - Speaking style (optional: cheerful, sad, angry, etc.)
      * @returns {Promise<Buffer>} - Audio buffer (MP3)
      */
-    async textToSpeech(text, voice = 'vi-VN-HoaiMyNeural') {
+    async textToSpeech(text, voice = 'vi-VN-HoaiMyNeural', style = '') {
         // Validate input
         if (!text || text.length === 0) {
             throw new Error('Text is required');
@@ -46,7 +47,7 @@ class AzureTTS {
         }
 
         // Build SSML (Speech Synthesis Markup Language)
-        const ssml = this.buildSSML(text, voice);
+        const ssml = this.buildSSML(text, voice, style);
 
         try {
             const response = await fetch(this.endpoint, {
@@ -76,9 +77,9 @@ class AzureTTS {
     }
 
     /**
-     * Build SSML markup
+     * Build SSML markup with optional style
      */
-    buildSSML(text, voice) {
+    buildSSML(text, voice, style = '') {
         // Escape XML special characters
         const escapedText = text
             .replace(/&/g, '&amp;')
@@ -87,6 +88,20 @@ class AzureTTS {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&apos;');
 
+        // If style is provided, wrap in mstts:express-as tag
+        if (style && style.trim() !== '') {
+            return `
+                <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='vi-VN'>
+                    <voice name='${voice}'>
+                        <mstts:express-as style='${style}'>
+                            ${escapedText}
+                        </mstts:express-as>
+                    </voice>
+                </speak>
+            `.trim();
+        }
+
+        // Default SSML without style
         return `
             <speak version='1.0' xml:lang='vi-VN'>
                 <voice name='${voice}'>
