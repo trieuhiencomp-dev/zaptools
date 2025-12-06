@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Downloader - Tải Ảnh Thumbnail | ZapTools</title>
+    <meta name="description" content="Download YouTube thumbnail miễn phí. Tải ảnh bìa video YouTube với chất lượng cao (HD, 4K). Nhanh chóng và dễ dàng.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 1; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .input-section { margin-bottom: 2rem; }
+        .input-group { position: relative; margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 1rem; }
+        input[type="text"] { width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1rem; transition: border-color 0.3s; }
+        input[type="text"]:focus { outline: none; border-color: rgba(255,255,255,0.6); }
+        input[type="text"]::placeholder { color: rgba(255,255,255,0.5); }
+
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin: 0.5rem 0; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,0,128,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,0,128,0.4); }
+        .btn:active { transform: translateY(-1px); }
+        .btn:disabled { background: rgba(255,255,255,0.2); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .video-info { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; display: none; }
+        .video-info.show { display: block; animation: fadeIn 0.5s; }
+        .video-info h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .video-info p { opacity: 0.9; font-size: 0.95rem; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .thumbnails-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .thumbnail-card { background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1rem; border: 2px solid rgba(255,255,255,0.1); transition: all 0.3s; }
+        .thumbnail-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .thumbnail-card h4 { margin-bottom: 0.5rem; font-size: 1rem; text-align: center; }
+        .thumbnail-card .resolution { text-align: center; font-size: 0.85rem; opacity: 0.8; margin-bottom: 1rem; }
+        .thumbnail-preview { width: 100%; border-radius: 10px; margin-bottom: 1rem; cursor: pointer; transition: transform 0.3s; border: 2px solid rgba(255,255,255,0.2); }
+        .thumbnail-preview:hover { transform: scale(1.05); }
+        .thumbnail-preview.error { opacity: 0.3; }
+        .download-btn { padding: 0.75rem 1.5rem; background: #4CAF50; color: white; border: none; border-radius: 10px; cursor: pointer; width: 100%; font-size: 0.95rem; font-weight: 600; transition: all 0.3s; }
+        .download-btn:hover { background: #45a049; transform: translateY(-2px); }
+        .download-btn:disabled { background: rgba(255,255,255,0.2); cursor: not-allowed; }
+
+        .error-message { background: rgba(244,67,54,0.2); border: 2px solid #f44336; padding: 1rem; border-radius: 10px; margin: 1rem 0; display: none; }
+        .error-message.show { display: block; animation: shake 0.5s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .tips-section { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 10px; margin-top: 2rem; }
+        .tips-section h3 { margin-bottom: 1rem; }
+        .tips-section ul { list-style: none; padding: 0; }
+        .tips-section li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .tips-section li:before { content: "✓"; position: absolute; left: 0; color: #4CAF50; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .tool-container { padding: 1.5rem; }
+            .thumbnails-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>📺 YouTube Thumbnail Downloader</h1>
+            <p>Tải ảnh bìa video YouTube với chất lượng cao - Miễn phí!</p>
+        </div>
+        <div class="tool-container">
+            <div class="input-section">
+                <div class="input-group">
+                    <label>🔗 YouTube URL hoặc Video ID:</label>
+                    <input type="text" id="videoUrl" placeholder="Nhập link YouTube: https://www.youtube.com/watch?v=dQw4w9WgXcQ hoặc Video ID: dQw4w9WgXcQ">
+                </div>
+                <button class="btn" onclick="getThumbnails()">🔍 Tìm Thumbnails</button>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <div class="video-info" id="videoInfo">
+                <h3>📹 Video ID: <span id="displayVideoId"></span></h3>
+                <p>Chọn chất lượng thumbnail bên dưới để tải về</p>
+            </div>
+
+            <div id="thumbnailsContainer"></div>
+
+            <div class="tips-section">
+                <h3>💡 Hướng dẫn sử dụng:</h3>
+                <ul>
+                    <li>Sao chép link YouTube bất kỳ (dạng: youtube.com/watch?v=... hoặc youtu.be/...)</li>
+                    <li>Hoặc chỉ cần nhập Video ID (phần sau "v=" trong URL)</li>
+                    <li>Click "Tìm Thumbnails" để xem tất cả các size có sẵn</li>
+                    <li>Chọn chất lượng phù hợp và click Download</li>
+                    <li>MaxRes (1280x720) là chất lượng cao nhất, nhưng không phải video nào cũng có</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="dark-mode.js"></script>
+    <script>
+        const thumbnailSizes = [
+            { name: 'Max Resolution', id: 'maxresdefault', resolution: '1280 x 720', quality: 'Chất lượng cao nhất (HD)' },
+            { name: 'Standard Definition', id: 'sddefault', resolution: '640 x 480', quality: 'Chất lượng tốt' },
+            { name: 'High Quality', id: 'hqdefault', resolution: '480 x 360', quality: 'Chất lượng trung bình' },
+            { name: 'Medium Quality', id: 'mqdefault', resolution: '320 x 180', quality: 'Chất lượng thấp' },
+            { name: 'Default', id: 'default', resolution: '120 x 90', quality: 'Rất nhỏ' }
+        ];
+
+        function extractVideoId(input) {
+            input = input.trim();
+
+            // If it's just a video ID (11 characters)
+            if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+                return input;
+            }
+
+            // Regular YouTube URL
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            const match = input.match(regExp);
+            return (match && match[7].length === 11) ? match[7] : null;
+        }
+
+        function getThumbnails() {
+            const input = document.getElementById('videoUrl').value.trim();
+            const errorDiv = document.getElementById('errorMessage');
+            const videoInfoDiv = document.getElementById('videoInfo');
+            const container = document.getElementById('thumbnailsContainer');
+
+            // Clear previous results
+            errorDiv.classList.remove('show');
+            videoInfoDiv.classList.remove('show');
+            container.innerHTML = '';
+
+            if (!input) {
+                showError('Vui lòng nhập YouTube URL hoặc Video ID!');
+                return;
+            }
+
+            const videoId = extractVideoId(input);
+
+            if (!videoId) {
+                showError('URL không hợp lệ! Vui lòng kiểm tra lại.');
+                return;
+            }
+
+            // Show video info
+            document.getElementById('displayVideoId').textContent = videoId;
+            videoInfoDiv.classList.add('show');
+
+            // Generate thumbnails grid
+            const grid = document.createElement('div');
+            grid.className = 'thumbnails-grid';
+
+            thumbnailSizes.forEach(size => {
+                const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/${size.id}.jpg`;
+
+                const card = document.createElement('div');
+                card.className = 'thumbnail-card';
+                card.innerHTML = `
+                    <h4>${size.name}</h4>
+                    <div class="resolution">${size.resolution} - ${size.quality}</div>
+                    <img src="${thumbnailUrl}" alt="${size.name}" class="thumbnail-preview"
+                         onclick="window.open('${thumbnailUrl}', '_blank')"
+                         onerror="this.classList.add('error'); this.nextElementSibling.disabled = true; this.nextElementSibling.textContent = '❌ Không có';">
+                    <button class="download-btn" onclick="downloadThumbnail('${thumbnailUrl}', '${videoId}_${size.id}')">
+                        ⬇️ Download ${size.name}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+
+            container.appendChild(grid);
+        }
+
+        function downloadThumbnail(url, filename) {
+            // Create temporary link and trigger download
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = `${filename}.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(blobUrl);
+                })
+                .catch(err => {
+                    showError('Không thể tải ảnh. Vui lòng thử click chuột phải vào ảnh và chọn "Save Image As..."');
+                });
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = '❌ ' + message;
+            errorDiv.classList.add('show');
+        }
+
+        // Allow Enter key to trigger search
+        document.getElementById('videoUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getThumbnails();
+            }
+        });
+    </script>
+</body>
+</html>

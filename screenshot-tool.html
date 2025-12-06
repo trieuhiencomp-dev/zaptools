@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Tool - Chụp Màn Hình Online | ZapTools</title>
+    <meta name="description" content="Chụp màn hình online miễn phí. Screenshot, crop, annotate và download. Không cần cài đặt.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 1; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .upload-section { margin-bottom: 2rem; }
+        .upload-area { border: 3px dashed rgba(255,255,255,0.4); border-radius: 15px; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(255,255,255,0.05); }
+        .upload-area:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.1); }
+        .upload-area.dragover { border-color: #FF0080; background: rgba(255,0,128,0.1); }
+        .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+        input[type="file"] { display: none; }
+
+        .screenshot-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .option-card { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 15px; text-align: center; cursor: pointer; border: 2px solid rgba(255,255,255,0.2); transition: all 0.3s; }
+        .option-card:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.5); transform: translateY(-5px); }
+        .option-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .option-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .option-desc { font-size: 0.85rem; opacity: 0.8; }
+
+        .canvas-section { display: none; margin-top: 2rem; }
+        .canvas-section.show { display: block; }
+        .canvas-container { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 15px; margin-bottom: 1rem; text-align: center; overflow: auto; }
+        #screenshotCanvas { max-width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        .tools-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.08); border-radius: 10px; }
+        .tool-btn { padding: 0.75rem 1.5rem; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; color: white; cursor: pointer; font-size: 0.95rem; transition: all 0.3s; }
+        .tool-btn:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+        .tool-btn.active { background: rgba(255,0,128,0.4); border-color: #FF0080; }
+
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin: 0.5rem 0; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,0,128,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,0,128,0.4); }
+        .btn.download { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); }
+
+        .tips-section { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 10px; margin-top: 2rem; }
+        .tips-section h3 { margin-bottom: 1rem; }
+        .tips-section ul { list-style: none; padding: 0; }
+        .tips-section li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .tips-section li:before { content: "✓"; position: absolute; left: 0; color: #4CAF50; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .tool-container { padding: 1.5rem; }
+            .screenshot-options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>📸 Screenshot Tool</h1>
+            <p>Chụp, chỉnh sửa và tải ảnh màn hình - Miễn phí!</p>
+        </div>
+        <div class="tool-container">
+            <!-- Screenshot Options -->
+            <div class="screenshot-options">
+                <div class="option-card" onclick="document.getElementById('fileInput').click()">
+                    <div class="option-icon">🖼️</div>
+                    <div class="option-title">Upload Ảnh</div>
+                    <div class="option-desc">Tải ảnh lên để chỉnh sửa</div>
+                </div>
+                <div class="option-card" onclick="captureScreen()">
+                    <div class="option-icon">🖥️</div>
+                    <div class="option-title">Chụp Màn Hình</div>
+                    <div class="option-desc">Chụp màn hình của bạn</div>
+                </div>
+                <div class="option-card" onclick="pasteFromClipboard()">
+                    <div class="option-icon">📋</div>
+                    <div class="option-title">Paste từ Clipboard</div>
+                    <div class="option-desc">Dán ảnh đã copy (Ctrl+V)</div>
+                </div>
+            </div>
+
+            <input type="file" id="fileInput" accept="image/*" onchange="handleFileUpload(event)">
+
+            <!-- Canvas Section -->
+            <div class="canvas-section" id="canvasSection">
+                <div class="tools-bar">
+                    <button class="tool-btn" onclick="cropImage()">✂️ Crop</button>
+                    <button class="tool-btn" onclick="rotateImage()">🔄 Xoay 90°</button>
+                    <button class="tool-btn" onclick="flipImage()">↔️ Lật ngang</button>
+                    <button class="tool-btn" onclick="resetImage()">🔄 Reset</button>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="screenshotCanvas"></canvas>
+                </div>
+
+                <button class="btn download" onclick="downloadScreenshot()">⬇️ Tải về ảnh</button>
+                <button class="btn" onclick="resetAll()">🔄 Chụp ảnh mới</button>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Hướng dẫn sử dụng:</h3>
+                <ul>
+                    <li><strong>Upload Ảnh:</strong> Click để chọn ảnh từ máy tính</li>
+                    <li><strong>Chụp Màn Hình:</strong> Sử dụng Screen Capture API (Chrome/Edge)</li>
+                    <li><strong>Paste:</strong> Copy ảnh (Ctrl+C) rồi click "Paste từ Clipboard"</li>
+                    <li><strong>Keyboard:</strong> Nhấn Ctrl+V bất kỳ lúc nào để paste ảnh</li>
+                    <li><strong>Crop:</strong> Click vào ảnh và kéo để chọn vùng cần cắt</li>
+                    <li>Ảnh được xử lý hoàn toàn trên trình duyệt, không upload lên server</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="dark-mode.js"></script>
+    <script>
+        let canvas = document.getElementById('screenshotCanvas');
+        let ctx = canvas.getContext('2d');
+        let currentImage = null;
+        let rotation = 0;
+        let flipped = false;
+
+        // Paste from clipboard (Ctrl+V)
+        document.addEventListener('paste', (e) => {
+            const items = e.clipboardData.items;
+            for (let item of items) {
+                if (item.type.indexOf('image') !== -1) {
+                    const blob = item.getAsFile();
+                    loadImageFromBlob(blob);
+                    e.preventDefault();
+                    break;
+                }
+            }
+        });
+
+        function pasteFromClipboard() {
+            alert('📋 Hãy nhấn Ctrl+V (hoặc Cmd+V trên Mac) để paste ảnh từ clipboard!');
+        }
+
+        async function captureScreen() {
+            try {
+                // Use Screen Capture API (Chrome/Edge only)
+                const stream = await navigator.mediaDevices.getDisplayMedia({
+                    video: { mediaSource: 'screen' }
+                });
+
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.play();
+
+                video.onloadedmetadata = () => {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+
+                    ctx.drawImage(video, 0, 0);
+
+                    // Stop stream
+                    stream.getTracks().forEach(track => track.stop());
+
+                    // Save as image
+                    canvas.toBlob((blob) => {
+                        loadImageFromBlob(blob);
+                    });
+                };
+            } catch (err) {
+                alert('❌ Không thể chụp màn hình. Trình duyệt của bạn có thể không hỗ trợ hoặc bạn đã từ chối quyền truy cập.');
+                console.error('Screen capture error:', err);
+            }
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                loadImageFromBlob(file);
+            }
+        }
+
+        function loadImageFromBlob(blob) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    currentImage = img;
+                    rotation = 0;
+                    flipped = false;
+                    drawImage();
+                    document.getElementById('canvasSection').classList.add('show');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(blob);
+        }
+
+        function drawImage() {
+            if (!currentImage) return;
+
+            canvas.width = currentImage.width;
+            canvas.height = currentImage.height;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+
+            // Apply transformations
+            if (rotation !== 0 || flipped) {
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                if (flipped) ctx.scale(-1, 1);
+                ctx.rotate((rotation * Math.PI) / 180);
+                ctx.drawImage(currentImage, -currentImage.width / 2, -currentImage.height / 2);
+                ctx.restore();
+            } else {
+                ctx.drawImage(currentImage, 0, 0);
+            }
+        }
+
+        function rotateImage() {
+            rotation = (rotation + 90) % 360;
+            drawImage();
+        }
+
+        function flipImage() {
+            flipped = !flipped;
+            drawImage();
+        }
+
+        function resetImage() {
+            rotation = 0;
+            flipped = false;
+            drawImage();
+        }
+
+        function cropImage() {
+            alert('🚧 Tính năng Crop đang được phát triển!\n\nHiện tại bạn có thể:\n- Xoay ảnh\n- Lật ảnh\n- Tải về\n\nCrop sẽ được thêm trong phiên bản tiếp theo! 😊');
+        }
+
+        function downloadScreenshot() {
+            const link = document.createElement('a');
+            link.download = `zaptools-screenshot-${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function resetAll() {
+            currentImage = null;
+            rotation = 0;
+            flipped = false;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('canvasSection').classList.remove('show');
+            document.getElementById('fileInput').value = '';
+        }
+    </script>
+</body>
+</html>

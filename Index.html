@@ -336,6 +336,50 @@
         </p>
         <div class="features">
             <div class="feature">
+                <div class="feature-icon">🎬</div>
+                <div class="feature-name" id="textToVideoBtn" style="cursor:pointer; text-decoration:underline;">Text to Video</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔊</div>
+                <div class="feature-name" id="ttsToolBtn" style="cursor:pointer; text-decoration:underline;">Text to Speech</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📺</div>
+                <div class="feature-name" id="ytThumbnailBtn" style="cursor:pointer; text-decoration:underline;">YouTube Thumbnail</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📸</div>
+                <div class="feature-name" id="imageToTextBtn" style="cursor:pointer; text-decoration:underline;">Image to Text</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-name" id="urlShortenerBtn" style="cursor:pointer; text-decoration:underline;">URL Shortener</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📸</div>
+                <div class="feature-name" id="screenshotToolBtn" style="cursor:pointer; text-decoration:underline;">Screenshot Tool</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-name" id="colorPaletteBtn" style="cursor:pointer; text-decoration:underline;">Color Palette</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔍</div>
+                <div class="feature-name" id="regexTesterBtn" style="cursor:pointer; text-decoration:underline;">Regex Tester</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">😂</div>
+                <div class="feature-name" id="memeGenBtn" style="cursor:pointer; text-decoration:underline;">Meme Generator</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-name" id="gradientGenBtn" style="cursor:pointer; text-decoration:underline;">Gradient Generator</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📝</div>
+                <div class="feature-name" id="loremIpsumBtn" style="cursor:pointer; text-decoration:underline;">Lorem Ipsum</div>
+            </div>
+            <div class="feature">
                 <div class="feature-icon">🖼️</div>
                 <div class="feature-name" id="imageToolsBtn" style="cursor:pointer; text-decoration:underline;">Image Tools</div>
             </div>
@@ -386,10 +430,6 @@
             <div class="feature">
                 <div class="feature-icon">📰</div>
                 <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔊</div>
-                <div class="feature-name" id="ttsToolBtn" style="cursor:pointer; text-decoration:underline;">TTS Tool</div>
             </div>
             <div class="feature">
                 <div class="feature-icon">🔧</div>
@@ -520,6 +560,72 @@
                         window.location.href = 'json-formatter.html';
                     };
                 }
+                var ttsToolBtn = document.getElementById('ttsToolBtn');
+                if (ttsToolBtn) {
+                    ttsToolBtn.onclick = function() {
+                        window.location.href = 'tts-tool.html';
+                    };
+                }
+                var ytThumbnailBtn = document.getElementById('ytThumbnailBtn');
+                if (ytThumbnailBtn) {
+                    ytThumbnailBtn.onclick = function() {
+                        window.location.href = 'youtube-thumbnail-downloader.html';
+                    };
+                }
+                var imageToTextBtn = document.getElementById('imageToTextBtn');
+                if (imageToTextBtn) {
+                    imageToTextBtn.onclick = function() {
+                        window.location.href = 'image-to-text.html';
+                    };
+                }
+                var urlShortenerBtn = document.getElementById('urlShortenerBtn');
+                if (urlShortenerBtn) {
+                    urlShortenerBtn.onclick = function() {
+                        window.location.href = 'url-shortener.html';
+                    };
+                }
+                var screenshotToolBtn = document.getElementById('screenshotToolBtn');
+                if (screenshotToolBtn) {
+                    screenshotToolBtn.onclick = function() {
+                        window.location.href = 'screenshot-tool.html';
+                    };
+                }
+                var colorPaletteBtn = document.getElementById('colorPaletteBtn');
+                if (colorPaletteBtn) {
+                    colorPaletteBtn.onclick = function() {
+                        window.location.href = 'color-palette-extractor.html';
+                    };
+                }
+                var regexTesterBtn = document.getElementById('regexTesterBtn');
+                if (regexTesterBtn) {
+                    regexTesterBtn.onclick = function() {
+                        window.location.href = 'regex-tester.html';
+                    };
+                }
+                var textToVideoBtn = document.getElementById('textToVideoBtn');
+                if (textToVideoBtn) {
+                    textToVideoBtn.onclick = function() {
+                        window.location.href = 'text-to-video.html';
+                    };
+                }
+                var memeGenBtn = document.getElementById('memeGenBtn');
+                if (memeGenBtn) {
+                    memeGenBtn.onclick = function() {
+                        window.location.href = 'meme-generator.html';
+                    };
+                }
+                var gradientGenBtn = document.getElementById('gradientGenBtn');
+                if (gradientGenBtn) {
+                    gradientGenBtn.onclick = function() {
+                        window.location.href = 'gradient-generator.html';
+                    };
+                }
+                var loremIpsumBtn = document.getElementById('loremIpsumBtn');
+                if (loremIpsumBtn) {
+                    loremIpsumBtn.onclick = function() {
+                        window.location.href = 'lorem-ipsum.html';
+                    };
+                }
                 var base64EncoderBtn = document.getElementById('base64EncoderBtn');
                 if (base64EncoderBtn) {
                     base64EncoderBtn.onclick = function() {
@@ -576,7 +682,13 @@
                     caseConverter: 'Chuyển đổi chữ',
                     urlEncoder: 'Mã hóa URL',
                     blog: 'Blog',
-                    ttsTool: 'Công cụ TTS',
+                    ttsTool: 'Text to Speech',
+                    ytThumbnail: 'YouTube Thumbnail',
+                    imageToText: 'Ảnh sang Text',
+                    urlShortener: 'Rút gọn Link',
+                    screenshotTool: 'Chụp Màn Hình',
+                    colorPalette: 'Bảng Màu',
+                    regexTester: 'Test Regex',
                     more: 'Thêm công cụ',
                     status: '<span class="pulse"></span> Chào mừng bạn đến với ZapTools'
                 },
@@ -597,7 +709,13 @@
                     caseConverter: 'Case Converter',
                     urlEncoder: 'URL Encoder',
                     blog: 'Blog',
-                    ttsTool: 'TTS Tool',
+                    ttsTool: 'Text to Speech',
+                    ytThumbnail: 'YouTube Thumbnail',
+                    imageToText: 'Image to Text',
+                    urlShortener: 'URL Shortener',
+                    screenshotTool: 'Screenshot Tool',
+                    colorPalette: 'Color Palette',
+                    regexTester: 'Regex Tester',
                     more: 'More Tools',
                     status: '<span class="pulse"></span> Welcome to ZapTools'
                 }
@@ -620,6 +738,12 @@
                 document.getElementById('urlEncoderBtn').textContent = langData[lang].urlEncoder;
                 document.getElementById('blogBtn').textContent = langData[lang].blog;
                 document.getElementById('ttsToolBtn').textContent = langData[lang].ttsTool;
+                document.getElementById('ytThumbnailBtn').textContent = langData[lang].ytThumbnail;
+                document.getElementById('imageToTextBtn').textContent = langData[lang].imageToText;
+                document.getElementById('urlShortenerBtn').textContent = langData[lang].urlShortener;
+                document.getElementById('screenshotToolBtn').textContent = langData[lang].screenshotTool;
+                document.getElementById('colorPaletteBtn').textContent = langData[lang].colorPalette;
+                document.getElementById('regexTesterBtn').textContent = langData[lang].regexTester;
                 document.getElementById('moreToolsBtn').textContent = langData[lang].more;
                 document.getElementById('status').innerHTML = langData[lang].status;
             }

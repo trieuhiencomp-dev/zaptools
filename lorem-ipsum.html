@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Generator - Tạo Text Mẫu | ZapTools</title>
+    <meta name="description" content="Generate Lorem Ipsum placeholder text miễn phí. Tùy chỉnh số paragraphs, words, độ dài. Copy dễ dàng.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 1; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; }
+        select, input[type="number"] { width: 100%; padding: 0.75rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1rem; transition: border-color 0.3s; }
+        select:focus, input:focus { outline: none; border-color: rgba(255,255,255,0.6); }
+        select option { background: #764ba2; color: white; }
+        .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+        .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
+        .checkbox-group label { margin: 0; font-weight: 500; cursor: pointer; }
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin: 0.5rem 0; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,0,128,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,0,128,0.4); }
+        .btn:active { transform: translateY(-1px); }
+        .btn.copy { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); box-shadow: 0 4px 15px rgba(76,175,80,0.3); }
+        .btn.copy:hover { box-shadow: 0 10px 30px rgba(76,175,80,0.4); }
+        .stats { display: flex; justify-content: space-around; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 10px; margin: 1rem 0; }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: #FFD700; }
+        .stat-label { font-size: 0.85rem; opacity: 0.8; margin-top: 0.25rem; }
+        .output { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 1.5rem; margin-top: 1.5rem; min-height: 200px; max-height: 500px; overflow-y: auto; line-height: 1.8; border: 2px solid rgba(255,255,255,0.1); }
+        .output p { margin-bottom: 1rem; }
+        .output h1, .output h2, .output h3 { margin: 1rem 0 0.5rem 0; }
+        .output::-webkit-scrollbar { width: 8px; }
+        .output::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .output::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+        .output::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .tool-container { padding: 1.5rem; }
+            .controls { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>📝 Lorem Ipsum Generator</h1>
+            <p>Tạo placeholder text nhanh chóng với nhiều tùy chỉnh - Miễn phí!</p>
+        </div>
+        <div class="tool-container">
+            <div class="controls">
+                <div class="form-group">
+                    <label>📊 Loại văn bản:</label>
+                    <select id="type">
+                        <option value="paragraphs">Paragraphs (Đoạn văn)</option>
+                        <option value="sentences">Sentences (Câu)</option>
+                        <option value="words">Words (Từ)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🔢 Số lượng:</label>
+                    <input type="number" id="amount" value="3" min="1" max="100">
+                </div>
+                <div class="form-group">
+                    <label>📏 Độ dài đoạn văn:</label>
+                    <select id="length">
+                        <option value="short">Short (50-100 words)</option>
+                        <option value="medium" selected>Medium (100-200 words)</option>
+                        <option value="long">Long (200-300 words)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="startWithLorem" checked>
+                    <label for="startWithLorem">✨ Bắt đầu bằng "Lorem ipsum dolor sit amet..."</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="includeHtml">
+                    <label for="includeHtml">🏷️ Include HTML tags (&lt;p&gt;, &lt;h2&gt;, etc.)</label>
+                </div>
+            </div>
+
+            <button class="btn" onclick="generate()">🎲 Generate Lorem Ipsum</button>
+            <button class="btn copy" onclick="copyText()">📋 Copy to Clipboard</button>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="charCount">0</div>
+                    <div class="stat-label">Characters</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="wordCount">0</div>
+                    <div class="stat-label">Words</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="paraCount">0</div>
+                    <div class="stat-label">Paragraphs</div>
+                </div>
+            </div>
+
+            <div class="output" id="output"></div>
+        </div>
+    </div>
+    <script src="dark-mode.js"></script>
+    <script>
+        // Multiple Lorem Ipsum variations for variety
+        const loremVariations = [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+            "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+            "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+            "Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+            "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+            "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.",
+            "Quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.",
+            "Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
+            "Et harum quidem rerum facilis est et expedita distinctio.",
+            "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.",
+            "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.",
+            "Ut et voluptates repudiandae sint et molestiae non recusandae.",
+            "Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur.",
+            "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+            "Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.",
+            "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized."
+        ];
+
+        const allWords = loremVariations.join(' ').split(' ');
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function generateParagraph(wordCount, startWithLorem) {
+            let words = [];
+
+            if (startWithLorem) {
+                words.push(...loremVariations[0].split(' '));
+            }
+
+            const shuffled = shuffleArray(allWords);
+            let index = 0;
+
+            while (words.length < wordCount) {
+                words.push(shuffled[index % shuffled.length]);
+                index++;
+            }
+
+            words = words.slice(0, wordCount);
+            let text = words.join(' ');
+
+            // Ensure proper capitalization and punctuation
+            text = text.charAt(0).toUpperCase() + text.slice(1);
+            if (!text.endsWith('.') && !text.endsWith('!') && !text.endsWith('?')) {
+                text += '.';
+            }
+
+            return text;
+        }
+
+        function generate() {
+            const type = document.getElementById('type').value;
+            const amount = parseInt(document.getElementById('amount').value);
+            const length = document.getElementById('length').value;
+            const startWithLorem = document.getElementById('startWithLorem').checked;
+            const includeHtml = document.getElementById('includeHtml').checked;
+            const output = document.getElementById('output');
+
+            let wordCount;
+            switch(length) {
+                case 'short': wordCount = 50 + Math.floor(Math.random() * 50); break;
+                case 'medium': wordCount = 100 + Math.floor(Math.random() * 100); break;
+                case 'long': wordCount = 200 + Math.floor(Math.random() * 100); break;
+            }
+
+            let result = '';
+            let plainText = '';
+
+            if (type === 'paragraphs') {
+                for (let i = 0; i < amount; i++) {
+                    const para = generateParagraph(wordCount, startWithLorem && i === 0);
+
+                    if (includeHtml && i === 0 && amount > 1) {
+                        result += '<h2>Lorem Ipsum</h2>\n';
+                    }
+
+                    if (includeHtml) {
+                        result += '<p>' + para + '</p>\n';
+                    } else {
+                        result += '<p>' + para + '</p>';
+                    }
+                    plainText += para + '\n\n';
+                }
+            } else if (type === 'sentences') {
+                const sentences = [];
+                loremVariations.forEach(v => {
+                    const s = v.match(/[^.!?]+[.!?]+/g);
+                    if (s) sentences.push(...s);
+                });
+
+                const shuffled = shuffleArray(sentences);
+                const selected = [];
+
+                for (let i = 0; i < amount; i++) {
+                    selected.push(shuffled[i % shuffled.length].trim());
+                }
+
+                const text = selected.join(' ');
+                if (includeHtml) {
+                    result = '<p>' + text + '</p>\n';
+                } else {
+                    result = '<p>' + text + '</p>';
+                }
+                plainText = text;
+            } else if (type === 'words') {
+                const shuffled = shuffleArray(allWords);
+                const selected = shuffled.slice(0, Math.min(amount, shuffled.length));
+
+                if (selected.length < amount) {
+                    const repeats = Math.ceil(amount / selected.length);
+                    const expanded = [];
+                    for (let i = 0; i < repeats; i++) {
+                        expanded.push(...shuffleArray(allWords));
+                    }
+                    selected.length = 0;
+                    selected.push(...expanded.slice(0, amount));
+                }
+
+                let text = selected.join(' ');
+                text = text.charAt(0).toUpperCase() + text.slice(1) + '.';
+
+                if (includeHtml) {
+                    result = '<p>' + text + '</p>\n';
+                } else {
+                    result = '<p>' + text + '</p>';
+                }
+                plainText = text;
+            }
+
+            if (includeHtml) {
+                output.innerHTML = result;
+            } else {
+                output.innerHTML = result;
+            }
+
+            // Update statistics
+            updateStats(plainText);
+        }
+
+        function updateStats(text) {
+            const chars = text.length;
+            const words = text.trim().split(/\s+/).length;
+            const paras = text.split(/\n\n/).filter(p => p.trim().length > 0).length;
+
+            document.getElementById('charCount').textContent = chars.toLocaleString();
+            document.getElementById('wordCount').textContent = words.toLocaleString();
+            document.getElementById('paraCount').textContent = paras.toLocaleString();
+        }
+
+        function copyText() {
+            const output = document.getElementById('output');
+            const text = output.innerText;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Đã copy!';
+                btn.style.background = 'linear-gradient(135deg, #00C851 0%, #007E33 100%)';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
+                }, 2000);
+            }).catch(err => {
+                alert('❌ Không thể copy. Vui lòng thử lại!');
+            });
+        }
+
+        // Generate on load
+        generate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener - Rút Gọn Link Miễn Phí | ZapTools</title>
+    <meta name="description" content="Rút gọn link miễn phí, nhanh chóng. Tạo short URL cho Facebook, Twitter, Instagram. Free URL shortener online.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 1; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .input-section { margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 1rem; }
+        input[type="url"], input[type="text"] { width: 100%; padding: 1rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1rem; transition: border-color 0.3s; }
+        input:focus { outline: none; border-color: rgba(255,255,255,0.6); }
+        input::placeholder { color: rgba(255,255,255,0.5); }
+
+        .options-toggle { margin-bottom: 1rem; }
+        .checkbox-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+        .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
+        .checkbox-group label { margin: 0; cursor: pointer; font-weight: 500; }
+
+        .custom-alias { display: none; margin-top: 1rem; }
+        .custom-alias.show { display: block; animation: slideDown 0.3s; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin: 0.5rem 0; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,0,128,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,0,128,0.4); }
+        .btn:active { transform: translateY(-1px); }
+        .btn:disabled { background: rgba(255,255,255,0.2); cursor: not-allowed; transform: none; }
+
+        .result-section { display: none; margin-top: 2rem; background: rgba(255,255,255,0.08); padding: 2rem; border-radius: 15px; border: 2px solid rgba(255,255,255,0.2); }
+        .result-section.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header { text-align: center; margin-bottom: 1.5rem; }
+        .result-header h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+        .url-display { background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; }
+        .url-label { font-size: 0.85rem; opacity: 0.8; margin-bottom: 0.5rem; }
+        .url-value { font-size: 1.2rem; font-weight: 600; word-break: break-all; color: #FFD700; }
+
+        .qr-section { text-align: center; margin: 1.5rem 0; padding: 1.5rem; background: rgba(255,255,255,0.9); border-radius: 10px; }
+        .qr-code { margin: 1rem auto; max-width: 200px; }
+        .qr-code img { width: 100%; border-radius: 10px; }
+
+        .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .copy-btn { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); }
+        .new-btn { background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); }
+
+        .stats-section { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
+        .stat-card { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; text-align: center; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: #FFD700; margin-bottom: 0.3rem; }
+        .stat-label { font-size: 0.85rem; opacity: 0.8; }
+
+        .error-message { background: rgba(244,67,54,0.2); border: 2px solid #f44336; padding: 1rem; border-radius: 10px; margin: 1rem 0; display: none; }
+        .error-message.show { display: block; animation: shake 0.5s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .tips-section { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 10px; margin-top: 2rem; }
+        .tips-section h3 { margin-bottom: 1rem; }
+        .tips-section ul { list-style: none; padding: 0; }
+        .tips-section li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .tips-section li:before { content: "✓"; position: absolute; left: 0; color: #4CAF50; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .tool-container { padding: 1.5rem; }
+            .action-buttons { grid-template-columns: 1fr; }
+            .stats-section { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>🔗 URL Shortener</h1>
+            <p>Rút gọn link nhanh chóng và miễn phí!</p>
+        </div>
+        <div class="tool-container">
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="form-group">
+                    <label>🌐 Nhập URL dài cần rút gọn:</label>
+                    <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/that/needs/to/be/shortened">
+                </div>
+
+                <div class="options-toggle">
+                    <div class="checkbox-group" onclick="toggleCustomAlias()">
+                        <input type="checkbox" id="customAliasCheck">
+                        <label for="customAliasCheck">✨ Tùy chỉnh alias (tên ngắn)</label>
+                    </div>
+                </div>
+
+                <div class="custom-alias" id="customAliasDiv">
+                    <div class="form-group">
+                        <label>🎯 Custom Alias (tùy chọn):</label>
+                        <input type="text" id="customAlias" placeholder="my-custom-link">
+                        <small style="opacity: 0.8; font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+                            Chỉ dùng chữ cái, số, gạch ngang (-) và gạch dưới (_)
+                        </small>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="shortenUrl()">✂️ Rút gọn URL</button>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage"></div>
+
+            <!-- Result Section -->
+            <div class="result-section" id="resultSection">
+                <div class="result-header">
+                    <div class="success-icon">✅</div>
+                    <h3>Link đã được rút gọn thành công!</h3>
+                </div>
+
+                <div class="url-display">
+                    <div class="url-label">Link gốc:</div>
+                    <div class="url-value" id="originalUrl" style="font-size: 0.9rem; color: rgba(255,255,255,0.7);"></div>
+                </div>
+
+                <div class="url-display">
+                    <div class="url-label">Link rút gọn:</div>
+                    <div class="url-value" id="shortUrl"></div>
+                </div>
+
+                <!-- QR Code -->
+                <div class="qr-section">
+                    <div style="color: #333; font-weight: 600; margin-bottom: 0.5rem;">📱 QR Code</div>
+                    <div class="qr-code" id="qrCode"></div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-value" id="savedChars">0</div>
+                        <div class="stat-label">Ký tự đã tiết kiệm</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="reduction">0%</div>
+                        <div class="stat-label">Giảm độ dài</div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn copy-btn" onclick="copyShortUrl()">📋 Copy Link</button>
+                    <button class="btn new-btn" onclick="reset()">🔄 Rút gọn link mới</button>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Tại sao nên rút gọn link?</h3>
+                <ul>
+                    <li>Dễ nhớ và chia sẻ hơn trên social media</li>
+                    <li>Tiết kiệm ký tự khi đăng Twitter, SMS</li>
+                    <li>Trông chuyên nghiệp hơn trong email, in ấn</li>
+                    <li>Tạo QR code gọn gàng hơn</li>
+                    <li>Hoàn toàn miễn phí, không cần đăng ký</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="dark-mode.js"></script>
+    <script>
+        let currentShortUrl = '';
+
+        function toggleCustomAlias() {
+            const checkbox = document.getElementById('customAliasCheck');
+            const div = document.getElementById('customAliasDiv');
+            checkbox.checked = !checkbox.checked;
+
+            if (checkbox.checked) {
+                div.classList.add('show');
+            } else {
+                div.classList.remove('show');
+            }
+        }
+
+        function validateUrl(url) {
+            try {
+                const urlObj = new URL(url);
+                return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+            } catch {
+                return false;
+            }
+        }
+
+        async function shortenUrl() {
+            const longUrl = document.getElementById('longUrl').value.trim();
+            const customAlias = document.getElementById('customAliasCheck').checked ?
+                document.getElementById('customAlias').value.trim() : '';
+            const errorDiv = document.getElementById('errorMessage');
+            const resultSection = document.getElementById('resultSection');
+
+            // Hide previous results
+            errorDiv.classList.remove('show');
+            resultSection.classList.remove('show');
+
+            // Validation
+            if (!longUrl) {
+                showError('Vui lòng nhập URL cần rút gọn!');
+                return;
+            }
+
+            if (!validateUrl(longUrl)) {
+                showError('URL không hợp lệ! Vui lòng nhập URL đầy đủ (bắt đầu với http:// hoặc https://)');
+                return;
+            }
+
+            if (customAlias && !/^[a-zA-Z0-9_-]+$/.test(customAlias)) {
+                showError('Custom alias chỉ được chứa chữ cái, số, gạch ngang (-) và gạch dưới (_)');
+                return;
+            }
+
+            // Show loading
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Đang xử lý...';
+            btn.disabled = true;
+
+            try {
+                // Using is.gd API (free, no API key needed)
+                let apiUrl = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`;
+
+                if (customAlias) {
+                    apiUrl += `&shorturl=${encodeURIComponent(customAlias)}`;
+                }
+
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.shorturl) {
+                    currentShortUrl = data.shorturl;
+                    displayResult(longUrl, data.shorturl);
+                } else if (data.errormessage) {
+                    showError(data.errormessage);
+                } else {
+                    showError('Không thể rút gọn URL. Vui lòng thử lại!');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Có lỗi xảy ra. Vui lòng kiểm tra kết nối internet và thử lại!');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function displayResult(originalUrl, shortUrl) {
+            document.getElementById('originalUrl').textContent = originalUrl;
+            document.getElementById('shortUrl').textContent = shortUrl;
+
+            // Calculate stats
+            const savedChars = originalUrl.length - shortUrl.length;
+            const reduction = Math.round((savedChars / originalUrl.length) * 100);
+
+            document.getElementById('savedChars').textContent = savedChars;
+            document.getElementById('reduction').textContent = reduction + '%';
+
+            // Generate QR Code using QR Server API (free and reliable)
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(shortUrl)}`;
+            document.getElementById('qrCode').innerHTML = `<img src="${qrUrl}" alt="QR Code" style="max-width: 100%;">`;
+
+            // Show result
+            document.getElementById('resultSection').classList.add('show');
+        }
+
+        function copyShortUrl() {
+            navigator.clipboard.writeText(currentShortUrl).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Đã copy!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                alert('❌ Không thể copy. Vui lòng copy thủ công.');
+            });
+        }
+
+        function reset() {
+            document.getElementById('longUrl').value = '';
+            document.getElementById('customAlias').value = '';
+            document.getElementById('customAliasCheck').checked = false;
+            document.getElementById('customAliasDiv').classList.remove('show');
+            document.getElementById('resultSection').classList.remove('show');
+            document.getElementById('errorMessage').classList.remove('show');
+            currentShortUrl = '';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = '❌ ' + message;
+            errorDiv.classList.add('show');
+        }
+
+        // Allow Enter key to trigger shortening
+        document.getElementById('longUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                shortenUrl();
+            }
+        });
+
+        document.getElementById('customAlias').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                shortenUrl();
+            }
+        });
+    </script>
+</body>
+</html>

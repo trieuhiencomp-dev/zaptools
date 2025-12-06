@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Gradient Generator - Tạo Gradient | ZapTools</title>
+    <meta name="description" content="Tạo CSS gradient đẹp miễn phí. Linear & radial gradient với nhiều màu. Copy CSS code ngay.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 1; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .preview { width: 100%; height: 300px; border-radius: 15px; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 3px solid rgba(255,255,255,0.2); transition: all 0.3s; }
+
+        .controls-section { margin-bottom: 1.5rem; }
+        .controls-section h3 { margin-bottom: 1rem; font-size: 1.1rem; opacity: 0.95; }
+
+        .type-direction-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+
+        select, input[type="number"] { width: 100%; padding: 0.75rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1rem; transition: border-color 0.3s; }
+        select:focus, input:focus { outline: none; border-color: rgba(255,255,255,0.6); }
+        select option { background: #764ba2; color: white; }
+
+        .direction-presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem; margin-top: 0.5rem; }
+        .direction-btn { padding: 0.6rem; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; cursor: pointer; font-size: 0.85rem; text-align: center; transition: all 0.3s; }
+        .direction-btn:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+        .direction-btn.active { background: rgba(255,0,128,0.4); border-color: #FF0080; }
+
+        .color-stops { margin-bottom: 1.5rem; }
+        .color-stop { background: rgba(255,255,255,0.08); padding: 1rem; border-radius: 10px; margin-bottom: 0.8rem; position: relative; border: 2px solid rgba(255,255,255,0.1); }
+        .color-stop-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+        .color-stop-title { font-weight: 600; font-size: 0.95rem; }
+        .remove-stop-btn { background: rgba(244,67,54,0.7); border: none; color: white; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; }
+        .remove-stop-btn:hover { background: rgba(244,67,54,1); transform: scale(1.05); }
+
+        .color-stop-controls { display: grid; grid-template-columns: 80px 1fr 100px; gap: 1rem; align-items: center; }
+        .color-picker-wrapper { position: relative; }
+        input[type="color"] { width: 100%; height: 50px; border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; cursor: pointer; transition: all 0.3s; }
+        input[type="color"]:hover { border-color: rgba(255,255,255,0.6); transform: scale(1.05); }
+
+        .position-control { flex: 1; }
+        input[type="range"] { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 5px; outline: none; cursor: pointer; }
+        input[type="range"]::-webkit-slider-thumb { width: 20px; height: 20px; background: #FF0080; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        input[type="range"]::-webkit-slider-thumb:hover { background: #FF8C00; transform: scale(1.2); }
+        input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: #FF0080; border-radius: 50%; cursor: pointer; border: none; }
+
+        .position-value { background: rgba(255,255,255,0.15); padding: 0.5rem; border-radius: 6px; text-align: center; font-weight: 600; min-width: 60px; }
+
+        .add-stop-btn { padding: 1rem; background: rgba(76,175,80,0.3); border: 2px dashed rgba(76,175,80,0.6); color: white; border-radius: 10px; cursor: pointer; width: 100%; font-size: 1rem; font-weight: 600; transition: all 0.3s; margin-bottom: 1.5rem; }
+        .add-stop-btn:hover { background: rgba(76,175,80,0.5); border-style: solid; transform: translateY(-2px); }
+
+        .presets-section { margin-bottom: 1.5rem; }
+        .presets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.8rem; }
+        .preset-item { height: 80px; border-radius: 10px; cursor: pointer; border: 3px solid rgba(255,255,255,0.2); transition: all 0.3s; position: relative; overflow: hidden; }
+        .preset-item:hover { border-color: rgba(255,255,255,0.6); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .preset-item::after { content: attr(data-name); position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); padding: 0.3rem; font-size: 0.75rem; text-align: center; opacity: 0; transition: opacity 0.3s; }
+        .preset-item:hover::after { opacity: 1; }
+
+        .code-output { background: #1e1e1e; color: #d4d4d4; padding: 1.5rem; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 0.9rem; margin: 1rem 0; position: relative; overflow-x: auto; border: 2px solid rgba(255,255,255,0.1); line-height: 1.6; }
+        .code-output::-webkit-scrollbar { height: 8px; }
+        .code-output::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+        .code-output::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin-top: 1rem; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,0,128,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,0,128,0.4); }
+        .btn:active { transform: translateY(-1px); }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .tool-container { padding: 1.5rem; }
+            .color-stop-controls { grid-template-columns: 60px 1fr 80px; gap: 0.5rem; }
+            .direction-presets { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>🎨 CSS Gradient Generator</h1>
+            <p>Tạo gradient đẹp với nhiều màu sắc - Miễn phí!</p>
+        </div>
+        <div class="tool-container">
+            <!-- Preview -->
+            <div class="preview" id="preview"></div>
+
+            <!-- Gradient Type & Direction -->
+            <div class="controls-section">
+                <h3>⚙️ Cài đặt cơ bản</h3>
+                <div class="type-direction-controls">
+                    <div class="form-group">
+                        <label>📊 Loại Gradient:</label>
+                        <select id="type" onchange="updateGradient()">
+                            <option value="linear">Linear Gradient</option>
+                            <option value="radial">Radial Gradient</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="angleControl">
+                        <label>🔄 Góc (Degrees):</label>
+                        <input type="number" id="angle" value="135" min="0" max="360" step="1" oninput="updateGradient()">
+                    </div>
+                </div>
+
+                <!-- Direction Presets -->
+                <div id="directionPresets">
+                    <label>🧭 Hướng nhanh:</label>
+                    <div class="direction-presets">
+                        <button class="direction-btn" onclick="setDirection(0, this)">⬆️ To Top</button>
+                        <button class="direction-btn" onclick="setDirection(180, this)">⬇️ To Bottom</button>
+                        <button class="direction-btn" onclick="setDirection(270, this)">⬅️ To Left</button>
+                        <button class="direction-btn" onclick="setDirection(90, this)">➡️ To Right</button>
+                        <button class="direction-btn" onclick="setDirection(45, this)">↗️ 45°</button>
+                        <button class="direction-btn active" onclick="setDirection(135, this)">↘️ 135°</button>
+                        <button class="direction-btn" onclick="setDirection(225, this)">↙️ 225°</button>
+                        <button class="direction-btn" onclick="setDirection(315, this)">↖️ 315°</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Stops -->
+            <div class="controls-section">
+                <h3>🎨 Điểm màu (Color Stops)</h3>
+                <div class="color-stops" id="colorStops"></div>
+                <button class="add-stop-btn" onclick="addColorStop()">➕ Thêm màu mới</button>
+            </div>
+
+            <!-- Presets -->
+            <div class="controls-section presets-section">
+                <h3>✨ Gradient có sẵn</h3>
+                <div class="presets-grid" id="presetsGrid"></div>
+            </div>
+
+            <!-- CSS Code Output -->
+            <div class="controls-section">
+                <h3>📝 CSS Code</h3>
+                <div class="code-output" id="code"></div>
+                <button class="btn" onclick="copyCode()">📋 Copy CSS Code</button>
+            </div>
+        </div>
+    </div>
+    <script src="dark-mode.js"></script>
+    <script>
+        let colorStops = [
+            { color: '#667eea', position: 0 },
+            { color: '#764ba2', position: 100 }
+        ];
+
+        const presets = [
+            { name: 'Purple Dream', stops: [{color: '#667eea', position: 0}, {color: '#764ba2', position: 100}] },
+            { name: 'Sunset', stops: [{color: '#FF512F', position: 0}, {color: '#F09819', position: 100}] },
+            { name: 'Ocean', stops: [{color: '#2E3192', position: 0}, {color: '#1BFFFF', position: 100}] },
+            { name: 'Forest', stops: [{color: '#134E5E', position: 0}, {color: '#71B280', position: 100}] },
+            { name: 'Fire', stops: [{color: '#f12711', position: 0}, {color: '#f5af19', position: 100}] },
+            { name: 'Sky', stops: [{color: '#00d2ff', position: 0}, {color: '#928DAB', position: 100}] },
+            { name: 'Rainbow', stops: [
+                {color: '#FF0080', position: 0},
+                {color: '#FF8C00', position: 25},
+                {color: '#40E0D0', position: 50},
+                {color: '#FF0080', position: 100}
+            ]},
+            { name: 'Cotton Candy', stops: [{color: '#FEC7D7', position: 0}, {color: '#A786DF', position: 100}] },
+            { name: 'Mint', stops: [{color: '#00F260', position: 0}, {color: '#0575E6', position: 100}] },
+            { name: 'Peach', stops: [{color: '#ED4264', position: 0}, {color: '#FFEDBC', position: 100}] },
+            { name: 'Lavender', stops: [{color: '#a8edea', position: 0}, {color: '#fed6e3', position: 100}] },
+            { name: 'Gold', stops: [{color: '#FFD700', position: 0}, {color: '#FF8C00', position: 100}] }
+        ];
+
+        function renderColorStops() {
+            const container = document.getElementById('colorStops');
+            container.innerHTML = '';
+
+            colorStops.forEach((stop, index) => {
+                const stopDiv = document.createElement('div');
+                stopDiv.className = 'color-stop';
+                stopDiv.innerHTML = `
+                    <div class="color-stop-header">
+                        <span class="color-stop-title">Màu ${index + 1}</span>
+                        ${colorStops.length > 2 ? `<button class="remove-stop-btn" onclick="removeColorStop(${index})">🗑️ Xóa</button>` : ''}
+                    </div>
+                    <div class="color-stop-controls">
+                        <div class="color-picker-wrapper">
+                            <input type="color" value="${stop.color}" onchange="updateStopColor(${index}, this.value)">
+                        </div>
+                        <div class="position-control">
+                            <input type="range" min="0" max="100" value="${stop.position}" oninput="updateStopPosition(${index}, this.value)">
+                        </div>
+                        <div class="position-value" id="position-${index}">${stop.position}%</div>
+                    </div>
+                `;
+                container.appendChild(stopDiv);
+            });
+        }
+
+        function renderPresets() {
+            const grid = document.getElementById('presetsGrid');
+            grid.innerHTML = '';
+
+            presets.forEach((preset, index) => {
+                const div = document.createElement('div');
+                div.className = 'preset-item';
+                div.setAttribute('data-name', preset.name);
+
+                const gradientStops = preset.stops.map(s => `${s.color} ${s.position}%`).join(', ');
+                div.style.background = `linear-gradient(135deg, ${gradientStops})`;
+
+                div.onclick = () => applyPreset(index);
+                grid.appendChild(div);
+            });
+        }
+
+        function applyPreset(index) {
+            colorStops = JSON.parse(JSON.stringify(presets[index].stops));
+            renderColorStops();
+            updateGradient();
+        }
+
+        function addColorStop() {
+            const lastStop = colorStops[colorStops.length - 1];
+            const newPosition = Math.min(lastStop.position + 20, 100);
+
+            colorStops.push({
+                color: '#' + Math.floor(Math.random()*16777215).toString(16),
+                position: newPosition
+            });
+
+            renderColorStops();
+            updateGradient();
+        }
+
+        function removeColorStop(index) {
+            if (colorStops.length > 2) {
+                colorStops.splice(index, 1);
+                renderColorStops();
+                updateGradient();
+            }
+        }
+
+        function updateStopColor(index, color) {
+            colorStops[index].color = color;
+            updateGradient();
+        }
+
+        function updateStopPosition(index, position) {
+            colorStops[index].position = parseInt(position);
+            document.getElementById(`position-${index}`).textContent = position + '%';
+            updateGradient();
+        }
+
+        function setDirection(angle, btn) {
+            document.getElementById('angle').value = angle;
+
+            // Update active state
+            document.querySelectorAll('.direction-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            updateGradient();
+        }
+
+        function updateGradient() {
+            const type = document.getElementById('type').value;
+            const angle = document.getElementById('angle').value;
+
+            // Sort color stops by position
+            colorStops.sort((a, b) => a.position - b.position);
+
+            const stopsString = colorStops.map(stop => `${stop.color} ${stop.position}%`).join(', ');
+
+            let css;
+            if (type === 'linear') {
+                css = `background: linear-gradient(${angle}deg, ${stopsString});`;
+                document.getElementById('directionPresets').style.display = 'block';
+                document.getElementById('angleControl').style.display = 'block';
+            } else {
+                css = `background: radial-gradient(circle, ${stopsString});`;
+                document.getElementById('directionPresets').style.display = 'none';
+                document.getElementById('angleControl').style.display = 'none';
+            }
+
+            document.getElementById('preview').style.cssText = css;
+            document.getElementById('code').textContent = css;
+        }
+
+        function copyCode() {
+            const code = document.getElementById('code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Đã copy CSS!';
+                btn.style.background = 'linear-gradient(135deg, #00C851 0%, #007E33 100%)';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = 'linear-gradient(135deg, #FF0080 0%, #FF8C00 100%)';
+                }, 2000);
+            }).catch(err => {
+                alert('❌ Không thể copy. Vui lòng thử lại!');
+            });
+        }
+
+        // Initialize
+        renderColorStops();
+        renderPresets();
+        updateGradient();
+    </script>
+</body>
+</html>

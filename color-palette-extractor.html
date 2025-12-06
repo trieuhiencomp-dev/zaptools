@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Extractor - Lấy Bảng Màu Từ Ảnh | ZapTools</title>
+    <meta name="description" content="Trích xuất bảng màu từ ảnh miễn phí. Extract color palette from image. Lấy mã màu HEX, RGB cho design.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 1; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .upload-area { border: 3px dashed rgba(255,255,255,0.4); border-radius: 15px; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(255,255,255,0.05); margin-bottom: 2rem; }
+        .upload-area:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.1); }
+        .upload-area.dragover { border-color: #FF0080; background: rgba(255,0,128,0.1); }
+        .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+        input[type="file"] { display: none; }
+
+        .settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .setting-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        input[type="range"] { width: 100%; }
+        .range-value { text-align: center; margin-top: 0.5rem; font-size: 1.2rem; font-weight: 700; color: #FFD700; }
+
+        .preview-section { display: none; margin-bottom: 2rem; }
+        .preview-section.show { display: block; }
+        .image-preview { max-width: 100%; border-radius: 15px; margin-bottom: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+        .palette-section { display: none; }
+        .palette-section.show { display: block; }
+        .palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .color-card { background: rgba(255,255,255,0.08); border-radius: 15px; padding: 1rem; cursor: pointer; transition: all 0.3s; border: 2px solid rgba(255,255,255,0.2); }
+        .color-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.5); }
+        .color-swatch { width: 100%; height: 100px; border-radius: 10px; margin-bottom: 0.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .color-info { text-align: center; }
+        .color-hex { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .color-rgb { font-size: 0.85rem; opacity: 0.8; }
+        .color-percentage { font-size: 0.8rem; opacity: 0.7; margin-top: 0.3rem; }
+
+        .export-section { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 15px; margin-top: 2rem; }
+        .export-section h3 { margin-bottom: 1rem; }
+        .export-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+        .export-btn { padding: 0.75rem 1.5rem; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; color: white; cursor: pointer; text-align: center; transition: all 0.3s; }
+        .export-btn:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
+
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin: 0.5rem 0; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,0,128,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,0,128,0.4); }
+
+        .tips-section { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 10px; margin-top: 2rem; }
+        .tips-section h3 { margin-bottom: 1rem; }
+        .tips-section ul { list-style: none; padding: 0; }
+        .tips-section li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .tips-section li:before { content: "✓"; position: absolute; left: 0; color: #4CAF50; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .tool-container { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>🎨 Color Palette Extractor</h1>
+            <p>Trích xuất bảng màu từ ảnh - Miễn phí!</p>
+        </div>
+        <div class="tool-container">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">🖼️</div>
+                <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Click để chọn ảnh</div>
+                <div style="font-size: 0.9rem; opacity: 0.8;">Hỗ trợ: JPG, PNG, GIF, WebP</div>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" onchange="handleFileUpload(event)">
+
+            <!-- Settings -->
+            <div class="settings">
+                <div class="setting-group">
+                    <label>🎨 Số lượng màu:</label>
+                    <input type="range" id="colorCount" min="3" max="12" value="6" oninput="updateRangeValue('colorCount', 'colorCountValue')">
+                    <div class="range-value" id="colorCountValue">6</div>
+                </div>
+                <div class="setting-group">
+                    <label>🎯 Độ chính xác:</label>
+                    <input type="range" id="quality" min="1" max="10" value="5" oninput="updateRangeValue('quality', 'qualityValue')">
+                    <div class="range-value" id="qualityValue">5</div>
+                </div>
+            </div>
+
+            <!-- Preview -->
+            <div class="preview-section" id="previewSection">
+                <img id="imagePreview" class="image-preview" alt="Preview">
+                <button class="btn" onclick="extractColors()">🎨 Trích xuất màu sắc</button>
+            </div>
+
+            <!-- Palette -->
+            <div class="palette-section" id="paletteSection">
+                <h3 style="margin-bottom: 1rem;">🎨 Bảng màu của bạn:</h3>
+                <div class="palette-grid" id="paletteGrid"></div>
+
+                <!-- Export Section -->
+                <div class="export-section">
+                    <h3>📋 Export bảng màu:</h3>
+                    <div class="export-buttons">
+                        <button class="export-btn" onclick="exportAs('css')">CSS Variables</button>
+                        <button class="export-btn" onclick="exportAs('scss')">SCSS Variables</button>
+                        <button class="export-btn" onclick="exportAs('json')">JSON</button>
+                        <button class="export-btn" onclick="exportAs('array')">Array</button>
+                    </div>
+                </div>
+
+                <button class="btn" style="margin-top: 1.5rem;" onclick="reset()">🔄 Chọn ảnh khác</button>
+            </div>
+
+            <!-- Tips -->
+            <div class="tips-section">
+                <h3>💡 Mẹo sử dụng:</h3>
+                <ul>
+                    <li>Ảnh có độ phân giải cao sẽ cho kết quả chính xác hơn</li>
+                    <li>Click vào màu bất kỳ để copy mã HEX</li>
+                    <li>Tăng "Số lượng màu" để lấy nhiều màu hơn</li>
+                    <li>Tăng "Độ chính xác" để phân tích kỹ hơn (chậm hơn)</li>
+                    <li>Export để dùng trong CSS, SCSS hoặc code</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="dark-mode.js"></script>
+    <script>
+        let currentImage = null;
+        let extractedColors = [];
+
+        const uploadArea = document.getElementById('uploadArea');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) handleFile(file);
+        }
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('❌ Vui lòng chọn file ảnh!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    currentImage = img;
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('previewSection').classList.add('show');
+                    document.getElementById('paletteSection').classList.remove('show');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateRangeValue(inputId, valueId) {
+            document.getElementById(valueId).textContent = document.getElementById(inputId).value;
+        }
+
+        function extractColors() {
+            if (!currentImage) return;
+
+            const colorCount = parseInt(document.getElementById('colorCount').value);
+            const quality = parseInt(document.getElementById('quality').value);
+
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Scale down for performance
+            const scale = Math.min(1, 200 / Math.max(currentImage.width, currentImage.height));
+            canvas.width = currentImage.width * scale;
+            canvas.height = currentImage.height * scale;
+
+            ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+
+            // Get image data
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+
+            // Extract colors using k-means clustering (simplified)
+            const colors = [];
+            const step = Math.max(1, Math.floor(11 - quality));
+
+            for (let i = 0; i < pixels.length; i += 4 * step) {
+                const r = pixels[i];
+                const g = pixels[i + 1];
+                const b = pixels[i + 2];
+                const a = pixels[i + 3];
+
+                if (a > 128) { // Skip transparent pixels
+                    colors.push({ r, g, b });
+                }
+            }
+
+            // Get dominant colors
+            extractedColors = getDominantColors(colors, colorCount);
+
+            displayPalette();
+        }
+
+        function getDominantColors(pixels, k) {
+            // Simplified k-means clustering
+            const maxIterations = 10;
+
+            // Initialize random centroids
+            let centroids = [];
+            for (let i = 0; i < k; i++) {
+                const randomPixel = pixels[Math.floor(Math.random() * pixels.length)];
+                centroids.push({ ...randomPixel, count: 0 });
+            }
+
+            // K-means iterations
+            for (let iter = 0; iter < maxIterations; iter++) {
+                const clusters = Array(k).fill().map(() => []);
+
+                // Assign pixels to nearest centroid
+                pixels.forEach(pixel => {
+                    let minDist = Infinity;
+                    let closestCentroid = 0;
+
+                    centroids.forEach((centroid, i) => {
+                        const dist = colorDistance(pixel, centroid);
+                        if (dist < minDist) {
+                            minDist = dist;
+                            closestCentroid = i;
+                        }
+                    });
+
+                    clusters[closestCentroid].push(pixel);
+                });
+
+                // Update centroids
+                centroids = clusters.map((cluster, i) => {
+                    if (cluster.length === 0) return centroids[i];
+
+                    const sum = cluster.reduce((acc, p) => ({
+                        r: acc.r + p.r,
+                        g: acc.g + p.g,
+                        b: acc.b + p.b
+                    }), { r: 0, g: 0, b: 0 });
+
+                    return {
+                        r: Math.round(sum.r / cluster.length),
+                        g: Math.round(sum.g / cluster.length),
+                        b: Math.round(sum.b / cluster.length),
+                        count: cluster.length
+                    };
+                });
+            }
+
+            // Calculate percentages
+            const total = pixels.length;
+            centroids.forEach(c => {
+                c.percentage = ((c.count / total) * 100).toFixed(1);
+            });
+
+            // Sort by count
+            return centroids.sort((a, b) => b.count - a.count);
+        }
+
+        function colorDistance(c1, c2) {
+            return Math.sqrt(
+                Math.pow(c1.r - c2.r, 2) +
+                Math.pow(c1.g - c2.g, 2) +
+                Math.pow(c1.b - c2.b, 2)
+            );
+        }
+
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+
+        function displayPalette() {
+            const grid = document.getElementById('paletteGrid');
+            grid.innerHTML = '';
+
+            extractedColors.forEach((color, index) => {
+                const hex = rgbToHex(color.r, color.g, color.b);
+                const rgb = `rgb(${color.r}, ${color.g}, ${color.b})`;
+
+                const card = document.createElement('div');
+                card.className = 'color-card';
+                card.onclick = () => copyColor(hex);
+                card.innerHTML = `
+                    <div class="color-swatch" style="background: ${hex};"></div>
+                    <div class="color-info">
+                        <div class="color-hex">${hex}</div>
+                        <div class="color-rgb">${rgb}</div>
+                        <div class="color-percentage">${color.percentage}%</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('paletteSection').classList.add('show');
+        }
+
+        function copyColor(hex) {
+            navigator.clipboard.writeText(hex).then(() => {
+                alert(`✅ Đã copy: ${hex}`);
+            });
+        }
+
+        function exportAs(format) {
+            let output = '';
+
+            switch(format) {
+                case 'css':
+                    output = ':root {\n';
+                    extractedColors.forEach((c, i) => {
+                        output += `  --color-${i + 1}: ${rgbToHex(c.r, c.g, c.b)};\n`;
+                    });
+                    output += '}';
+                    break;
+
+                case 'scss':
+                    extractedColors.forEach((c, i) => {
+                        output += `$color-${i + 1}: ${rgbToHex(c.r, c.g, c.b)};\n`;
+                    });
+                    break;
+
+                case 'json':
+                    const jsonColors = extractedColors.map(c => rgbToHex(c.r, c.g, c.b));
+                    output = JSON.stringify(jsonColors, null, 2);
+                    break;
+
+                case 'array':
+                    const arrayColors = extractedColors.map(c => rgbToHex(c.r, c.g, c.b));
+                    output = JSON.stringify(arrayColors);
+                    break;
+            }
+
+            navigator.clipboard.writeText(output).then(() => {
+                alert(`✅ Đã copy bảng màu dạng ${format.toUpperCase()}!`);
+            });
+        }
+
+        function reset() {
+            currentImage = null;
+            extractedColors = [];
+            document.getElementById('fileInput').value = '';
+            document.getElementById('previewSection').classList.remove('show');
+            document.getElementById('paletteSection').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

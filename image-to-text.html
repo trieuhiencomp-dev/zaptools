@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Text OCR - Chuyển Ảnh Thành Text | ZapTools</title>
+    <meta name="description" content="Chuyển ảnh thành text miễn phí. OCR online hỗ trợ tiếng Việt và tiếng Anh. Trích xuất chữ từ ảnh nhanh chóng.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s; }
+        .back-link:hover { opacity: 1; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .upload-section { margin-bottom: 2rem; }
+        .upload-area { border: 3px dashed rgba(255,255,255,0.4); border-radius: 15px; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(255,255,255,0.05); }
+        .upload-area:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.1); }
+        .upload-area.dragover { border-color: #FF0080; background: rgba(255,0,128,0.1); transform: scale(1.02); }
+        .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .upload-text { font-size: 1.2rem; margin-bottom: 0.5rem; font-weight: 600; }
+        .upload-hint { font-size: 0.9rem; opacity: 0.8; }
+        input[type="file"] { display: none; }
+
+        .language-select { margin-bottom: 1.5rem; }
+        .language-select label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        select { width: 100%; padding: 0.75rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white; font-size: 1rem; }
+        select option { background: #764ba2; color: white; }
+
+        .preview-section { display: none; margin-bottom: 2rem; }
+        .preview-section.show { display: block; }
+        .preview-container { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 15px; }
+        .preview-image { max-width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin: 0.5rem 0; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255,0,128,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,0,128,0.4); }
+        .btn:disabled { background: rgba(255,255,255,0.2); cursor: not-allowed; transform: none; }
+
+        .progress-section { display: none; margin: 1.5rem 0; }
+        .progress-section.show { display: block; }
+        .progress-bar { width: 100%; height: 30px; background: rgba(255,255,255,0.1); border-radius: 15px; overflow: hidden; position: relative; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #FF0080 0%, #FF8C00 100%); width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+        .progress-text { margin-top: 0.5rem; text-align: center; font-size: 0.95rem; opacity: 0.9; }
+
+        .result-section { display: none; margin-top: 2rem; }
+        .result-section.show { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .result-header h3 { font-size: 1.2rem; }
+        .char-count { font-size: 0.9rem; opacity: 0.8; }
+        .result-text { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 10px; min-height: 200px; max-height: 400px; overflow-y: auto; line-height: 1.8; border: 2px solid rgba(255,255,255,0.1); white-space: pre-wrap; word-wrap: break-word; }
+        .result-text::-webkit-scrollbar { width: 8px; }
+        .result-text::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .result-text::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
+
+        .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+        .copy-btn { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); }
+        .clear-btn { background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); }
+
+        .tips-section { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 10px; margin-top: 2rem; }
+        .tips-section h3 { margin-bottom: 1rem; }
+        .tips-section ul { list-style: none; padding: 0; }
+        .tips-section li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+        .tips-section li:before { content: "✓"; position: absolute; left: 0; color: #4CAF50; font-weight: bold; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .tool-container { padding: 1.5rem; }
+            .action-buttons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>📸 Image to Text (OCR)</h1>
+            <p>Chuyển ảnh thành text với công nghệ OCR - Miễn phí!</p>
+        </div>
+        <div class="tool-container">
+            <!-- Language Selection -->
+            <div class="language-select">
+                <label>🌐 Chọn ngôn ngữ:</label>
+                <select id="language">
+                    <option value="vie">Tiếng Việt</option>
+                    <option value="eng" selected>English (Tiếng Anh)</option>
+                    <option value="vie+eng">Tiếng Việt + English</option>
+                </select>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📤</div>
+                    <div class="upload-text">Click để chọn ảnh hoặc kéo thả vào đây</div>
+                    <div class="upload-hint">Hỗ trợ: JPG, PNG, GIF, WebP (tối đa 10MB)</div>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)">
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section" id="previewSection">
+                <div class="preview-container">
+                    <img id="previewImage" class="preview-image" alt="Preview">
+                </div>
+                <button class="btn" id="processBtn" onclick="processImage()">🔍 Trích xuất text từ ảnh</button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <div class="progress-text" id="progressText">Đang khởi tạo OCR engine...</div>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-section" id="resultSection">
+                <div class="result-header">
+                    <h3>📝 Kết quả:</h3>
+                    <span class="char-count" id="charCount">0 ký tự</span>
+                </div>
+                <div class="result-text" id="resultText"></div>
+                <div class="action-buttons">
+                    <button class="btn copy-btn" onclick="copyResult()">📋 Copy Text</button>
+                    <button class="btn clear-btn" onclick="clearAll()">🔄 Làm lại</button>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Mẹo để có kết quả tốt nhất:</h3>
+                <ul>
+                    <li>Sử dụng ảnh có độ phân giải cao và rõ nét</li>
+                    <li>Đảm bảo chữ trong ảnh không bị mờ hoặc nghiêng quá</li>
+                    <li>Nền ảnh nên đơn giản, tương phản với chữ</li>
+                    <li>Chọn đúng ngôn ngữ để tăng độ chính xác</li>
+                    <li>OCR hoạt động hoàn toàn trên trình duyệt, không upload ảnh lên server</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tesseract.js CDN -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+    <script src="dark-mode.js"></script>
+    <script>
+        let selectedFile = null;
+        let worker = null;
+
+        // Drag and drop handlers
+        const uploadArea = document.getElementById('uploadArea');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        function handleFile(file) {
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('❌ Vui lòng chọn file ảnh!');
+                return;
+            }
+
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('❌ File quá lớn! Vui lòng chọn ảnh dưới 10MB.');
+                return;
+            }
+
+            selectedFile = file;
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('previewImage').src = e.target.result;
+                document.getElementById('previewSection').classList.add('show');
+                document.getElementById('resultSection').classList.remove('show');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function processImage() {
+            if (!selectedFile) {
+                alert('❌ Vui lòng chọn ảnh trước!');
+                return;
+            }
+
+            const language = document.getElementById('language').value;
+            const progressSection = document.getElementById('progressSection');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const resultSection = document.getElementById('resultSection');
+            const processBtn = document.getElementById('processBtn');
+
+            // Show progress
+            progressSection.classList.add('show');
+            resultSection.classList.remove('show');
+            processBtn.disabled = true;
+
+            try {
+                // Create worker if not exists
+                if (!worker) {
+                    progressText.textContent = 'Đang tải OCR engine...';
+                    worker = await Tesseract.createWorker(language, 1, {
+                        logger: (m) => {
+                            if (m.status === 'loading tesseract core') {
+                                progressFill.style.width = '20%';
+                                progressFill.textContent = '20%';
+                                progressText.textContent = 'Đang tải Tesseract core...';
+                            } else if (m.status === 'initializing tesseract') {
+                                progressFill.style.width = '40%';
+                                progressFill.textContent = '40%';
+                                progressText.textContent = 'Đang khởi tạo...';
+                            } else if (m.status === 'loading language traineddata') {
+                                progressFill.style.width = '60%';
+                                progressFill.textContent = '60%';
+                                progressText.textContent = 'Đang tải ngôn ngữ...';
+                            } else if (m.status === 'initializing api') {
+                                progressFill.style.width = '80%';
+                                progressFill.textContent = '80%';
+                                progressText.textContent = 'Đang khởi tạo API...';
+                            } else if (m.status === 'recognizing text') {
+                                const percent = Math.round(m.progress * 100);
+                                progressFill.style.width = percent + '%';
+                                progressFill.textContent = percent + '%';
+                                progressText.textContent = 'Đang nhận diện text...';
+                            }
+                        }
+                    });
+                } else {
+                    // If worker exists, just load the language
+                    await worker.loadLanguage(language);
+                    await worker.initialize(language);
+                }
+
+                progressText.textContent = 'Đang xử lý ảnh...';
+
+                // Perform OCR
+                const { data: { text } } = await worker.recognize(selectedFile);
+
+                // Show result
+                progressFill.style.width = '100%';
+                progressFill.textContent = '100%';
+                progressText.textContent = '✅ Hoàn thành!';
+
+                setTimeout(() => {
+                    progressSection.classList.remove('show');
+                    displayResult(text);
+                }, 500);
+
+            } catch (error) {
+                console.error('OCR Error:', error);
+                progressSection.classList.remove('show');
+                alert('❌ Có lỗi xảy ra khi xử lý ảnh. Vui lòng thử lại!');
+            } finally {
+                processBtn.disabled = false;
+            }
+        }
+
+        function displayResult(text) {
+            const resultSection = document.getElementById('resultSection');
+            const resultText = document.getElementById('resultText');
+            const charCount = document.getElementById('charCount');
+
+            resultText.textContent = text || '(Không tìm thấy text trong ảnh)';
+            charCount.textContent = text.length.toLocaleString() + ' ký tự';
+            resultSection.classList.add('show');
+        }
+
+        function copyResult() {
+            const text = document.getElementById('resultText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Đã copy!';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                alert('❌ Không thể copy. Vui lòng chọn text và copy thủ công.');
+            });
+        }
+
+        function clearAll() {
+            selectedFile = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('previewSection').classList.remove('show');
+            document.getElementById('resultSection').classList.remove('show');
+            document.getElementById('progressSection').classList.remove('show');
+        }
+
+        // Cleanup worker on page unload
+        window.addEventListener('beforeunload', async () => {
+            if (worker) {
+                await worker.terminate();
+            }
+        });
+    </script>
+</body>
+</html>
