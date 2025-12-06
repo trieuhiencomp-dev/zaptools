@@ -16,7 +16,16 @@
       "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(iconv:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "WebFetch(domain:tiengdong.com)",
+      "WebFetch(domain:zaptools.pro)",
+      "Bash(npm start)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)",
+      "Bash(node tts-api.js:*)",
+      "Bash(start Y:zaptoolstts-tool.html)",
+      "Bash(start \"Y:/zaptools/tts-tool.html\")",
+      "Bash(netlify status:*)"
     ],
     "deny": [],
     "ask": []
