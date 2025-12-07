@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Video - Tạo Video từ Text | ZapTools</title>
+    <meta name="description" content="Tạo video animation từ text miễn phí. Thêm text, chọn animation, xuất video MP4. Hoàn toàn miễn phí!">
+    <meta name="keywords" content="text to video, video maker, text animation, video creator, free video tool">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        select option {
+            background: #764ba2;
+            color: white;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .preview-section {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            border-radius: 10px;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn:disabled {
+            background: rgba(255,255,255,0.2);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #4CAF50;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .tool-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+
+        <div class="header">
+            <h1>🎬 Text to Video</h1>
+            <p>Tạo video animation từ text - Miễn phí, dễ dùng!</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="grid">
+                <div class="form-group">
+                    <label for="text-input">📝 Nội dung Text:</label>
+                    <textarea id="text-input" maxlength="600" placeholder="Nhập text của bạn..." oninput="updateCharCount()">ZapTools
+Lightning-Fast Free Tools</textarea>
+                    <div style="text-align:right; font-size:0.85rem; margin-top:0.25rem; opacity:0.8;">
+                        <span id="char-count">29</span>/600 ký tự
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bg-type">🎨 Background:</label>
+                    <select id="bg-type">
+                        <option value="gradient1">Gradient Purple-Pink</option>
+                        <option value="gradient2">Gradient Blue-Green</option>
+                        <option value="gradient3">Gradient Orange-Red</option>
+                        <option value="solid-black">Solid Black</option>
+                        <option value="solid-white">Solid White</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="form-group">
+                    <label for="font-size">📏 Font Size:</label>
+                    <select id="font-size">
+                        <option value="40">Small (40px)</option>
+                        <option value="60" selected>Medium (60px)</option>
+                        <option value="80">Large (80px)</option>
+                        <option value="100">X-Large (100px)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="animation">✨ Animation:</label>
+                    <select id="animation">
+                        <option value="fade">Fade In</option>
+                        <option value="slide">Slide Up</option>
+                        <option value="zoom">Zoom In</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">⏱️ Duration:</label>
+                    <select id="duration">
+                        <option value="3">3 seconds</option>
+                        <option value="5" selected>5 seconds</option>
+                        <option value="8">8 seconds</option>
+                        <option value="10">10 seconds</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <h3>Preview:</h3>
+                <canvas id="canvas" width="1280" height="720"></canvas>
+            </div>
+
+            <div class="controls">
+                <button class="btn" onclick="previewAnimation()">👁️ Preview</button>
+                <button class="btn btn-secondary" onclick="generateVideo()" id="generate-btn">🎬 Generate Video</button>
+                <button class="btn" onclick="downloadVideo()" id="download-btn" disabled>⬇️ Download MP4</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let mediaRecorder;
+        let recordedChunks = [];
+        let videoBlob = null;
+
+        // Backgrounds
+        const backgrounds = {
+            'gradient1': ctx => {
+                const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                grad.addColorStop(0, '#667eea');
+                grad.addColorStop(1, '#764ba2');
+                return grad;
+            },
+            'gradient2': ctx => {
+                const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                grad.addColorStop(0, '#2193b0');
+                grad.addColorStop(1, '#6dd5ed');
+                return grad;
+            },
+            'gradient3': ctx => {
+                const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                grad.addColorStop(0, '#f12711');
+                grad.addColorStop(1, '#f5af19');
+                return grad;
+            },
+            'solid-black': () => '#000000',
+            'solid-white': () => '#FFFFFF'
+        };
+
+        function wrapText(ctx, text, maxWidth) {
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                const word = words[i];
+                const width = ctx.measureText(currentLine + " " + word).width;
+                if (width < maxWidth) {
+                    currentLine += " " + word;
+                } else {
+                    lines.push(currentLine);
+                    currentLine = word;
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        function updateCharCount() {
+            const text = document.getElementById('text-input').value;
+            document.getElementById('char-count').textContent = text.length;
+        }
+
+        function drawFrame(progress) {
+            const text = document.getElementById('text-input').value;
+            const bgType = document.getElementById('bg-type').value;
+            let fontSize = parseInt(document.getElementById('font-size').value);
+            const animation = document.getElementById('animation').value;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw background
+            ctx.fillStyle = backgrounds[bgType](ctx);
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Text color (opposite of background)
+            const textColor = bgType === 'solid-white' ? '#000000' : '#FFFFFF';
+            ctx.fillStyle = textColor;
+
+            // Apply animation with word wrap
+            const paragraphs = text.split('\n');
+            let allLines = [];
+
+            // First pass to get all lines
+            ctx.font = `bold ${fontSize}px Arial`;
+            paragraphs.forEach(para => {
+                const wrapped = wrapText(ctx, para, canvas.width * 0.9);
+                allLines = allLines.concat(wrapped);
+            });
+
+            // Auto-scale font if text too long
+            let lineHeight = fontSize * 1.5;
+            let totalHeight = allLines.length * lineHeight;
+
+            while (totalHeight > canvas.height * 0.85 && fontSize > 20) {
+                fontSize -= 5;
+                ctx.font = `bold ${fontSize}px Arial`;
+                allLines = [];
+                paragraphs.forEach(para => {
+                    const wrapped = wrapText(ctx, para, canvas.width * 0.9);
+                    allLines = allLines.concat(wrapped);
+                });
+                lineHeight = fontSize * 1.5;
+                totalHeight = allLines.length * lineHeight;
+            }
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const startY = (canvas.height - totalHeight) / 2 + lineHeight / 2;
+
+            allLines.forEach((line, index) => {
+                const y = startY + (index * lineHeight);
+
+                ctx.save();
+
+                if (animation === 'fade') {
+                    ctx.globalAlpha = progress;
+                } else if (animation === 'slide') {
+                    const offsetY = (1 - progress) * 100;
+                    ctx.translate(0, offsetY);
+                    ctx.globalAlpha = progress;
+                } else if (animation === 'zoom') {
+                    const scale = 0.5 + (progress * 0.5);
+                    ctx.translate(canvas.width / 2, y);
+                    ctx.scale(scale, scale);
+                    ctx.translate(-canvas.width / 2, -y);
+                    ctx.globalAlpha = progress;
+                }
+
+                ctx.fillText(line, canvas.width / 2, y);
+                ctx.restore();
+            });
+        }
+
+        function previewAnimation() {
+            let progress = 0;
+            const duration = parseInt(document.getElementById('duration').value) * 1000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                progress = Math.min(elapsed / duration, 1);
+
+                drawFrame(progress);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            animate();
+        }
+
+        async function generateVideo() {
+            const generateBtn = document.getElementById('generate-btn');
+            const downloadBtn = document.getElementById('download-btn');
+
+            generateBtn.disabled = true;
+            generateBtn.textContent = '🎬 Generating...';
+
+            recordedChunks = [];
+
+            // Create stream from canvas
+            const stream = canvas.captureStream(30); // 30 FPS
+
+            mediaRecorder = new MediaRecorder(stream, {
+                mimeType: 'video/webm;codecs=vp9',
+                videoBitsPerSecond: 5000000
+            });
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                videoBlob = new Blob(recordedChunks, { type: 'video/webm' });
+                downloadBtn.disabled = false;
+                generateBtn.disabled = false;
+                generateBtn.textContent = '🎬 Generate Video';
+                alert('✅ Video generated! Click Download to save.');
+            };
+
+            mediaRecorder.start();
+
+            // Animate and record
+            let progress = 0;
+            const duration = parseInt(document.getElementById('duration').value) * 1000;
+            const startTime = Date.now();
+            const fps = 30;
+            const frameInterval = 1000 / fps;
+
+            function recordFrame() {
+                const elapsed = Date.now() - startTime;
+                progress = Math.min(elapsed / duration, 1);
+
+                drawFrame(progress);
+
+                if (progress < 1) {
+                    setTimeout(recordFrame, frameInterval);
+                } else {
+                    mediaRecorder.stop();
+                }
+            }
+
+            recordFrame();
+        }
+
+        function downloadVideo() {
+            if (!videoBlob) {
+                alert('Please generate video first!');
+                return;
+            }
+
+            const url = URL.createObjectURL(videoBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `zaptools-video-${Date.now()}.webm`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initial preview
+        drawFrame(1);
+    </script>
+</body>
+</html>

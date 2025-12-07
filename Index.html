@@ -137,7 +137,7 @@
         
         .container {
             text-align: center;
-            max-width: 600px;
+            max-width: 900px;
             padding: 2rem;
         }
         
@@ -174,7 +174,7 @@
         
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             margin-bottom: 3rem;
             animation: fadeInUp 1.4s;
@@ -276,25 +276,166 @@
             }
         }
         
+        /* Blog Section Styles */
+        .blog-section {
+            margin: 2rem 0 1.5rem;
+            animation: fadeInUp 1.8s;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .blog-header h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+
+        .blog-header p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .blog-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .blog-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid #fbbf24;
+            color: #fbbf24;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .blog-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 0 0 0.4rem 0;
+        }
+
+        .blog-excerpt {
+            font-size: 0.8rem;
+            line-height: 1.35;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 0.7rem;
+            opacity: 0.65;
+        }
+
+        .blog-date, .blog-read-time {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .view-all-blogs {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .view-all-btn {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .view-all-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
         @media (max-width: 768px) {
             .logo {
                 font-size: 4rem;
             }
-            
+
             h1 {
                 font-size: 2.5rem;
             }
-            
+
             .tagline {
                 font-size: 1.2rem;
             }
-            
+
             .description {
                 font-size: 1rem;
             }
-            
+
             .features {
                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-header h2 {
+                font-size: 1.6rem;
             }
         }
     </style>
@@ -428,12 +569,56 @@
                 <div class="feature-name" id="urlEncoderBtn" style="cursor:pointer; text-decoration:underline;">URL Encoder</div>
             </div>
             <div class="feature">
-                <div class="feature-icon">📰</div>
-                <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
+                <div class="feature-icon">📝</div>
+                <div class="feature-name" id="markdownEditorBtn" style="cursor:pointer; text-decoration:underline;">Markdown Editor</div>
             </div>
             <div class="feature">
-                <div class="feature-icon">🔧</div>
-                <div class="feature-name" id="moreToolsBtn">More Tools</div>
+                <div class="feature-icon">✨</div>
+                <div class="feature-name" id="codeBeautifierBtn" style="cursor:pointer; text-decoration:underline;">Code Beautifier</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔍</div>
+                <div class="feature-name" id="diffCheckerBtn" style="cursor:pointer; text-decoration:underline;">Diff Checker</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🆔</div>
+                <div class="feature-name" id="uuidGeneratorBtn" style="cursor:pointer; text-decoration:underline;">UUID Generator</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⏰</div>
+                <div class="feature-name" id="timestampConverterBtn" style="cursor:pointer; text-decoration:underline;">Timestamp Converter</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔤</div>
+                <div class="feature-name" id="htmlEncoderBtn" style="cursor:pointer; text-decoration:underline;">HTML Encoder</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔄</div>
+                <div class="feature-name" id="csvToJsonBtn" style="cursor:pointer; text-decoration:underline;">CSV to JSON</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🧮</div>
+                <div class="feature-name" id="calculatorBtn" style="cursor:pointer; text-decoration:underline;">Calculator</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✂️</div>
+                <div class="feature-name" id="imageCropperBtn" style="cursor:pointer; text-decoration:underline;">Image Cropper</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⏱️</div>
+                <div class="feature-name" id="stopwatchBtn" style="cursor:pointer; text-decoration:underline;">Stopwatch</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📧</div>
+                <div class="feature-name" id="emailValidatorBtn" style="cursor:pointer; text-decoration:underline;">Email Validator</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <div class="feature-name" id="jsonToXmlBtn" style="cursor:pointer; text-decoration:underline;">JSON to XML</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📰</div>
+                <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
             </div>
         </div>
         <!-- Stats Counter -->
@@ -452,26 +637,79 @@
             </div>
         </div>
 
-        <!-- YouTube Channel Promotion -->
-        <div style="margin: 2rem 0; padding: 2rem; background: rgba(255,255,255,0.12); border-radius: 20px; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">📺</div>
-            <h2 id="ytTitle" style="margin: 0 0 0.8rem 0; font-size: 1.5rem; font-weight: 700;">Video Tutorials</h2>
-            <p id="ytDesc" style="margin: 0 0 1.5rem 0; font-size: 1rem; opacity: 0.95; line-height: 1.6;">
-                Learn how to use our tools with easy step-by-step video guides!<br>
-                New tutorials every week!
-            </p>
-            <a href="https://www.youtube.com/@CuộcSốngNhiềuMàu" target="_blank" rel="noopener"
-               style="display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2rem;
-                      background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%); color: white;
-                      text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 1.1rem;
-                      box-shadow: 0 4px 15px rgba(255,0,0,0.3); transition: all 0.3s;"
-               onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 20px rgba(255,0,0,0.4)'"
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255,0,0,0.3)'">
-                <span style="font-size: 1.5rem;">▶️</span>
-                <span id="ytButton">Subscribe to our YouTube Channel</span>
-            </a>
-            <div style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.8;">
-                <span id="ytStats">PDF Tutorials • QR Guides • Free Tools Tips</span>
+        <!-- Latest Blog Posts -->
+        <div class="blog-section">
+            <div class="blog-header">
+                <h2 id="blogSectionTitle">📰 Latest Blog Posts</h2>
+                <p id="blogSectionSubtitle">Tips, tutorials and guides for using online tools</p>
+            </div>
+            <div class="blog-grid">
+                <!-- Blog Post 1 -->
+                <a href="blog/5-cong-cu-mien-phi.html" class="blog-card">
+                    <div class="blog-card-header">
+                        <div class="blog-icon">⚡</div>
+                        <span class="blog-category" id="blogCat1">Review</span>
+                    </div>
+                    <div class="blog-title" id="blogTitle1">5 Free Tools on ZapTools You Can't Miss</div>
+                    <div class="blog-excerpt" id="blogExcerpt1">
+                        Discover the 5 best free online tools: TTS, Password Generator, Word Counter, QR Code and Image Compressor!
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 <span id="blogDate1">Dec 7, 2024</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead1">8 min</span></span>
+                    </div>
+                </a>
+
+                <!-- Blog Post 2 -->
+                <a href="blog/unit-converter-guide.html" class="blog-card">
+                    <div class="blog-card-header">
+                        <div class="blog-icon">📏</div>
+                        <span class="blog-category" id="blogCat2">Tutorial</span>
+                    </div>
+                    <div class="blog-title" id="blogTitle2">Complete Unit Converter Guide</div>
+                    <div class="blog-excerpt" id="blogExcerpt2">
+                        Learn how to convert units quickly and accurately. Master unit conversion with our guide!
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 <span id="blogDate2">Jan 15, 2025</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead2">5 min</span></span>
+                    </div>
+                </a>
+
+                <!-- Blog Post 3 -->
+                <a href="blog/image-compression-tips.html" class="blog-card">
+                    <div class="blog-card-header">
+                        <div class="blog-icon">🖼️</div>
+                        <span class="blog-category" id="blogCat3">Tips & Tricks</span>
+                    </div>
+                    <div class="blog-title" id="blogTitle3">10 Tips to Compress Images</div>
+                    <div class="blog-excerpt" id="blogExcerpt3">
+                        Discover techniques to reduce image file size while maintaining quality for web!
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 <span id="blogDate3">Jan 14, 2025</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead3">7 min</span></span>
+                    </div>
+                </a>
+
+                <!-- Blog Post 4 -->
+                <a href="blog/qr-codes-for-business.html" class="blog-card">
+                    <div class="blog-card-header">
+                        <div class="blog-icon">📱</div>
+                        <span class="blog-category" id="blogCat4">Business</span>
+                    </div>
+                    <div class="blog-title" id="blogTitle4">QR Codes for Your Business</div>
+                    <div class="blog-excerpt" id="blogExcerpt4">
+                        Learn how to create and use QR codes effectively for business growth!
+                    </div>
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 <span id="blogDate4">Jan 13, 2025</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead4">6 min</span></span>
+                    </div>
+                </a>
+            </div>
+            <div class="view-all-blogs">
+                <a href="blog.html" class="view-all-btn" id="viewAllBlogsBtn">View All Blog Posts →</a>
             </div>
         </div>
 
@@ -662,6 +900,78 @@
                         window.location.href = 'tts-tool.html';
                     };
                 }
+                var markdownEditorBtn = document.getElementById('markdownEditorBtn');
+                if (markdownEditorBtn) {
+                    markdownEditorBtn.onclick = function() {
+                        window.location.href = 'markdown-editor.html';
+                    };
+                }
+                var codeBeautifierBtn = document.getElementById('codeBeautifierBtn');
+                if (codeBeautifierBtn) {
+                    codeBeautifierBtn.onclick = function() {
+                        window.location.href = 'code-beautifier.html';
+                    };
+                }
+                var diffCheckerBtn = document.getElementById('diffCheckerBtn');
+                if (diffCheckerBtn) {
+                    diffCheckerBtn.onclick = function() {
+                        window.location.href = 'diff-checker.html';
+                    };
+                }
+                var uuidGeneratorBtn = document.getElementById('uuidGeneratorBtn');
+                if (uuidGeneratorBtn) {
+                    uuidGeneratorBtn.onclick = function() {
+                        window.location.href = 'uuid-generator.html';
+                    };
+                }
+                var timestampConverterBtn = document.getElementById('timestampConverterBtn');
+                if (timestampConverterBtn) {
+                    timestampConverterBtn.onclick = function() {
+                        window.location.href = 'timestamp-converter.html';
+                    };
+                }
+                var htmlEncoderBtn = document.getElementById('htmlEncoderBtn');
+                if (htmlEncoderBtn) {
+                    htmlEncoderBtn.onclick = function() {
+                        window.location.href = 'html-encoder.html';
+                    };
+                }
+                var csvToJsonBtn = document.getElementById('csvToJsonBtn');
+                if (csvToJsonBtn) {
+                    csvToJsonBtn.onclick = function() {
+                        window.location.href = 'csv-to-json.html';
+                    };
+                }
+                var calculatorBtn = document.getElementById('calculatorBtn');
+                if (calculatorBtn) {
+                    calculatorBtn.onclick = function() {
+                        window.location.href = 'calculator.html';
+                    };
+                }
+                var imageCropperBtn = document.getElementById('imageCropperBtn');
+                if (imageCropperBtn) {
+                    imageCropperBtn.onclick = function() {
+                        window.location.href = 'image-cropper.html';
+                    };
+                }
+                var stopwatchBtn = document.getElementById('stopwatchBtn');
+                if (stopwatchBtn) {
+                    stopwatchBtn.onclick = function() {
+                        window.location.href = 'stopwatch.html';
+                    };
+                }
+                var emailValidatorBtn = document.getElementById('emailValidatorBtn');
+                if (emailValidatorBtn) {
+                    emailValidatorBtn.onclick = function() {
+                        window.location.href = 'email-validator.html';
+                    };
+                }
+                var jsonToXmlBtn = document.getElementById('jsonToXmlBtn');
+                if (jsonToXmlBtn) {
+                    jsonToXmlBtn.onclick = function() {
+                        window.location.href = 'json-to-xml.html';
+                    };
+                }
             });
             // Language switcher
             const langData = {
@@ -681,6 +991,18 @@
                     hashGenerator: 'Tạo Hash',
                     caseConverter: 'Chuyển đổi chữ',
                     urlEncoder: 'Mã hóa URL',
+                    markdownEditor: 'Markdown Editor',
+                    codeBeautifier: 'Làm đẹp Code',
+                    diffChecker: 'So sánh Text',
+                    uuidGenerator: 'Tạo UUID',
+                    timestampConverter: 'Chuyển đổi Timestamp',
+                    htmlEncoder: 'Mã hóa HTML',
+                    csvToJson: 'CSV sang JSON',
+                    calculator: 'Máy tính',
+                    imageCropper: 'Cắt Ảnh',
+                    stopwatch: 'Đồng hồ bấm giờ',
+                    emailValidator: 'Kiểm tra Email',
+                    jsonToXml: 'JSON sang XML',
                     blog: 'Blog',
                     ttsTool: 'Text to Speech',
                     ytThumbnail: 'YouTube Thumbnail',
@@ -690,7 +1012,30 @@
                     colorPalette: 'Bảng Màu',
                     regexTester: 'Test Regex',
                     more: 'Thêm công cụ',
-                    status: '<span class="pulse"></span> Chào mừng bạn đến với ZapTools'
+                    status: '<span class="pulse"></span> Chào mừng bạn đến với ZapTools',
+                    blogSectionTitle: '📰 Bài Viết Mới Nhất',
+                    blogSectionSubtitle: 'Mẹo, hướng dẫn và tips sử dụng công cụ trực tuyến',
+                    blogCat1: 'Đánh Giá',
+                    blogTitle1: '5 Công Cụ Miễn Phí Trên ZapTools Bạn Không Thể Bỏ Qua',
+                    blogExcerpt1: 'Khám phá 5 công cụ trực tuyến miễn phí tuyệt vời nhất: TTS, Password Generator, Word Counter, QR Code và Image Compressor!',
+                    blogDate1: '7 Tháng 12, 2024',
+                    blogRead1: '8 phút',
+                    blogCat2: 'Hướng dẫn',
+                    blogTitle2: 'Hướng Dẫn Toàn Diện Unit Converter',
+                    blogExcerpt2: 'Học cách chuyển đổi đơn vị nhanh và chính xác. Làm chủ chuyển đổi đơn vị với hướng dẫn của chúng tôi!',
+                    blogDate2: '15 Tháng 1, 2025',
+                    blogRead2: '5 phút',
+                    blogCat3: 'Mẹo & Thủ thuật',
+                    blogTitle3: '10 Mẹo Nén Ảnh',
+                    blogExcerpt3: 'Khám phá kỹ thuật giảm dung lượng ảnh mà vẫn giữ chất lượng cho web!',
+                    blogDate3: '14 Tháng 1, 2025',
+                    blogRead3: '7 phút',
+                    blogCat4: 'Doanh nghiệp',
+                    blogTitle4: 'QR Code Cho Doanh Nghiệp',
+                    blogExcerpt4: 'Học cách tạo và sử dụng QR code hiệu quả cho phát triển doanh nghiệp!',
+                    blogDate4: '13 Tháng 1, 2025',
+                    blogRead4: '6 phút',
+                    viewAllBlogsBtn: 'Xem Tất Cả Bài Viết →'
                 },
                 en: {
                     title: 'ZapTools',
@@ -708,6 +1053,18 @@
                     hashGenerator: 'Hash Generator',
                     caseConverter: 'Case Converter',
                     urlEncoder: 'URL Encoder',
+                    markdownEditor: 'Markdown Editor',
+                    codeBeautifier: 'Code Beautifier',
+                    diffChecker: 'Diff Checker',
+                    uuidGenerator: 'UUID Generator',
+                    timestampConverter: 'Timestamp Converter',
+                    htmlEncoder: 'HTML Encoder',
+                    csvToJson: 'CSV to JSON',
+                    calculator: 'Calculator',
+                    imageCropper: 'Image Cropper',
+                    stopwatch: 'Stopwatch',
+                    emailValidator: 'Email Validator',
+                    jsonToXml: 'JSON to XML',
                     blog: 'Blog',
                     ttsTool: 'Text to Speech',
                     ytThumbnail: 'YouTube Thumbnail',
@@ -717,7 +1074,30 @@
                     colorPalette: 'Color Palette',
                     regexTester: 'Regex Tester',
                     more: 'More Tools',
-                    status: '<span class="pulse"></span> Welcome to ZapTools'
+                    status: '<span class="pulse"></span> Welcome to ZapTools',
+                    blogSectionTitle: '📰 Latest Blog Posts',
+                    blogSectionSubtitle: 'Tips, tutorials and guides for using online tools',
+                    blogCat1: 'Review',
+                    blogTitle1: '5 Free Tools on ZapTools You Can\'t Miss',
+                    blogExcerpt1: 'Discover the 5 best free online tools: TTS, Password Generator, Word Counter, QR Code and Image Compressor!',
+                    blogDate1: 'Dec 7, 2024',
+                    blogRead1: '8 min',
+                    blogCat2: 'Tutorial',
+                    blogTitle2: 'Complete Unit Converter Guide',
+                    blogExcerpt2: 'Learn how to convert units quickly and accurately. Master unit conversion with our guide!',
+                    blogDate2: 'Jan 15, 2025',
+                    blogRead2: '5 min',
+                    blogCat3: 'Tips & Tricks',
+                    blogTitle3: '10 Tips to Compress Images',
+                    blogExcerpt3: 'Discover techniques to reduce image file size while maintaining quality for web!',
+                    blogDate3: 'Jan 14, 2025',
+                    blogRead3: '7 min',
+                    blogCat4: 'Business',
+                    blogTitle4: 'QR Codes for Your Business',
+                    blogExcerpt4: 'Learn how to create and use QR codes effectively for business growth!',
+                    blogDate4: 'Jan 13, 2025',
+                    blogRead4: '6 min',
+                    viewAllBlogsBtn: 'View All Blog Posts →'
                 }
             };
             function setLang(lang) {
@@ -736,6 +1116,18 @@
                 document.getElementById('hashGeneratorBtn').textContent = langData[lang].hashGenerator;
                 document.getElementById('caseConverterBtn').textContent = langData[lang].caseConverter;
                 document.getElementById('urlEncoderBtn').textContent = langData[lang].urlEncoder;
+                document.getElementById('markdownEditorBtn').textContent = langData[lang].markdownEditor;
+                document.getElementById('codeBeautifierBtn').textContent = langData[lang].codeBeautifier;
+                document.getElementById('diffCheckerBtn').textContent = langData[lang].diffChecker;
+                document.getElementById('uuidGeneratorBtn').textContent = langData[lang].uuidGenerator;
+                document.getElementById('timestampConverterBtn').textContent = langData[lang].timestampConverter;
+                document.getElementById('htmlEncoderBtn').textContent = langData[lang].htmlEncoder;
+                document.getElementById('csvToJsonBtn').textContent = langData[lang].csvToJson;
+                document.getElementById('calculatorBtn').textContent = langData[lang].calculator;
+                document.getElementById('imageCropperBtn').textContent = langData[lang].imageCropper;
+                document.getElementById('stopwatchBtn').textContent = langData[lang].stopwatch;
+                document.getElementById('emailValidatorBtn').textContent = langData[lang].emailValidator;
+                document.getElementById('jsonToXmlBtn').textContent = langData[lang].jsonToXml;
                 document.getElementById('blogBtn').textContent = langData[lang].blog;
                 document.getElementById('ttsToolBtn').textContent = langData[lang].ttsTool;
                 document.getElementById('ytThumbnailBtn').textContent = langData[lang].ytThumbnail;
@@ -746,6 +1138,31 @@
                 document.getElementById('regexTesterBtn').textContent = langData[lang].regexTester;
                 document.getElementById('moreToolsBtn').textContent = langData[lang].more;
                 document.getElementById('status').innerHTML = langData[lang].status;
+
+                // Blog section translations
+                document.getElementById('blogSectionTitle').textContent = langData[lang].blogSectionTitle;
+                document.getElementById('blogSectionSubtitle').textContent = langData[lang].blogSectionSubtitle;
+                document.getElementById('blogCat1').textContent = langData[lang].blogCat1;
+                document.getElementById('blogTitle1').textContent = langData[lang].blogTitle1;
+                document.getElementById('blogExcerpt1').textContent = langData[lang].blogExcerpt1;
+                document.getElementById('blogDate1').textContent = langData[lang].blogDate1;
+                document.getElementById('blogRead1').textContent = langData[lang].blogRead1;
+                document.getElementById('blogCat2').textContent = langData[lang].blogCat2;
+                document.getElementById('blogTitle2').textContent = langData[lang].blogTitle2;
+                document.getElementById('blogExcerpt2').textContent = langData[lang].blogExcerpt2;
+                document.getElementById('blogDate2').textContent = langData[lang].blogDate2;
+                document.getElementById('blogRead2').textContent = langData[lang].blogRead2;
+                document.getElementById('blogCat3').textContent = langData[lang].blogCat3;
+                document.getElementById('blogTitle3').textContent = langData[lang].blogTitle3;
+                document.getElementById('blogExcerpt3').textContent = langData[lang].blogExcerpt3;
+                document.getElementById('blogDate3').textContent = langData[lang].blogDate3;
+                document.getElementById('blogRead3').textContent = langData[lang].blogRead3;
+                document.getElementById('blogCat4').textContent = langData[lang].blogCat4;
+                document.getElementById('blogTitle4').textContent = langData[lang].blogTitle4;
+                document.getElementById('blogExcerpt4').textContent = langData[lang].blogExcerpt4;
+                document.getElementById('blogDate4').textContent = langData[lang].blogDate4;
+                document.getElementById('blogRead4').textContent = langData[lang].blogRead4;
+                document.getElementById('viewAllBlogsBtn').textContent = langData[lang].viewAllBlogsBtn;
             }
             document.getElementById('langSwitcher').addEventListener('change', function(e) {
                 setLang(e.target.value);

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Encoder/Decoder - Encode & Decode HTML Entities | ZapTools</title>
+    <meta name="description" content="Free HTML encoder and decoder. Convert HTML entities to text and vice versa. Perfect for web developers!">
+    <meta name="keywords" content="html encoder, html decoder, encode html, decode html, html entities">
+    <link rel="canonical" href="https://zaptools.org/html-encoder.html">
+    <meta name="theme-color" content="#667eea">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { text-align: center; color: white; margin-bottom: 30px; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; }
+        .tool-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .converter {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        .input-box, .output-box {
+            display: flex;
+            flex-direction: column;
+        }
+        .box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .box-header h3 {
+            color: #374151;
+            font-size: 1.2rem;
+        }
+        .copy-btn {
+            padding: 6px 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover { background: #5568d3; }
+        .copy-btn.copied { background: #10b981; }
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102,126,234,0.4); }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .info-box h3 { color: #1e40af; margin-bottom: 8px; font-size: 1.1rem; }
+        .info-box p { color: #1e3a8a; line-height: 1.6; }
+        .examples {
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 8px 16px;
+        }
+        .lang-switch select {
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .lang-switch select option { color: #333; }
+        @media (max-width: 968px) {
+            .converter {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            textarea { min-height: 200px; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .tool-box { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <select id="langSelect">
+            <option value="en">🇬🇧 English</option>
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 id="title">🔤 HTML Encoder/Decoder</h1>
+            <p class="subtitle" id="subtitle">Encode & decode HTML entities</p>
+        </header>
+
+        <div class="tool-box">
+            <div class="converter">
+                <div class="input-box">
+                    <div class="box-header">
+                        <h3 id="inputTitle">Input</h3>
+                        <button class="copy-btn" onclick="copyText('input')" id="copyInputBtn">Copy</button>
+                    </div>
+                    <textarea id="inputText" placeholder="Enter text or HTML entities here..."></textarea>
+                </div>
+
+                <div class="controls">
+                    <button class="btn" onclick="encode()">
+                        <span id="encodeBtn">→<br>Encode</span>
+                    </button>
+                    <button class="btn" onclick="decode()">
+                        <span id="decodeBtn">←<br>Decode</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearAll()">
+                        <span id="clearBtn">Clear</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="swap()">
+                        <span id="swapBtn">⇅ Swap</span>
+                    </button>
+                </div>
+
+                <div class="output-box">
+                    <div class="box-header">
+                        <h3 id="outputTitle">Output</h3>
+                        <button class="copy-btn" onclick="copyText('output')" id="copyOutputBtn">Copy</button>
+                    </div>
+                    <textarea id="outputText" placeholder="Result will appear here..." readonly></textarea>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3 id="infoTitle">ℹ️ HTML Encoding</h3>
+                <p id="infoText">
+                    HTML encoding converts special characters to HTML entities to prevent them from being interpreted as HTML code.
+                </p>
+                <div class="examples">
+                    <div>&lt; → &amp;lt;</div>
+                    <div>&gt; → &amp;gt;</div>
+                    <div>&amp; → &amp;amp;</div>
+                    <div>" → &amp;quot;</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.html" style="color: white; text-decoration: none; opacity: 0.8; font-size: 0.9rem;">
+                ← <span id="backText">Back to Home</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="feedback-widget.js"></script>
+    <script>
+        const lang = {
+            en: {
+                title: '🔤 HTML Encoder/Decoder',
+                subtitle: 'Encode & decode HTML entities',
+                inputTitle: 'Input',
+                outputTitle: 'Output',
+                encodeBtn: '→\nEncode',
+                decodeBtn: '←\nDecode',
+                clearBtn: 'Clear',
+                swapBtn: '⇅ Swap',
+                copyInputBtn: 'Copy',
+                copyOutputBtn: 'Copy',
+                copied: 'Copied!',
+                infoTitle: 'ℹ️ HTML Encoding',
+                infoText: 'HTML encoding converts special characters to HTML entities to prevent them from being interpreted as HTML code.',
+                backText: 'Back to Home'
+            },
+            vi: {
+                title: '🔤 Mã hóa/Giải mã HTML',
+                subtitle: 'Mã hóa & giải mã HTML entities',
+                inputTitle: 'Đầu vào',
+                outputTitle: 'Đầu ra',
+                encodeBtn: '→\nMã hóa',
+                decodeBtn: '←\nGiải mã',
+                clearBtn: 'Xóa',
+                swapBtn: '⇅ Đổi',
+                copyInputBtn: 'Sao chép',
+                copyOutputBtn: 'Sao chép',
+                copied: 'Đã sao chép!',
+                infoTitle: 'ℹ️ Mã hóa HTML',
+                infoText: 'Mã hóa HTML chuyển đổi các ký tự đặc biệt thành HTML entities để ngăn chúng bị hiểu là mã HTML.',
+                backText: 'Quay lại Trang chủ'
+            }
+        };
+
+        let currentLang = localStorage.getItem('zaptools_lang') || 'vi';
+        document.getElementById('langSelect').value = currentLang;
+
+        function setLang(l) {
+            currentLang = l;
+            document.getElementById('title').textContent = lang[l].title;
+            document.getElementById('subtitle').textContent = lang[l].subtitle;
+            document.getElementById('inputTitle').textContent = lang[l].inputTitle;
+            document.getElementById('outputTitle').textContent = lang[l].outputTitle;
+            document.getElementById('encodeBtn').innerHTML = lang[l].encodeBtn;
+            document.getElementById('decodeBtn').innerHTML = lang[l].decodeBtn;
+            document.getElementById('clearBtn').textContent = lang[l].clearBtn;
+            document.getElementById('swapBtn').textContent = lang[l].swapBtn;
+            document.getElementById('copyInputBtn').textContent = lang[l].copyInputBtn;
+            document.getElementById('copyOutputBtn').textContent = lang[l].copyOutputBtn;
+            document.getElementById('infoTitle').textContent = lang[l].infoTitle;
+            document.getElementById('infoText').textContent = lang[l].infoText;
+            document.getElementById('backText').textContent = lang[l].backText;
+            localStorage.setItem('zaptools_lang', l);
+        }
+
+        document.getElementById('langSelect').addEventListener('change', (e) => setLang(e.target.value));
+        setLang(currentLang);
+
+        function encode() {
+            const input = document.getElementById('inputText').value;
+            const encoded = input
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+            document.getElementById('outputText').value = encoded;
+        }
+
+        function decode() {
+            const input = document.getElementById('inputText').value;
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = input;
+            document.getElementById('outputText').value = textarea.value;
+        }
+
+        function clearAll() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+        }
+
+        function swap() {
+            const input = document.getElementById('inputText').value;
+            const output = document.getElementById('outputText').value;
+            document.getElementById('inputText').value = output;
+            document.getElementById('outputText').value = input;
+        }
+
+        function copyText(type) {
+            const textArea = type === 'input' ?
+                document.getElementById('inputText') :
+                document.getElementById('outputText');
+
+            const btn = type === 'input' ?
+                document.getElementById('copyInputBtn') :
+                document.getElementById('copyOutputBtn');
+
+            textArea.select();
+            document.execCommand('copy');
+
+            const originalText = btn.textContent;
+            btn.textContent = lang[currentLang].copied;
+            btn.classList.add('copied');
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        }
+
+        document.getElementById('inputText').addEventListener('input', () => {
+            const text = document.getElementById('inputText').value;
+            if (text.includes('&') && (text.includes('lt;') || text.includes('gt;') || text.includes('quot;'))) {
+                decode();
+            } else if (text.includes('<') || text.includes('>') || text.includes('&')) {
+                encode();
+            }
+        });
+    </script>
+</body>
+</html>

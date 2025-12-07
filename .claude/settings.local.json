@@ -25,7 +25,10 @@
       "Bash(node tts-api.js:*)",
       "Bash(start Y:zaptoolstts-tool.html)",
       "Bash(start \"Y:/zaptools/tts-tool.html\")",
-      "Bash(netlify status:*)"
+      "Bash(netlify status:*)",
+      "Bash(netlify deploy:*)",
+      "Bash(start:*)",
+      "WebFetch(domain:zaptools.org)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to JSON Converter - Chuyển Đổi CSV Sang JSON Online Miễn Phí | ZapTools</title>
+    <meta name="description" content="CSV to JSON Converter miễn phí - Chuyển đổi file CSV sang JSON nhanh chóng. Hỗ trợ custom delimiter, validate data, download kết quả. Công cụ convert CSV online tốt nhất.">
+    <meta name="keywords" content="csv to json, convert csv, csv converter, csv parser, csv to json online, chuyển csv sang json, convert file csv">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="CSV to JSON Converter - Chuyển Đổi CSV Sang JSON">
+    <meta property="og:description" content="Công cụ chuyển đổi CSV sang JSON online miễn phí. Nhanh chóng, chính xác, dễ sử dụng.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.pro/csv-to-json.html">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CSV to JSON Converter Online">
+    <meta name="twitter:description" content="Chuyển đổi CSV sang JSON dễ dàng. Miễn phí, không giới hạn.">
+
+    <link rel="canonical" href="https://zaptools.pro/csv-to-json.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        select, input[type="text"] {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        select:hover, input[type="text"]:hover {
+            border-color: #667eea;
+        }
+
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .editor-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-panel h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .row-count {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: normal;
+        }
+
+        textarea {
+            width: 100%;
+            height: 500px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-download {
+            background: #6366f1;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        .sample-data {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 10px;
+            border-left: 4px solid #a8edea;
+        }
+
+        .sample-data h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .sample-data pre {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85em;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            margin-top: 30px;
+        }
+
+        .info-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .info-section h3 {
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .info-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .info-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-section li {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            padding: 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-home a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-home a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+
+            textarea {
+                height: 300px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            button {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 CSV to JSON Converter</h1>
+            <p>Chuyển đổi CSV sang JSON nhanh chóng và dễ dàng</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="delimiter">Delimiter (Ký tự phân cách):</label>
+                    <select id="delimiter">
+                        <option value=",">Comma (,)</option>
+                        <option value=";">Semicolon (;)</option>
+                        <option value="\t">Tab (\t)</option>
+                        <option value="|">Pipe (|)</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="customDelimiter">Custom Delimiter:</label>
+                    <input type="text" id="customDelimiter" placeholder="Nhập ký tự..." disabled>
+                </div>
+
+                <div class="control-group checkbox-group">
+                    <input type="checkbox" id="hasHeader" checked>
+                    <label for="hasHeader">Dòng đầu là header</label>
+                </div>
+
+                <div class="control-group checkbox-group">
+                    <input type="checkbox" id="prettyPrint" checked>
+                    <label for="prettyPrint">Format JSON đẹp</label>
+                </div>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-panel">
+                    <h3>📊 CSV Input <span class="row-count" id="csvRows">0 dòng</span></h3>
+                    <textarea id="csvInput" placeholder="Paste CSV data vào đây...
+
+Ví dụ:
+name,age,city
+John,30,New York
+Jane,25,Los Angeles
+Bob,35,Chicago"></textarea>
+                </div>
+
+                <div class="editor-panel">
+                    <h3>📄 JSON Output <span class="row-count" id="jsonRows">0 objects</span></h3>
+                    <textarea id="jsonOutput" readonly placeholder="JSON sẽ xuất hiện ở đây..."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="convertToJSON()">🔄 Convert to JSON</button>
+                <button class="btn-success" onclick="copyJSON()">📋 Copy JSON</button>
+                <button class="btn-download" onclick="downloadJSON()">💾 Download JSON</button>
+                <button class="btn-secondary" onclick="loadSample()">📝 Load Sample</button>
+                <button class="btn-secondary" onclick="clearAll()">🗑️ Xóa Tất Cả</button>
+            </div>
+
+            <div class="sample-data">
+                <h4>💡 Mẹo: Upload CSV file</h4>
+                <input type="file" id="fileInput" accept=".csv,.txt" onchange="loadFile(event)" style="margin-top: 10px;">
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>CSV to JSON Converter - Công Cụ Chuyển Đổi CSV Sang JSON Tốt Nhất</h2>
+
+            <p>CSV to JSON Converter là công cụ miễn phí giúp bạn chuyển đổi dữ liệu từ định dạng CSV (Comma-Separated Values) sang JSON (JavaScript Object Notation) một cách nhanh chóng và chính xác.</p>
+
+            <h3>🎯 Tính Năng Nổi Bật</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>🔧 Custom Delimiter</h4>
+                    <p>Hỗ trợ nhiều loại delimiter: comma, semicolon, tab, pipe, hoặc tự định nghĩa</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📋 Header Detection</h4>
+                    <p>Tự động sử dụng dòng đầu làm tên key cho JSON objects</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎨 Pretty Print</h4>
+                    <p>Format JSON với indentation đẹp mắt, dễ đọc</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📁 File Upload</h4>
+                    <p>Upload trực tiếp file CSV để convert nhanh chóng</p>
+                </div>
+                <div class="feature-card">
+                    <h4>💾 Download JSON</h4>
+                    <p>Tải xuống kết quả dưới dạng file .json</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ Xử Lý Nhanh</h4>
+                    <p>Convert ngay lập tức, không giới hạn kích thước</p>
+                </div>
+            </div>
+
+            <h3>📚 Hướng Dẫn Sử Dụng</h3>
+            <ul>
+                <li><strong>Bước 1:</strong> Chọn delimiter phù hợp với CSV của bạn</li>
+                <li><strong>Bước 2:</strong> Paste CSV data vào ô bên trái hoặc upload file</li>
+                <li><strong>Bước 3:</strong> Chọn options (header, pretty print)</li>
+                <li><strong>Bước 4:</strong> Click "Convert to JSON"</li>
+                <li><strong>Bước 5:</strong> Copy hoặc download JSON kết quả</li>
+            </ul>
+
+            <h3>💡 CSV là gì?</h3>
+            <p><strong>CSV (Comma-Separated Values)</strong> là định dạng file phổ biến để lưu trữ dữ liệu dạng bảng. Mỗi dòng là một record, các giá trị được phân cách bởi dấu phẩy hoặc delimiter khác.</p>
+            <pre><code>name,age,city
+John,30,New York
+Jane,25,Los Angeles</code></pre>
+
+            <h3>💡 JSON là gì?</h3>
+            <p><strong>JSON (JavaScript Object Notation)</strong> là định dạng dữ liệu nhẹ, dễ đọc cho cả người và máy. Rất phổ biến trong web APIs và lưu trữ configuration.</p>
+            <pre><code>[
+  {"name": "John", "age": "30", "city": "New York"},
+  {"name": "Jane", "age": "25", "city": "Los Angeles"}
+]</code></pre>
+
+            <h3>🔧 Các Trường Hợp Sử Dụng</h3>
+            <ul>
+                <li><strong>Web Development:</strong> Chuyển data từ Excel/CSV sang format cho API</li>
+                <li><strong>Data Migration:</strong> Di chuyển dữ liệu giữa các hệ thống</li>
+                <li><strong>Testing:</strong> Tạo test data từ CSV spreadsheets</li>
+                <li><strong>Data Analysis:</strong> Chuẩn bị data cho JavaScript processing</li>
+                <li><strong>Database Import:</strong> Convert CSV sang JSON để import vào NoSQL databases</li>
+            </ul>
+
+            <h3>🎓 Tips & Tricks</h3>
+            <ul>
+                <li>Nếu CSV có dấu phẩy trong giá trị, hãy wrap giá trị đó bằng quotes</li>
+                <li>Sử dụng "Load Sample" để xem ví dụ CSV format</li>
+                <li>Kiểm tra delimiter đúng để tránh lỗi parsing</li>
+                <li>Bật "Pretty Print" để debug JSON dễ hơn</li>
+                <li>File CSV từ Excel thường dùng delimiter là semicolon (;)</li>
+            </ul>
+
+            <h3>❓ FAQs</h3>
+            <p><strong>Q: Tool có giới hạn kích thước file không?</strong><br>
+            A: Không có giới hạn cứng, nhưng file quá lớn (>10MB) có thể chậm trên một số trình duyệt.</p>
+
+            <p><strong>Q: Làm thế nào nếu CSV có nhiều delimiter?</strong><br>
+            A: Chọn delimiter chính được sử dụng. Nếu có quotes trong values, tool sẽ handle đúng.</p>
+
+            <p><strong>Q: Tool có hỗ trợ convert ngược JSON to CSV không?</strong><br>
+            A: Hiện tại chỉ hỗ trợ CSV to JSON. Chức năng JSON to CSV sẽ được thêm sau.</p>
+
+            <p><strong>Q: Dữ liệu có được lưu trên server không?</strong><br>
+            A: Không, mọi conversion đều thực hiện trên trình duyệt. Dữ liệu không được gửi lên server.</p>
+        </div>
+
+        <div class="back-home">
+            <a href="Index.html">← Về Trang Chủ ZapTools</a>
+        </div>
+    </div>
+
+    <script>
+        // Enable/disable custom delimiter input
+        document.getElementById('delimiter').addEventListener('change', function() {
+            const customInput = document.getElementById('customDelimiter');
+            customInput.disabled = this.value !== 'custom';
+        });
+
+        // Update row count
+        document.getElementById('csvInput').addEventListener('input', function() {
+            const lines = this.value.trim().split('\n').filter(line => line.trim());
+            document.getElementById('csvRows').textContent = lines.length + ' dòng';
+        });
+
+        function convertToJSON() {
+            const csvInput = document.getElementById('csvInput').value.trim();
+
+            if (!csvInput) {
+                alert('Vui lòng nhập CSV data!');
+                return;
+            }
+
+            try {
+                const delimiterSelect = document.getElementById('delimiter').value;
+                let delimiter;
+
+                if (delimiterSelect === 'custom') {
+                    delimiter = document.getElementById('customDelimiter').value;
+                    if (!delimiter) {
+                        alert('Vui lòng nhập custom delimiter!');
+                        return;
+                    }
+                } else {
+                    delimiter = delimiterSelect === '\\t' ? '\t' : delimiterSelect;
+                }
+
+                const hasHeader = document.getElementById('hasHeader').checked;
+                const prettyPrint = document.getElementById('prettyPrint').checked;
+
+                const lines = csvInput.split('\n').map(line => line.trim()).filter(line => line);
+                const result = [];
+
+                if (lines.length === 0) {
+                    throw new Error('CSV rỗng!');
+                }
+
+                let headers;
+                let startIndex;
+
+                if (hasHeader) {
+                    headers = parseCSVLine(lines[0], delimiter);
+                    startIndex = 1;
+                } else {
+                    // Generate default headers
+                    const firstLine = parseCSVLine(lines[0], delimiter);
+                    headers = firstLine.map((_, i) => `column${i + 1}`);
+                    startIndex = 0;
+                }
+
+                for (let i = startIndex; i < lines.length; i++) {
+                    const values = parseCSVLine(lines[i], delimiter);
+                    const obj = {};
+
+                    for (let j = 0; j < headers.length; j++) {
+                        obj[headers[j]] = values[j] || '';
+                    }
+
+                    result.push(obj);
+                }
+
+                const jsonOutput = prettyPrint
+                    ? JSON.stringify(result, null, 2)
+                    : JSON.stringify(result);
+
+                document.getElementById('jsonOutput').value = jsonOutput;
+                document.getElementById('jsonRows').textContent = result.length + ' objects';
+
+            } catch (error) {
+                alert('Lỗi khi convert: ' + error.message);
+            }
+        }
+
+        function parseCSVLine(line, delimiter) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                const nextChar = line[i + 1];
+
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === delimiter && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+
+            result.push(current.trim());
+            return result;
+        }
+
+        function copyJSON() {
+            const output = document.getElementById('jsonOutput');
+            if (!output.value) {
+                alert('Chưa có JSON để copy!');
+                return;
+            }
+
+            output.select();
+            document.execCommand('copy');
+
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Đã Copy!';
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+
+        function downloadJSON() {
+            const output = document.getElementById('jsonOutput').value;
+            if (!output) {
+                alert('Chưa có JSON để download!');
+                return;
+            }
+
+            const blob = new Blob([output], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function loadSample() {
+            const sample = `name,age,city,country
+John Doe,30,New York,USA
+Jane Smith,25,Los Angeles,USA
+Bob Johnson,35,Chicago,USA
+Alice Brown,28,Houston,USA
+Charlie Wilson,32,Phoenix,USA`;
+
+            document.getElementById('csvInput').value = sample;
+            document.getElementById('csvRows').textContent = '6 dòng';
+        }
+
+        function loadFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('csvInput').value = e.target.result;
+                const lines = e.target.result.trim().split('\n').filter(line => line.trim());
+                document.getElementById('csvRows').textContent = lines.length + ' dòng';
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAll() {
+            if (confirm('Bạn có chắc muốn xóa tất cả?')) {
+                document.getElementById('csvInput').value = '';
+                document.getElementById('jsonOutput').value = '';
+                document.getElementById('csvRows').textContent = '0 dòng';
+                document.getElementById('jsonRows').textContent = '0 objects';
+                document.getElementById('fileInput').value = '';
+            }
+        }
+    </script>
+</body>
+</html>

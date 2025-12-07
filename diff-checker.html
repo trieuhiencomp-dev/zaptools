@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diff Checker - So Sánh Văn Bản & Code Online Miễn Phí | ZapTools</title>
+    <meta name="description" content="Diff Checker miễn phí - So sánh 2 văn bản, code, tài liệu để tìm sự khác biệt. Công cụ compare text online nhanh chóng, hiển thị trực quan các thay đổi.">
+    <meta name="keywords" content="diff checker, compare text, text comparison, code diff, file compare, so sánh văn bản, so sánh code, tìm khác biệt">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Diff Checker - So Sánh Văn Bản & Code Online">
+    <meta property="og:description" content="Công cụ so sánh văn bản và code online miễn phí. Tìm sự khác biệt nhanh chóng với giao diện trực quan.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.pro/diff-checker.html">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Diff Checker - So Sánh Văn Bản Online">
+    <meta name="twitter:description" content="So sánh 2 văn bản, code để tìm sự khác biệt. Miễn phí, dễ sử dụng.">
+
+    <link rel="canonical" href="https://zaptools.pro/diff-checker.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .editor-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-panel h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .char-count {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: normal;
+        }
+
+        textarea {
+            width: 100%;
+            height: 400px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .result-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .stat-added {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .stat-removed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .stat-unchanged {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .diff-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .diff-panel {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+
+        .diff-panel h4 {
+            background: #f5f5f5;
+            padding: 12px 15px;
+            margin: 0;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        .diff-content {
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 500px;
+            overflow-y: auto;
+            line-height: 1.8;
+        }
+
+        .diff-line {
+            padding: 2px 8px;
+            margin: 2px 0;
+            border-radius: 4px;
+        }
+
+        .line-added {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .line-removed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .line-unchanged {
+            color: #666;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 30px;
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .info-section h3 {
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .info-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .info-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-section li {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            padding: 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-home a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-home a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .editor-container,
+            .diff-display {
+                grid-template-columns: 1fr;
+            }
+
+            textarea {
+                height: 250px;
+            }
+
+            button {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Diff Checker</h1>
+            <p>So sánh và tìm sự khác biệt giữa 2 văn bản hoặc đoạn code</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="controls">
+                <div class="control-group">
+                    <input type="checkbox" id="ignoreCase">
+                    <label for="ignoreCase">Bỏ qua chữ hoa/thường</label>
+                </div>
+                <div class="control-group">
+                    <input type="checkbox" id="ignoreWhitespace">
+                    <label for="ignoreWhitespace">Bỏ qua khoảng trắng</label>
+                </div>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-panel">
+                    <h3>📄 Văn bản 1 <span class="char-count" id="count1">0 ký tự</span></h3>
+                    <textarea id="text1" placeholder="Paste văn bản hoặc code đầu tiên vào đây..."></textarea>
+                </div>
+
+                <div class="editor-panel">
+                    <h3>📄 Văn bản 2 <span class="char-count" id="count2">0 ký tự</span></h3>
+                    <textarea id="text2" placeholder="Paste văn bản hoặc code thứ hai vào đây..."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="compareDiff()">🔍 So Sánh Ngay</button>
+                <button class="btn-secondary" onclick="swapTexts()">🔄 Đổi Chỗ</button>
+                <button class="btn-secondary" onclick="clearAll()">🗑️ Xóa Tất Cả</button>
+            </div>
+
+            <div class="result-container" id="resultContainer">
+                <div class="result-header">
+                    <h3>📊 Kết Quả So Sánh</h3>
+                    <div class="result-stats">
+                        <div class="stat-item stat-added" id="addedCount">+0 dòng thêm</div>
+                        <div class="stat-item stat-removed" id="removedCount">-0 dòng xóa</div>
+                        <div class="stat-item stat-unchanged" id="unchangedCount">0 dòng giống</div>
+                    </div>
+                </div>
+
+                <div class="diff-display">
+                    <div class="diff-panel">
+                        <h4>Văn bản 1 (Original)</h4>
+                        <div class="diff-content" id="diff1"></div>
+                    </div>
+
+                    <div class="diff-panel">
+                        <h4>Văn bản 2 (Modified)</h4>
+                        <div class="diff-content" id="diff2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Diff Checker - Công Cụ So Sánh Văn Bản & Code Tốt Nhất</h2>
+
+            <p>Diff Checker là công cụ miễn phí giúp bạn so sánh 2 văn bản, đoạn code hoặc tài liệu để tìm ra sự khác biệt. Hiển thị trực quan các dòng được thêm, xóa hoặc thay đổi giữa 2 phiên bản.</p>
+
+            <h3>🎯 Tính Năng Nổi Bật</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>🎨 Hiển Thị Trực Quan</h4>
+                    <p>Màu sắc rõ ràng cho từng loại thay đổi: xanh (thêm), đỏ (xóa), xám (không đổi)</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚙️ Tùy Chỉnh Linh Hoạt</h4>
+                    <p>Bỏ qua chữ hoa/thường hoặc khoảng trắng khi so sánh</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📊 Thống Kê Chi Tiết</h4>
+                    <p>Hiển thị số lượng dòng thêm, xóa và giống nhau</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔄 So Sánh 2 Chiều</h4>
+                    <p>Xem đồng thời cả 2 văn bản để dễ dàng đối chiếu</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ Xử Lý Nhanh</h4>
+                    <p>So sánh ngay lập tức, không giới hạn kích thước văn bản</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 An Toàn & Bảo Mật</h4>
+                    <p>Xử lý hoàn toàn trên trình duyệt, không upload lên server</p>
+                </div>
+            </div>
+
+            <h3>📚 Hướng Dẫn Sử Dụng</h3>
+            <ul>
+                <li><strong>Bước 1:</strong> Paste văn bản hoặc code gốc vào ô "Văn bản 1"</li>
+                <li><strong>Bước 2:</strong> Paste văn bản hoặc code cần so sánh vào ô "Văn bản 2"</li>
+                <li><strong>Bước 3:</strong> Chọn tùy chọn so sánh (bỏ qua chữ hoa/thường, khoảng trắng)</li>
+                <li><strong>Bước 4:</strong> Click "So Sánh Ngay" để xem kết quả</li>
+                <li><strong>Bước 5:</strong> Xem các dòng được highlight với màu sắc khác nhau</li>
+            </ul>
+
+            <h3>💡 Các Trường Hợp Sử Dụng</h3>
+            <p><strong>Diff checker</strong> rất hữu ích trong nhiều tình huống:</p>
+            <ul>
+                <li><strong>Lập trình viên:</strong> So sánh code trước và sau khi sửa bug</li>
+                <li><strong>Nhà văn/Editor:</strong> Kiểm tra thay đổi giữa các draft</li>
+                <li><strong>Sinh viên:</strong> So sánh các phiên bản bài luận, báo cáo</li>
+                <li><strong>Quản lý dự án:</strong> Review các thay đổi trong tài liệu</li>
+                <li><strong>Translator:</strong> Đối chiếu bản dịch với bản gốc</li>
+                <li><strong>Legal:</strong> So sánh các phiên bản hợp đồng</li>
+            </ul>
+
+            <h3>🎨 Hiểu Màu Sắc Trong Diff</h3>
+            <ul>
+                <li><strong style="color: #065f46;">🟢 Màu xanh (Thêm):</strong> Dòng này có trong văn bản 2 nhưng không có trong văn bản 1</li>
+                <li><strong style="color: #991b1b;">🔴 Màu đỏ (Xóa):</strong> Dòng này có trong văn bản 1 nhưng không có trong văn bản 2</li>
+                <li><strong style="color: #666;">⚪ Màu xám (Giống):</strong> Dòng này giống nhau ở cả 2 văn bản</li>
+            </ul>
+
+            <h3>🔧 Tính Năng Nâng Cao</h3>
+            <ul>
+                <li><strong>Bỏ qua chữ hoa/thường:</strong> Hữu ích khi bạn chỉ quan tâm đến nội dung, không quan tâm case sensitivity</li>
+                <li><strong>Bỏ qua khoảng trắng:</strong> Loại bỏ sự khác biệt về spaces, tabs, và line breaks</li>
+                <li><strong>Đổi chỗ văn bản:</strong> Nhanh chóng swap 2 văn bản để xem từ góc độ ngược lại</li>
+                <li><strong>Đếm ký tự real-time:</strong> Theo dõi độ dài văn bản khi nhập</li>
+            </ul>
+
+            <h3>🎓 Tips & Tricks</h3>
+            <ul>
+                <li>Sử dụng Ctrl+A để select all text nhanh chóng</li>
+                <li>Bật "Bỏ qua khoảng trắng" khi so sánh code đã format khác nhau</li>
+                <li>Sử dụng chức năng "Đổi chỗ" để xem diff từ 2 hướng</li>
+                <li>Tool này hữu ích để review code changes trước khi commit</li>
+            </ul>
+
+            <h3>❓ FAQs</h3>
+            <p><strong>Q: Văn bản của tôi có được lưu trữ không?</strong><br>
+            A: Không, mọi so sánh đều được thực hiện hoàn toàn trên trình duyệt. Không có dữ liệu nào được gửi lên server.</p>
+
+            <p><strong>Q: Có giới hạn độ dài văn bản không?</strong><br>
+            A: Không có giới hạn cố định, nhưng văn bản quá lớn (>5MB) có thể ảnh hưởng đến hiệu suất trình duyệt.</p>
+
+            <p><strong>Q: Tool có hỗ trợ so sánh file không?</strong><br>
+            A: Hiện tại tool so sánh text/code được paste vào. Bạn có thể mở file và copy nội dung vào.</p>
+
+            <p><strong>Q: Làm thế nào để so sánh code có nhiều thay đổi?</strong><br>
+            A: Sử dụng options "Bỏ qua khoảng trắng" để tập trung vào logic changes thay vì formatting.</p>
+        </div>
+
+        <div class="back-home">
+            <a href="Index.html">← Về Trang Chủ ZapTools</a>
+        </div>
+    </div>
+
+    <script>
+        // Character count
+        document.getElementById('text1').addEventListener('input', function() {
+            document.getElementById('count1').textContent = this.value.length + ' ký tự';
+        });
+
+        document.getElementById('text2').addEventListener('input', function() {
+            document.getElementById('count2').textContent = this.value.length + ' ký tự';
+        });
+
+        function compareDiff() {
+            let text1 = document.getElementById('text1').value;
+            let text2 = document.getElementById('text2').value;
+
+            if (!text1 && !text2) {
+                alert('Vui lòng nhập văn bản để so sánh!');
+                return;
+            }
+
+            const ignoreCase = document.getElementById('ignoreCase').checked;
+            const ignoreWhitespace = document.getElementById('ignoreWhitespace').checked;
+
+            // Preprocessing
+            if (ignoreCase) {
+                text1 = text1.toLowerCase();
+                text2 = text2.toLowerCase();
+            }
+
+            if (ignoreWhitespace) {
+                text1 = text1.replace(/\s+/g, ' ').trim();
+                text2 = text2.replace(/\s+/g, ' ').trim();
+            }
+
+            const lines1 = text1.split('\n');
+            const lines2 = text2.split('\n');
+
+            const diff = calculateDiff(lines1, lines2);
+            displayDiff(diff);
+        }
+
+        function calculateDiff(lines1, lines2) {
+            const result = {
+                left: [],
+                right: [],
+                stats: { added: 0, removed: 0, unchanged: 0 }
+            };
+
+            let i = 0, j = 0;
+
+            while (i < lines1.length || j < lines2.length) {
+                if (i < lines1.length && j < lines2.length && lines1[i] === lines2[j]) {
+                    // Unchanged
+                    result.left.push({ type: 'unchanged', content: lines1[i] });
+                    result.right.push({ type: 'unchanged', content: lines2[j] });
+                    result.stats.unchanged++;
+                    i++;
+                    j++;
+                } else if (i < lines1.length && (j >= lines2.length || !lines2.includes(lines1[i]))) {
+                    // Removed
+                    result.left.push({ type: 'removed', content: lines1[i] });
+                    result.right.push({ type: 'empty', content: '' });
+                    result.stats.removed++;
+                    i++;
+                } else if (j < lines2.length && (i >= lines1.length || !lines1.includes(lines2[j]))) {
+                    // Added
+                    result.left.push({ type: 'empty', content: '' });
+                    result.right.push({ type: 'added', content: lines2[j] });
+                    result.stats.added++;
+                    j++;
+                } else {
+                    // Changed
+                    if (i < lines1.length) {
+                        result.left.push({ type: 'removed', content: lines1[i] });
+                        i++;
+                    }
+                    if (j < lines2.length) {
+                        result.right.push({ type: 'added', content: lines2[j] });
+                        j++;
+                    }
+                    result.stats.removed++;
+                    result.stats.added++;
+                }
+            }
+
+            return result;
+        }
+
+        function displayDiff(diff) {
+            const diff1 = document.getElementById('diff1');
+            const diff2 = document.getElementById('diff2');
+
+            diff1.innerHTML = '';
+            diff2.innerHTML = '';
+
+            diff.left.forEach(line => {
+                const div = document.createElement('div');
+                div.className = `diff-line ${line.type === 'removed' ? 'line-removed' : (line.type === 'unchanged' ? 'line-unchanged' : '')}`;
+                div.textContent = line.content || '\u00A0';
+                diff1.appendChild(div);
+            });
+
+            diff.right.forEach(line => {
+                const div = document.createElement('div');
+                div.className = `diff-line ${line.type === 'added' ? 'line-added' : (line.type === 'unchanged' ? 'line-unchanged' : '')}`;
+                div.textContent = line.content || '\u00A0';
+                diff2.appendChild(div);
+            });
+
+            // Update stats
+            document.getElementById('addedCount').textContent = `+${diff.stats.added} dòng thêm`;
+            document.getElementById('removedCount').textContent = `-${diff.stats.removed} dòng xóa`;
+            document.getElementById('unchangedCount').textContent = `${diff.stats.unchanged} dòng giống`;
+
+            // Show result
+            document.getElementById('resultContainer').classList.add('active');
+        }
+
+        function swapTexts() {
+            const text1 = document.getElementById('text1');
+            const text2 = document.getElementById('text2');
+            const temp = text1.value;
+            text1.value = text2.value;
+            text2.value = temp;
+
+            // Update character counts
+            document.getElementById('count1').textContent = text1.value.length + ' ký tự';
+            document.getElementById('count2').textContent = text2.value.length + ' ký tự';
+        }
+
+        function clearAll() {
+            if (confirm('Bạn có chắc muốn xóa tất cả?')) {
+                document.getElementById('text1').value = '';
+                document.getElementById('text2').value = '';
+                document.getElementById('count1').textContent = '0 ký tự';
+                document.getElementById('count2').textContent = '0 ký tự';
+                document.getElementById('resultContainer').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

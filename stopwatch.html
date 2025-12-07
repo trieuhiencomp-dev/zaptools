@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Stopwatch - Accurate Timer with Lap Function | ZapTools</title>
+    <meta name="description" content="Free online stopwatch with lap timer. Accurate to milliseconds. Perfect for workouts, sports, cooking, and productivity!">
+    <meta name="keywords" content="stopwatch, online stopwatch, timer, lap timer, free stopwatch">
+    <link rel="canonical" href="https://zaptools.org/stopwatch.html">
+    <meta name="theme-color" content="#667eea">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { max-width: 500px; width: 100%; }
+        header { text-align: center; color: white; margin-bottom: 30px; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; }
+        .stopwatch-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 30px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn-start {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        .btn-stop {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+        .btn-reset {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .btn-reset:hover { background: #e5e7eb; }
+        .btn-lap {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .laps {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .laps h3 {
+            color: #374151;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .lap-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .lap-number { font-weight: 600; color: #6b7280; }
+        .lap-time { font-family: 'Courier New', monospace; color: #111827; }
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 8px 16px;
+        }
+        .lang-switch select {
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .lang-switch select option { color: #333; }
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .display { font-size: 3rem; }
+            .stopwatch-box { padding: 25px; }
+            .btn { min-width: 100px; padding: 12px 25px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <select id="langSelect">
+            <option value="en">🇬🇧 English</option>
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 id="title">⏱️ Stopwatch</h1>
+            <p class="subtitle" id="subtitle">Precise time tracking</p>
+        </header>
+
+        <div class="stopwatch-box">
+            <div class="display" id="display">00:00:00.000</div>
+
+            <div class="controls">
+                <button class="btn btn-start" id="startBtn" onclick="start()">
+                    <span id="startText">Start</span>
+                </button>
+                <button class="btn btn-stop" id="stopBtn" onclick="stop()" style="display:none;">
+                    <span id="stopText">Stop</span>
+                </button>
+                <button class="btn btn-lap" id="lapBtn" onclick="recordLap()" style="display:none;">
+                    <span id="lapText">Lap</span>
+                </button>
+                <button class="btn btn-reset" onclick="reset()">
+                    <span id="resetText">Reset</span>
+                </button>
+            </div>
+
+            <div class="laps" id="lapsContainer" style="display:none;">
+                <h3 id="lapsTitle">Laps</h3>
+                <div id="lapsList"></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.html" style="color: white; text-decoration: none; opacity: 0.8; font-size: 0.9rem;">
+                ← <span id="backText">Back to Home</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="feedback-widget.js"></script>
+    <script>
+        const lang = {
+            en: {
+                title: '⏱️ Stopwatch',
+                subtitle: 'Precise time tracking',
+                startText: 'Start',
+                stopText: 'Stop',
+                lapText: 'Lap',
+                resetText: 'Reset',
+                lapsTitle: 'Laps',
+                lap: 'Lap',
+                backText: 'Back to Home'
+            },
+            vi: {
+                title: '⏱️ Đồng hồ bấm giờ',
+                subtitle: 'Đo thời gian chính xác',
+                startText: 'Bắt đầu',
+                stopText: 'Dừng',
+                lapText: 'Vòng',
+                resetText: 'Đặt lại',
+                lapsTitle: 'Các vòng',
+                lap: 'Vòng',
+                backText: 'Quay lại Trang chủ'
+            }
+        };
+
+        let currentLang = localStorage.getItem('zaptools_lang') || 'vi';
+        document.getElementById('langSelect').value = currentLang;
+
+        function setLang(l) {
+            currentLang = l;
+            document.getElementById('title').textContent = lang[l].title;
+            document.getElementById('subtitle').textContent = lang[l].subtitle;
+            document.getElementById('startText').textContent = lang[l].startText;
+            document.getElementById('stopText').textContent = lang[l].stopText;
+            document.getElementById('lapText').textContent = lang[l].lapText;
+            document.getElementById('resetText').textContent = lang[l].resetText;
+            document.getElementById('lapsTitle').textContent = lang[l].lapsTitle;
+            document.getElementById('backText').textContent = lang[l].backText;
+            localStorage.setItem('zaptools_lang', l);
+        }
+
+        document.getElementById('langSelect').addEventListener('change', (e) => setLang(e.target.value));
+        setLang(currentLang);
+
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval = null;
+        let lapCount = 0;
+
+        function formatTime(ms) {
+            const milliseconds = Math.floor((ms % 1000));
+            const seconds = Math.floor((ms / 1000) % 60);
+            const minutes = Math.floor((ms / (1000 * 60)) % 60);
+            const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+
+            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${padMs(milliseconds)}`;
+        }
+
+        function pad(num) {
+            return num < 10 ? '0' + num : num;
+        }
+
+        function padMs(num) {
+            if (num < 10) return '00' + num;
+            if (num < 100) return '0' + num;
+            return num;
+        }
+
+        function updateDisplay() {
+            const currentTime = Date.now() - startTime + elapsedTime;
+            document.getElementById('display').textContent = formatTime(currentTime);
+        }
+
+        function start() {
+            startTime = Date.now();
+            timerInterval = setInterval(updateDisplay, 10);
+
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('stopBtn').style.display = 'block';
+            document.getElementById('lapBtn').style.display = 'block';
+        }
+
+        function stop() {
+            clearInterval(timerInterval);
+            elapsedTime += Date.now() - startTime;
+
+            document.getElementById('startBtn').style.display = 'block';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('lapBtn').style.display = 'none';
+        }
+
+        function reset() {
+            clearInterval(timerInterval);
+            startTime = 0;
+            elapsedTime = 0;
+            lapCount = 0;
+
+            document.getElementById('display').textContent = '00:00:00.000';
+            document.getElementById('startBtn').style.display = 'block';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('lapBtn').style.display = 'none';
+
+            document.getElementById('lapsList').innerHTML = '';
+            document.getElementById('lapsContainer').style.display = 'none';
+        }
+
+        function recordLap() {
+            lapCount++;
+            const currentTime = Date.now() - startTime + elapsedTime;
+            const lapTime = formatTime(currentTime);
+
+            const lapItem = document.createElement('div');
+            lapItem.className = 'lap-item';
+            lapItem.innerHTML = `
+                <span class="lap-number">${lang[currentLang].lap} ${lapCount}</span>
+                <span class="lap-time">${lapTime}</span>
+            `;
+
+            document.getElementById('lapsList').insertBefore(lapItem, document.getElementById('lapsList').firstChild);
+            document.getElementById('lapsContainer').style.display = 'block';
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (document.getElementById('startBtn').style.display !== 'none') {
+                    start();
+                } else {
+                    stop();
+                }
+            }
+            if (e.key === 'l' || e.key === 'L') {
+                if (document.getElementById('lapBtn').style.display !== 'none') {
+                    recordLap();
+                }
+            }
+            if (e.key === 'r' || e.key === 'R') {
+                reset();
+            }
+        });
+    </script>
+</body>
+</html>

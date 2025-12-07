@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Email Validator - Check Email Address Validity | ZapTools</title>
+    <meta name="description" content="Free email validator tool. Check email format, syntax, and domain validity. Bulk email validation supported. Perfect for marketers and developers!">
+    <meta name="keywords" content="email validator, validate email, check email, email checker, email verification">
+    <link rel="canonical" href="https://zaptools.org/email-validator.html">
+    <meta name="theme-color" content="#667eea">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { text-align: center; color: white; margin-bottom: 30px; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; }
+        .tool-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #374151; }
+        input[type="email"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        textarea { min-height: 120px; resize: vertical; }
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102,126,234,0.4); }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+        }
+        .result.valid {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        .result.invalid {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .result.valid .result-title { color: #065f46; }
+        .result.invalid .result-title { color: #991b1b; }
+        .result-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .detail-item:last-child { border-bottom: none; }
+        .detail-label { font-weight: 600; color: #6b7280; }
+        .detail-value { color: #111827; }
+        .bulk-results { margin-top: 20px; }
+        .email-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .email-address { font-family: 'Courier New', monospace; flex: 1; }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-valid { background: #d1fae5; color: #065f46; }
+        .status-invalid { background: #fee2e2; color: #991b1b; }
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 8px 16px;
+        }
+        .lang-switch select {
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .lang-switch select option { color: #333; }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .tool-box { padding: 20px; }
+            .tabs { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <select id="langSelect">
+            <option value="en">🇬🇧 English</option>
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 id="title">📧 Email Validator</h1>
+            <p class="subtitle" id="subtitle">Check email address validity</p>
+        </header>
+
+        <div class="tool-box">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('single')" id="singleTab">Single Email</button>
+                <button class="tab" onclick="switchTab('bulk')" id="bulkTab">Bulk Validation</button>
+            </div>
+
+            <div class="tab-content active" id="singleContent">
+                <div class="input-group">
+                    <label id="emailLabel">Enter Email Address:</label>
+                    <input type="email" id="emailInput" placeholder="example@domain.com">
+                </div>
+                <button class="btn" onclick="validateEmail()">
+                    <span id="validateBtn">Validate Email</span>
+                </button>
+                <div id="singleResult"></div>
+            </div>
+
+            <div class="tab-content" id="bulkContent">
+                <div class="input-group">
+                    <label id="bulkLabel">Enter Emails (one per line):</label>
+                    <textarea id="bulkInput" placeholder="email1@example.com&#10;email2@example.com&#10;email3@example.com"></textarea>
+                </div>
+                <button class="btn" onclick="validateBulk()">
+                    <span id="validateBulkBtn">Validate All</span>
+                </button>
+                <div id="bulkResult"></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.html" style="color: white; text-decoration: none; opacity: 0.8; font-size: 0.9rem;">
+                ← <span id="backText">Back to Home</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="feedback-widget.js"></script>
+    <script>
+        const lang = {
+            en: {
+                title: '📧 Email Validator',
+                subtitle: 'Check email address validity',
+                singleTab: 'Single Email',
+                bulkTab: 'Bulk Validation',
+                emailLabel: 'Enter Email Address:',
+                validateBtn: 'Validate Email',
+                bulkLabel: 'Enter Emails (one per line):',
+                validateBulkBtn: 'Validate All',
+                validEmail: 'Valid Email!',
+                invalidEmail: 'Invalid Email',
+                format: 'Format',
+                domain: 'Domain',
+                username: 'Username',
+                valid: 'Valid',
+                invalid: 'Invalid',
+                backText: 'Back to Home'
+            },
+            vi: {
+                title: '📧 Kiểm tra Email',
+                subtitle: 'Kiểm tra tính hợp lệ của email',
+                singleTab: 'Email đơn',
+                bulkTab: 'Kiểm tra hàng loạt',
+                emailLabel: 'Nhập địa chỉ Email:',
+                validateBtn: 'Kiểm tra Email',
+                bulkLabel: 'Nhập Emails (mỗi dòng một email):',
+                validateBulkBtn: 'Kiểm tra Tất cả',
+                validEmail: 'Email hợp lệ!',
+                invalidEmail: 'Email không hợp lệ',
+                format: 'Định dạng',
+                domain: 'Tên miền',
+                username: 'Tên người dùng',
+                valid: 'Hợp lệ',
+                invalid: 'Không hợp lệ',
+                backText: 'Quay lại Trang chủ'
+            }
+        };
+
+        let currentLang = localStorage.getItem('zaptools_lang') || 'vi';
+        document.getElementById('langSelect').value = currentLang;
+
+        function setLang(l) {
+            currentLang = l;
+            document.getElementById('title').textContent = lang[l].title;
+            document.getElementById('subtitle').textContent = lang[l].subtitle;
+            document.getElementById('singleTab').textContent = lang[l].singleTab;
+            document.getElementById('bulkTab').textContent = lang[l].bulkTab;
+            document.getElementById('emailLabel').textContent = lang[l].emailLabel;
+            document.getElementById('validateBtn').textContent = lang[l].validateBtn;
+            document.getElementById('bulkLabel').textContent = lang[l].bulkLabel;
+            document.getElementById('validateBulkBtn').textContent = lang[l].validateBulkBtn;
+            document.getElementById('backText').textContent = lang[l].backText;
+            localStorage.setItem('zaptools_lang', l);
+        }
+
+        document.getElementById('langSelect').addEventListener('change', (e) => setLang(e.target.value));
+        setLang(currentLang);
+
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            if (tab === 'single') {
+                tabs[0].classList.add('active');
+                contents[0].classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                contents[1].classList.add('active');
+            }
+        }
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email.toLowerCase());
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('emailInput').value.trim();
+            const resultDiv = document.getElementById('singleResult');
+
+            if (!email) {
+                resultDiv.innerHTML = '';
+                return;
+            }
+
+            const isValid = isValidEmail(email);
+            const parts = email.split('@');
+            const username = parts[0] || '';
+            const domain = parts[1] || '';
+
+            resultDiv.innerHTML = `
+                <div class="result ${isValid ? 'valid' : 'invalid'}">
+                    <div class="result-icon">${isValid ? '✅' : '❌'}</div>
+                    <div class="result-title">${lang[currentLang][isValid ? 'validEmail' : 'invalidEmail']}</div>
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <span class="detail-label">${lang[currentLang].format}:</span>
+                            <span class="detail-value">${lang[currentLang][isValid ? 'valid' : 'invalid']}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">${lang[currentLang].username}:</span>
+                            <span class="detail-value">${username || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">${lang[currentLang].domain}:</span>
+                            <span class="detail-value">${domain || 'N/A'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function validateBulk() {
+            const emails = document.getElementById('bulkInput').value.trim().split('\n');
+            const resultDiv = document.getElementById('bulkResult');
+
+            if (!emails.length || !emails[0]) {
+                resultDiv.innerHTML = '';
+                return;
+            }
+
+            let html = '<div class="bulk-results">';
+            emails.forEach(email => {
+                email = email.trim();
+                if (email) {
+                    const isValid = isValidEmail(email);
+                    html += `
+                        <div class="email-item">
+                            <span class="email-address">${email}</span>
+                            <span class="status-badge ${isValid ? 'status-valid' : 'status-invalid'}">
+                                ${lang[currentLang][isValid ? 'valid' : 'invalid']}
+                            </span>
+                        </div>
+                    `;
+                }
+            });
+            html += '</div>';
+
+            resultDiv.innerHTML = html;
+        }
+
+        document.getElementById('emailInput').addEventListener('input', () => {
+            if (document.getElementById('emailInput').value) {
+                validateEmail();
+            }
+        });
+    </script>
+</body>
+</html>

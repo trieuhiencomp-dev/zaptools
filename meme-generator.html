@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator - Tạo Meme Miễn Phí | ZapTools</title>
+    <meta name="description" content="Tạo meme funny miễn phí. Upload ảnh, thêm text, download meme.">
+    <link rel="stylesheet" href="dark-mode.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: white; padding: 1rem; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: white; text-decoration: none; opacity: 0.8; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h1 { font-size: 2.5rem; }
+        .tool-container { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .upload-area { border: 3px dashed rgba(167, 226, 127, 0.5); border-radius: 15px; padding: 2rem; text-align: center; cursor: pointer; margin-bottom: 1.5rem; }
+        .upload-area:hover { background: rgba(14, 1, 30, 0.05); }
+        canvas { max-width: 100%; border-radius: 10px; margin: 1rem 0; box-shadow: 0 10px 30px rgba(238, 236, 236, 0.3); }
+        input[type="text"] { width: 100%; padding: 0.75rem; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(246, 164, 164, 0.1); color: white; font-size: 1rem; margin: 0.5rem 0; }
+        .btn { padding: 1rem 2rem; background: linear-gradient(135deg, #FF0080 0%, #FF8C00 100%); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; width: 100%; margin: 0.5rem 0; }
+        .btn:hover { transform: translateY(-3px); transition: 0.3s; }
+        #canvas { display: none; background: rgb(241, 9, 9); }
+        #canvas.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index.html" class="back-link">← Về trang chủ ZapTools</a>
+        <div class="header">
+            <h1>😂 Meme Generator</h1>
+            <p>Tạo meme viral trong vài giây!</p>
+        </div>
+        <div class="tool-container">
+            <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+                <div style="font-size: 3rem;">📸</div>
+                <p>Click để upload ảnh</p>
+                <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="loadImage(event)">
+            </div>
+            <div>
+                <input type="text" id="topText" placeholder="Text trên (Top text)" oninput="drawMeme()">
+                <input type="text" id="bottomText" placeholder="Text dưới (Bottom text)" oninput="drawMeme()">
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-top:1rem;">
+                <div>
+                    <label style="font-size:0.9rem;">Font Size:</label>
+                    <input type="range" id="fontSize" min="20" max="150" value="80" oninput="drawMeme()" style="width:100%;">
+                    <span id="fontSizeValue" style="font-size:0.8rem;">80px</span>
+                </div>
+                <div>
+                    <label style="font-size:0.9rem;">Text Color:</label>
+                    <input type="color" id="textColor" value="#ffffff" onchange="drawMeme()" style="width:100%; height:40px; border-radius:8px; border:none; cursor:pointer;">
+                </div>
+                <div>
+                    <label style="font-size:0.9rem;">Outline Color:</label>
+                    <input type="color" id="outlineColor" value="#000000" onchange="drawMeme()" style="width:100%; height:40px; border-radius:8px; border:none; cursor:pointer;">
+                </div>
+                <div>
+                    <label style="font-size:0.9rem;">Font:</label>
+                    <select id="fontFamily" onchange="drawMeme()" style="width:100%; padding:0.5rem; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:2px solid rgba(255,255,255,0.3);">
+                        <option value="Impact" style="background:#764ba2; color:white;">Impact (Classic)</option>
+                        <option value="Arial Black" style="background:#764ba2; color:white;">Arial Black</option>
+                        <option value="Comic Sans MS" style="background:#764ba2; color:white;">Comic Sans MS</option>
+                        <option value="Courier New" style="background:#764ba2; color:white;">Courier New</option>
+                        <option value="Georgia" style="background:#764ba2; color:white;">Georgia</option>
+                    </select>
+                </div>
+            </div>
+            <canvas id="canvas"></canvas>
+            <button class="btn" onclick="downloadMeme()" id="downloadBtn" style="display:none;">⬇️ Download Meme</button>
+        </div>
+    </div>
+    <script src="dark-mode.js"></script>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let img = null;
+
+        function loadImage(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                img = new Image();
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    canvas.classList.add('show');
+                    document.getElementById('downloadBtn').style.display = 'block';
+                    drawMeme();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function drawMeme() {
+            if (!img) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+
+            const topText = document.getElementById('topText').value.toUpperCase();
+            const bottomText = document.getElementById('bottomText').value.toUpperCase();
+            const fontSize = document.getElementById('fontSize').value;
+            const textColor = document.getElementById('textColor').value;
+            const outlineColor = document.getElementById('outlineColor').value;
+            const fontFamily = document.getElementById('fontFamily').value;
+
+            // Update font size display
+            document.getElementById('fontSizeValue').textContent = fontSize + 'px';
+
+            ctx.font = 'bold ' + fontSize + 'px ' + fontFamily;
+            ctx.fillStyle = textColor;
+            ctx.strokeStyle = outlineColor;
+            ctx.lineWidth = fontSize / 20;
+            ctx.textAlign = 'center';
+
+            if (topText) {
+                ctx.fillText(topText, canvas.width / 2, parseInt(fontSize) + 20);
+                ctx.strokeText(topText, canvas.width / 2, parseInt(fontSize) + 20);
+            }
+
+            if (bottomText) {
+                ctx.fillText(bottomText, canvas.width / 2, canvas.height - 20);
+                ctx.strokeText(bottomText, canvas.width / 2, canvas.height - 20);
+            }
+        }
+
+        function downloadMeme() {
+            const link = document.createElement('a');
+            link.download = 'zaptools-meme.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

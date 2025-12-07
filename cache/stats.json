@@ -1,8 +1,8 @@
 {
   "hit": 4,
-  "miss": 7,
+  "miss": 8,
   "expired": 0,
   "charsSaved": 77,
-  "charsUsed": 231,
-  "hitRate": "36.36%"
+  "charsUsed": 744,
+  "hitRate": "33.33%"
 }

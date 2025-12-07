@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to XML Converter - Chuyển Đổi JSON Sang XML Online Miễn Phí | ZapTools</title>
+    <meta name="description" content="JSON to XML Converter miễn phí - Chuyển đổi JSON sang XML nhanh chóng. Hỗ trợ validate JSON, format XML đẹp, download kết quả. Công cụ convert JSON online tốt nhất.">
+    <meta name="keywords" content="json to xml, convert json, xml converter, json parser, json to xml online, chuyển json sang xml, convert data">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="JSON to XML Converter - Chuyển Đổi JSON Sang XML">
+    <meta property="og:description" content="Công cụ chuyển đổi JSON sang XML online miễn phí. Nhanh chóng, chính xác, dễ sử dụng.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zaptools.pro/json-to-xml.html">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="JSON to XML Converter Online">
+    <meta name="twitter:description" content="Chuyển đổi JSON sang XML dễ dàng. Miễn phí, không giới hạn.">
+
+    <link rel="canonical" href="https://zaptools.pro/json-to-xml.html">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        input[type="text"] {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:hover {
+            border-color: #667eea;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .editor-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .panel-header h3 {
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-valid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-invalid {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-pending {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        textarea {
+            width: 100%;
+            height: 500px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-download {
+            background: #6366f1;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        .sample-data {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff7ed;
+            border-radius: 10px;
+            border-left: 4px solid #fa709a;
+        }
+
+        .sample-data h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .sample-data pre {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85em;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 30px;
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .info-section h3 {
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .info-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .info-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .info-section li {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            padding: 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-home a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-home a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+
+            textarea {
+                height: 300px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            button {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 JSON to XML Converter</h1>
+            <p>Chuyển đổi JSON sang XML nhanh chóng và dễ dàng</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="rootElement">Root Element Name:</label>
+                    <input type="text" id="rootElement" value="root" placeholder="Nhập tên root element...">
+                </div>
+
+                <div class="control-group">
+                    <label for="itemElement">Array Item Element:</label>
+                    <input type="text" id="itemElement" value="item" placeholder="Tên element cho array items...">
+                </div>
+
+                <div class="control-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="prettyPrint" checked>
+                        <label for="prettyPrint">Format XML đẹp (Pretty Print)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="addDeclaration" checked>
+                        <label for="addDeclaration">Thêm XML Declaration</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-panel">
+                    <div class="panel-header">
+                        <h3>📄 JSON Input</h3>
+                        <span class="status-badge status-pending" id="jsonStatus">Chưa validate</span>
+                    </div>
+                    <textarea id="jsonInput" placeholder="Paste JSON data vào đây...
+
+Ví dụ:
+{
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;age&quot;: 30,
+  &quot;city&quot;: &quot;New York&quot;,
+  &quot;hobbies&quot;: [&quot;reading&quot;, &quot;gaming&quot;, &quot;coding&quot;]
+}"></textarea>
+                </div>
+
+                <div class="editor-panel">
+                    <div class="panel-header">
+                        <h3>📋 XML Output</h3>
+                        <span class="status-badge status-pending" id="xmlStatus">Chờ convert</span>
+                    </div>
+                    <textarea id="xmlOutput" readonly placeholder="XML sẽ xuất hiện ở đây..."></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="convertToXML()">🔄 Convert to XML</button>
+                <button class="btn-success" onclick="copyXML()">📋 Copy XML</button>
+                <button class="btn-download" onclick="downloadXML()">💾 Download XML</button>
+                <button class="btn-secondary" onclick="loadSample()">📝 Load Sample</button>
+                <button class="btn-secondary" onclick="clearAll()">🗑️ Xóa Tất Cả</button>
+            </div>
+
+            <div class="sample-data">
+                <h4>💡 Mẹo: Upload JSON file</h4>
+                <input type="file" id="fileInput" accept=".json,.txt" onchange="loadFile(event)" style="margin-top: 10px;">
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>JSON to XML Converter - Công Cụ Chuyển Đổi JSON Sang XML Tốt Nhất</h2>
+
+            <p>JSON to XML Converter là công cụ miễn phí giúp bạn chuyển đổi dữ liệu từ định dạng JSON (JavaScript Object Notation) sang XML (eXtensible Markup Language) một cách nhanh chóng và chính xác.</p>
+
+            <h3>🎯 Tính Năng Nổi Bật</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>✅ Validate JSON</h4>
+                    <p>Tự động kiểm tra tính hợp lệ của JSON trước khi convert</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎨 Pretty Print</h4>
+                    <p>Format XML với indentation đẹp mắt, dễ đọc</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚙️ Custom Elements</h4>
+                    <p>Tùy chỉnh tên root element và array item elements</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📁 File Upload</h4>
+                    <p>Upload trực tiếp file JSON để convert nhanh chóng</p>
+                </div>
+                <div class="feature-card">
+                    <h4>💾 Download XML</h4>
+                    <p>Tải xuống kết quả dưới dạng file .xml</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ Xử Lý Nhanh</h4>
+                    <p>Convert ngay lập tức, không giới hạn kích thước</p>
+                </div>
+            </div>
+
+            <h3>📚 Hướng Dẫn Sử Dụng</h3>
+            <ul>
+                <li><strong>Bước 1:</strong> Paste JSON data vào ô bên trái hoặc upload file</li>
+                <li><strong>Bước 2:</strong> Tùy chỉnh root element và item element names (optional)</li>
+                <li><strong>Bước 3:</strong> Chọn options (pretty print, XML declaration)</li>
+                <li><strong>Bước 4:</strong> Click "Convert to XML"</li>
+                <li><strong>Bước 5:</strong> Copy hoặc download XML kết quả</li>
+            </ul>
+
+            <h3>💡 JSON vs XML</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Đặc điểm</th>
+                        <th>JSON</th>
+                        <th>XML</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cú pháp</strong></td>
+                        <td>Đơn giản, compact</td>
+                        <td>Verbose, tag-based</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kích thước</strong></td>
+                        <td>Nhỏ hơn</td>
+                        <td>Lớn hơn</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Đọc/Viết</strong></td>
+                        <td>Dễ hơn cho người</td>
+                        <td>Verbose hơn</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Types</strong></td>
+                        <td>String, Number, Boolean, Array, Object, null</td>
+                        <td>Chỉ có text</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Cases</strong></td>
+                        <td>APIs, Web, NoSQL</td>
+                        <td>SOAP, Config files, Legacy systems</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔧 Ví Dụ Chuyển Đổi</h3>
+            <p><strong>JSON Input:</strong></p>
+            <pre><code>{
+  "person": {
+    "name": "John Doe",
+    "age": 30,
+    "skills": ["JavaScript", "Python", "Java"]
+  }
+}</code></pre>
+
+            <p><strong>XML Output:</strong></p>
+            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;root&gt;
+  &lt;person&gt;
+    &lt;name&gt;John Doe&lt;/name&gt;
+    &lt;age&gt;30&lt;/age&gt;
+    &lt;skills&gt;
+      &lt;item&gt;JavaScript&lt;/item&gt;
+      &lt;item&gt;Python&lt;/item&gt;
+      &lt;item&gt;Java&lt;/item&gt;
+    &lt;/skills&gt;
+  &lt;/person&gt;
+&lt;/root&gt;</code></pre>
+
+            <h3>💡 Các Trường Hợp Sử Dụng</h3>
+            <ul>
+                <li><strong>Legacy Systems:</strong> Convert data cho hệ thống cũ chỉ hỗ trợ XML</li>
+                <li><strong>SOAP APIs:</strong> Chuẩn bị data cho SOAP web services</li>
+                <li><strong>Configuration Files:</strong> Tạo XML config từ JSON</li>
+                <li><strong>Data Migration:</strong> Di chuyển dữ liệu giữa các hệ thống</li>
+                <li><strong>RSS/Atom Feeds:</strong> Tạo RSS feeds từ JSON data</li>
+                <li><strong>Document Processing:</strong> Convert data cho XML processors</li>
+            </ul>
+
+            <h3>🎓 Tips & Tricks</h3>
+            <ul>
+                <li>Đảm bảo JSON hợp lệ trước khi convert để tránh lỗi</li>
+                <li>Sử dụng pretty print để debug XML dễ hơn</li>
+                <li>Customize root element name cho phù hợp với use case</li>
+                <li>Array items mặc định được wrap trong &lt;item&gt; tags</li>
+                <li>JSON attributes sẽ được convert thành XML elements</li>
+            </ul>
+
+            <h3>⚙️ Xử Lý Đặc Biệt</h3>
+            <ul>
+                <li><strong>Arrays:</strong> Mỗi item được wrap trong element (mặc định "item")</li>
+                <li><strong>Nested Objects:</strong> Được convert thành nested XML elements</li>
+                <li><strong>Special Characters:</strong> Tự động escape các ký tự đặc biệt XML</li>
+                <li><strong>Numbers & Booleans:</strong> Convert thành text trong XML</li>
+                <li><strong>Null values:</strong> Được convert thành empty elements</li>
+            </ul>
+
+            <h3>❓ FAQs</h3>
+            <p><strong>Q: Tool có validate JSON trước khi convert không?</strong><br>
+            A: Có, tool tự động validate và hiển thị lỗi nếu JSON không hợp lệ.</p>
+
+            <p><strong>Q: Làm sao để thay đổi tên của array item elements?</strong><br>
+            A: Sử dụng ô "Array Item Element" trong controls để customize tên element.</p>
+
+            <p><strong>Q: Tool có hỗ trợ convert ngược XML to JSON không?</strong><br>
+            A: Hiện tại chỉ hỗ trợ JSON to XML. Chức năng XML to JSON sẽ được thêm sau.</p>
+
+            <p><strong>Q: Có giới hạn kích thước JSON không?</strong><br>
+            A: Không có giới hạn cứng, nhưng JSON quá lớn (>5MB) có thể chậm trên một số trình duyệt.</p>
+
+            <p><strong>Q: Dữ liệu có được lưu trên server không?</strong><br>
+            A: Không, mọi conversion đều thực hiện trên trình duyệt. Dữ liệu không được gửi lên server.</p>
+        </div>
+
+        <div class="back-home">
+            <a href="Index.html">← Về Trang Chủ ZapTools</a>
+        </div>
+    </div>
+
+    <script>
+        // Real-time JSON validation
+        document.getElementById('jsonInput').addEventListener('input', function() {
+            const jsonStatus = document.getElementById('jsonStatus');
+            try {
+                if (this.value.trim()) {
+                    JSON.parse(this.value);
+                    jsonStatus.textContent = 'Valid JSON ✓';
+                    jsonStatus.className = 'status-badge status-valid';
+                } else {
+                    jsonStatus.textContent = 'Chưa validate';
+                    jsonStatus.className = 'status-badge status-pending';
+                }
+            } catch (e) {
+                jsonStatus.textContent = 'Invalid JSON ✗';
+                jsonStatus.className = 'status-badge status-invalid';
+            }
+        });
+
+        function convertToXML() {
+            const jsonInput = document.getElementById('jsonInput').value.trim();
+
+            if (!jsonInput) {
+                alert('Vui lòng nhập JSON data!');
+                return;
+            }
+
+            try {
+                const jsonData = JSON.parse(jsonInput);
+                const rootElement = document.getElementById('rootElement').value || 'root';
+                const itemElement = document.getElementById('itemElement').value || 'item';
+                const prettyPrint = document.getElementById('prettyPrint').checked;
+                const addDeclaration = document.getElementById('addDeclaration').checked;
+
+                let xml = '';
+
+                if (addDeclaration) {
+                    xml += '<?xml version="1.0" encoding="UTF-8"?>\n';
+                }
+
+                xml += jsonToXml(jsonData, rootElement, itemElement, prettyPrint);
+
+                document.getElementById('xmlOutput').value = xml;
+
+                const xmlStatus = document.getElementById('xmlStatus');
+                xmlStatus.textContent = 'Convert thành công ✓';
+                xmlStatus.className = 'status-badge status-valid';
+
+            } catch (error) {
+                alert('Lỗi khi convert: ' + error.message);
+                const xmlStatus = document.getElementById('xmlStatus');
+                xmlStatus.textContent = 'Lỗi convert ✗';
+                xmlStatus.className = 'status-badge status-invalid';
+            }
+        }
+
+        function jsonToXml(obj, rootName, itemName, prettyPrint, indent = 0) {
+            const indentStr = prettyPrint ? '  '.repeat(indent) : '';
+            const newline = prettyPrint ? '\n' : '';
+
+            if (typeof obj !== 'object' || obj === null) {
+                return escapeXml(String(obj));
+            }
+
+            if (Array.isArray(obj)) {
+                let xml = '';
+                obj.forEach(item => {
+                    xml += `${indentStr}<${itemName}>${newline}`;
+                    if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                        Object.keys(item).forEach(key => {
+                            xml += `${indentStr}  <${key}>${jsonToXml(item[key], key, itemName, prettyPrint, indent + 2)}</${key}>${newline}`;
+                        });
+                    } else {
+                        xml += jsonToXml(item, itemName, itemName, prettyPrint, indent + 1);
+                    }
+                    xml += `${indentStr}</${itemName}>${newline}`;
+                });
+                return xml;
+            }
+
+            let xml = `${indentStr}<${rootName}>${newline}`;
+            Object.keys(obj).forEach(key => {
+                const value = obj[key];
+                if (Array.isArray(value)) {
+                    xml += `${indentStr}  <${key}>${newline}`;
+                    xml += jsonToXml(value, key, itemName, prettyPrint, indent + 2);
+                    xml += `${indentStr}  </${key}>${newline}`;
+                } else if (typeof value === 'object' && value !== null) {
+                    xml += jsonToXml(value, key, itemName, prettyPrint, indent + 1);
+                } else {
+                    xml += `${indentStr}  <${key}>${escapeXml(String(value))}</${key}>${newline}`;
+                }
+            });
+            xml += `${indentStr}</${rootName}>${newline}`;
+
+            return xml;
+        }
+
+        function escapeXml(unsafe) {
+            return unsafe.replace(/[<>&'"]/g, function (c) {
+                switch (c) {
+                    case '<': return '&lt;';
+                    case '>': return '&gt;';
+                    case '&': return '&amp;';
+                    case '\'': return '&apos;';
+                    case '"': return '&quot;';
+                }
+            });
+        }
+
+        function copyXML() {
+            const output = document.getElementById('xmlOutput');
+            if (!output.value) {
+                alert('Chưa có XML để copy!');
+                return;
+            }
+
+            output.select();
+            document.execCommand('copy');
+
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Đã Copy!';
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+
+        function downloadXML() {
+            const output = document.getElementById('xmlOutput').value;
+            if (!output) {
+                alert('Chưa có XML để download!');
+                return;
+            }
+
+            const blob = new Blob([output], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.xml';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function loadSample() {
+            const sample = `{
+  "company": {
+    "name": "Tech Corp",
+    "founded": 2020,
+    "employees": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "position": "CEO",
+        "skills": ["Leadership", "Strategy"]
+      },
+      {
+        "id": 2,
+        "name": "Jane Smith",
+        "position": "CTO",
+        "skills": ["Technology", "Innovation"]
+      }
+    ],
+    "departments": ["Engineering", "Sales", "HR"],
+    "active": true
+  }
+}`;
+
+            document.getElementById('jsonInput').value = sample;
+            document.getElementById('jsonInput').dispatchEvent(new Event('input'));
+        }
+
+        function loadFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('jsonInput').value = e.target.result;
+                document.getElementById('jsonInput').dispatchEvent(new Event('input'));
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAll() {
+            if (confirm('Bạn có chắc muốn xóa tất cả?')) {
+                document.getElementById('jsonInput').value = '';
+                document.getElementById('xmlOutput').value = '';
+                document.getElementById('fileInput').value = '';
+
+                document.getElementById('jsonStatus').textContent = 'Chưa validate';
+                document.getElementById('jsonStatus').className = 'status-badge status-pending';
+                document.getElementById('xmlStatus').textContent = 'Chờ convert';
+                document.getElementById('xmlStatus').className = 'status-badge status-pending';
+            }
+        }
+    </script>
+</body>
+</html>
