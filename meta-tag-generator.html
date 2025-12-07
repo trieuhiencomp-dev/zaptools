@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Generator - SEO Meta Tags | ZapTools</title>
+    <meta name="description" content="Free meta tag generator. Create SEO-friendly meta tags for your website instantly.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 2rem; color: white; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 0.5rem; font-size: 2.5rem; }
+        .subtitle { text-align: center; margin-bottom: 2rem; opacity: 0.9; }
+        .tool-card { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 2rem; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); color: #333; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        input, textarea { width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; }
+        input:focus, textarea:focus { outline: none; border-color: #667eea; }
+        textarea { min-height: 80px; resize: vertical; font-family: inherit; }
+        .char-count { font-size: 0.85rem; color: #666; margin-top: 0.25rem; }
+        button { width: 100%; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin: 1rem 0; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+        .output { background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; }
+        .output h3 { margin-bottom: 1rem; color: #667eea; }
+        pre { background: white; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; }
+        .copy-btn { width: auto; padding: 0.5rem 1.5rem; font-size: 0.9rem; margin-top: 0.5rem; }
+        .back-home { position: fixed; top: 2rem; left: 2rem; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.3); color: white; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .back-home:hover { background: rgba(255, 255, 255, 0.3); transform: translateX(-5px); }
+        @media (max-width: 768px) { body { padding: 1rem; } h1 { font-size: 2rem; } .back-home { position: static; display: inline-block; margin-bottom: 1rem; } }
+    </style>
+</head>
+<body>
+    <a href="Index.html" class="back-home">← Home</a>
+    <div class="container">
+        <h1>🏷️ Meta Tag Generator</h1>
+        <p class="subtitle">Generate SEO-friendly meta tags for your website</p>
+        <div class="tool-card">
+            <div class="form-group">
+                <label for="title">Page Title *</label>
+                <input type="text" id="title" placeholder="e.g., Best Online Tools - ZapTools" maxlength="60" oninput="updateCount('title', 60)">
+                <div class="char-count"><span id="titleCount">0</span>/60 characters</div>
+            </div>
+            <div class="form-group">
+                <label for="description">Meta Description *</label>
+                <textarea id="description" placeholder="Describe your page in 150-160 characters..." maxlength="160" oninput="updateCount('description', 160)"></textarea>
+                <div class="char-count"><span id="descriptionCount">0</span>/160 characters</div>
+            </div>
+            <div class="form-group">
+                <label for="keywords">Keywords (comma-separated)</label>
+                <input type="text" id="keywords" placeholder="e.g., online tools, free tools, web utilities">
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" id="author" placeholder="Your name or company">
+            </div>
+            <div class="form-group">
+                <label for="url">Page URL</label>
+                <input type="url" id="url" placeholder="https://example.com/page">
+            </div>
+            <button onclick="generateMetaTags()">Generate Meta Tags</button>
+            <div id="output" class="output" style="display:none;">
+                <h3>Generated Meta Tags:</h3>
+                <pre id="metaTags"></pre>
+                <button class="copy-btn" onclick="copyTags()">Copy Tags</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCount(field, max) {
+            const value = document.getElementById(field).value;
+            document.getElementById(field + 'Count').textContent = value.length;
+        }
+
+        function generateMetaTags() {
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const keywords = document.getElementById('keywords').value.trim();
+            const author = document.getElementById('author').value.trim();
+            const url = document.getElementById('url').value.trim();
+
+            if (!title || !description) {
+                alert('Please fill in required fields (Title and Description)!');
+                return;
+            }
+
+            let tags = `<!-- Primary Meta Tags -->\n`;
+            tags += `<title>${title}</title>\n`;
+            tags += `<meta name="title" content="${title}">\n`;
+            tags += `<meta name="description" content="${description}">\n`;
+
+            if (keywords) {
+                tags += `<meta name="keywords" content="${keywords}">\n`;
+            }
+            if (author) {
+                tags += `<meta name="author" content="${author}">\n`;
+            }
+
+            tags += `\n<!-- Open Graph / Facebook -->\n`;
+            tags += `<meta property="og:type" content="website">\n`;
+            if (url) tags += `<meta property="og:url" content="${url}">\n`;
+            tags += `<meta property="og:title" content="${title}">\n`;
+            tags += `<meta property="og:description" content="${description}">\n`;
+
+            tags += `\n<!-- Twitter -->\n`;
+            tags += `<meta property="twitter:card" content="summary_large_image">\n`;
+            if (url) tags += `<meta property="twitter:url" content="${url}">\n`;
+            tags += `<meta property="twitter:title" content="${title}">\n`;
+            tags += `<meta property="twitter:description" content="${description}">`;
+
+            document.getElementById('metaTags').textContent = tags;
+            document.getElementById('output').style.display = 'block';
+        }
+
+        function copyTags() {
+            const tags = document.getElementById('metaTags').textContent;
+            navigator.clipboard.writeText(tags).then(() => {
+                alert('Meta tags copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

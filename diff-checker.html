@@ -365,6 +365,23 @@
             box-shadow: 0 10px 25px rgba(255,255,255,0.3);
         }
 
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -387,6 +404,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="Index.html" class="back-link">← Quay lại Trang chủ</a>
         <div class="header">
             <h1>🔍 Diff Checker</h1>
             <p>So sánh và tìm sự khác biệt giữa 2 văn bản hoặc đoạn code</p>

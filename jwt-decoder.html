@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Decoder - Decode JSON Web Tokens | ZapTools</title>
+    <meta name="description" content="Free online JWT decoder. Decode and verify JSON Web Tokens (JWT). View header, payload, and signature information instantly.">
+    <meta name="keywords" content="jwt decoder, decode jwt, json web token, jwt parser, jwt viewer, jwt debugger">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251"
+     crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .decode-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 1rem 0;
+        }
+
+        .decode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .output-section {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .output-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .output-box h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        pre {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-danger {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-info {
+            background: #e7f3ff;
+            color: #0066cc;
+            border: 1px solid #b3d9ff;
+        }
+
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-home:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tool-card {
+                padding: 1.5rem;
+            }
+
+            .back-home {
+                position: static;
+                display: inline-block;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="Index.html" class="back-home">← Home</a>
+
+    <div class="container">
+        <h1>🔓 JWT Decoder</h1>
+        <p class="subtitle">Decode and inspect JSON Web Tokens</p>
+
+        <div class="tool-card">
+            <div class="input-section">
+                <label for="jwtInput">Paste your JWT token here:</label>
+                <textarea id="jwtInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"></textarea>
+            </div>
+
+            <button class="decode-btn" onclick="decodeJWT()">Decode JWT</button>
+
+            <div id="output" class="output-section"></div>
+        </div>
+    </div>
+
+    <script>
+        function decodeJWT() {
+            const jwt = document.getElementById('jwtInput').value.trim();
+            const output = document.getElementById('output');
+
+            if (!jwt) {
+                output.innerHTML = '<div class="alert alert-danger">Please enter a JWT token!</div>';
+                return;
+            }
+
+            try {
+                const parts = jwt.split('.');
+
+                if (parts.length !== 3) {
+                    throw new Error('Invalid JWT format. JWT must have 3 parts separated by dots.');
+                }
+
+                const header = JSON.parse(atob(parts[0]));
+                const payload = JSON.parse(atob(parts[1]));
+                const signature = parts[2];
+
+                let html = '';
+
+                // Header
+                html += '<div class="output-box">';
+                html += '<h3>📋 Header</h3>';
+                html += '<pre>' + JSON.stringify(header, null, 2) + '</pre>';
+                html += '</div>';
+
+                // Payload
+                html += '<div class="output-box">';
+                html += '<h3>📦 Payload</h3>';
+                html += '<pre>' + JSON.stringify(payload, null, 2) + '</pre>';
+
+                // Decode timestamps if present
+                if (payload.iat || payload.exp || payload.nbf) {
+                    html += '<div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 8px;">';
+                    html += '<strong>Timestamp Information:</strong><br>';
+                    if (payload.iat) {
+                        html += '<br>• Issued At (iat): ' + new Date(payload.iat * 1000).toLocaleString();
+                    }
+                    if (payload.exp) {
+                        html += '<br>• Expires At (exp): ' + new Date(payload.exp * 1000).toLocaleString();
+                        const isExpired = Date.now() > payload.exp * 1000;
+                        html += ' <span style="color: ' + (isExpired ? 'red' : 'green') + '">(' + (isExpired ? 'EXPIRED' : 'Valid') + ')</span>';
+                    }
+                    if (payload.nbf) {
+                        html += '<br>• Not Before (nbf): ' + new Date(payload.nbf * 1000).toLocaleString();
+                    }
+                    html += '</div>';
+                }
+                html += '</div>';
+
+                // Signature
+                html += '<div class="output-box">';
+                html += '<h3>🔐 Signature</h3>';
+                html += '<pre>' + signature + '</pre>';
+                html += '<div class="alert alert-info" style="margin-top: 1rem;">';
+                html += '<strong>Note:</strong> Signature verification requires the secret key and cannot be done client-side.';
+                html += '</div>';
+                html += '</div>';
+
+                output.innerHTML = html;
+
+            } catch (error) {
+                output.innerHTML = '<div class="alert alert-danger"><strong>Error:</strong> ' + error.message + '</div>';
+            }
+        }
+
+        // Auto-decode if there's content on page load
+        window.addEventListener('load', function() {
+            const input = document.getElementById('jwtInput');
+            if (input.value.trim()) {
+                decodeJWT();
+            }
+        });
+    </script>
+</body>
+</html>

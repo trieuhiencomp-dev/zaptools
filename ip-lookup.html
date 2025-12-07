@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Lookup - Find IP Address Information | ZapTools</title>
+    <meta name="description" content="Free IP lookup tool. Find location, ISP, and detailed information about any IP address.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251" crossorigin="anonymous"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 2rem; color: white; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 0.5rem; font-size: 2.5rem; }
+        .subtitle { text-align: center; margin-bottom: 2rem; opacity: 0.9; }
+        .tool-card { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 2rem; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); color: #333; }
+        .search-box { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        input { flex: 1; padding: 1rem; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; }
+        input:focus { outline: none; border-color: #667eea; }
+        button { padding: 1rem 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+        .my-ip { background: #e7f3ff; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center; }
+        .info-grid { display: grid; gap: 1rem; }
+        .info-item { background: #f8f9fa; padding: 1rem; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .info-label { font-weight: 600; color: #666; }
+        .info-value { color: #333; font-weight: 500; }
+        .loading { text-align: center; padding: 2rem; }
+        .back-home { position: fixed; top: 2rem; left: 2rem; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.3); color: white; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .back-home:hover { background: rgba(255, 255, 255, 0.3); transform: translateX(-5px); }
+        @media (max-width: 768px) { body { padding: 1rem; } h1 { font-size: 2rem; } .search-box { flex-direction: column; } .back-home { position: static; display: inline-block; margin-bottom: 1rem; } }
+    </style>
+</head>
+<body>
+    <a href="Index.html" class="back-home">← Home</a>
+    <div class="container">
+        <h1>🌐 IP Lookup</h1>
+        <p class="subtitle">Find information about any IP address</p>
+        <div class="tool-card">
+            <div class="my-ip">
+                <strong>Your IP Address:</strong> <span id="myIP">Loading...</span>
+                <button onclick="lookupMyIP()" style="margin-left: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem;">Lookup My IP</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="ipInput" placeholder="Enter IP address (e.g., 8.8.8.8)">
+                <button onclick="lookupIP()">Lookup</button>
+            </div>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Get user's IP on page load
+        fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('myIP').textContent = data.ip;
+            })
+            .catch(() => {
+                document.getElementById('myIP').textContent = 'Unable to detect';
+            });
+
+        function lookupMyIP() {
+            const myIP = document.getElementById('myIP').textContent;
+            if (myIP && myIP !== 'Loading...' && myIP !== 'Unable to detect') {
+                document.getElementById('ipInput').value = myIP;
+                lookupIP();
+            }
+        }
+
+        function lookupIP() {
+            const ip = document.getElementById('ipInput').value.trim();
+            const results = document.getElementById('results');
+
+            if (!ip) {
+                alert('Please enter an IP address!');
+                return;
+            }
+
+            results.innerHTML = '<div class="loading">🔍 Looking up IP information...</div>';
+
+            // Try multiple APIs for better reliability
+            fetch(`http://ip-api.com/json/${ip}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'fail') {
+                        results.innerHTML = `<div class="loading" style="color: #c33;">Error: ${data.message || 'Invalid IP address'}</div>`;
+                        return;
+                    }
+
+                    let html = '<div class="info-grid">';
+                    html += infoItem('IP Address', data.query || ip);
+                    html += infoItem('Country', `${data.country || 'N/A'} ${getCountryFlag(data.countryCode)}`);
+                    html += infoItem('Region', data.regionName || 'N/A');
+                    html += infoItem('City', data.city || 'N/A');
+                    html += infoItem('Postal Code', data.zip || 'N/A');
+                    html += infoItem('Latitude', data.lat || 'N/A');
+                    html += infoItem('Longitude', data.lon || 'N/A');
+                    html += infoItem('Timezone', data.timezone || 'N/A');
+                    html += infoItem('ISP', data.isp || 'N/A');
+                    html += infoItem('Organization', data.org || 'N/A');
+                    html += infoItem('AS', data.as || 'N/A');
+                    html += '</div>';
+
+                    results.innerHTML = html;
+                })
+                .catch(error => {
+                    // Fallback to another API
+                    fetch(`https://ipapi.co/${ip}/json/`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.error) {
+                                results.innerHTML = `<div class="loading" style="color: #c33;">Error: Cannot fetch IP information. Please check the IP address.</div>`;
+                                return;
+                            }
+
+                            let html = '<div class="info-grid">';
+                            html += infoItem('IP Address', data.ip || 'N/A');
+                            html += infoItem('Country', `${data.country_name || 'N/A'} ${data.country_flag_emoji || ''}`);
+                            html += infoItem('Region', data.region || 'N/A');
+                            html += infoItem('City', data.city || 'N/A');
+                            html += infoItem('Postal Code', data.postal || 'N/A');
+                            html += infoItem('Latitude', data.latitude || 'N/A');
+                            html += infoItem('Longitude', data.longitude || 'N/A');
+                            html += infoItem('Timezone', data.timezone || 'N/A');
+                            html += infoItem('ISP', data.org || 'N/A');
+                            html += infoItem('ASN', data.asn || 'N/A');
+                            html += '</div>';
+
+                            results.innerHTML = html;
+                        })
+                        .catch(err => {
+                            results.innerHTML = '<div class="loading" style="color: #c33;">Cannot connect to IP lookup service. Please try again later.</div>';
+                        });
+                });
+        }
+
+        function getCountryFlag(countryCode) {
+            if (!countryCode) return '';
+            const codePoints = countryCode
+                .toUpperCase()
+                .split('')
+                .map(char => 127397 + char.charCodeAt());
+            return String.fromCodePoint(...codePoints);
+        }
+
+        function infoItem(label, value) {
+            return `
+                <div class="info-item">
+                    <div class="info-label">${label}:</div>
+                    <div class="info-value">${value}</div>
+                </div>
+            `;
+        }
+
+        // Allow Enter key to trigger lookup
+        document.getElementById('ipInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                lookupIP();
+            }
+        });
+    </script>
+</body>
+</html>

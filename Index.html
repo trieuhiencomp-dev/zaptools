@@ -172,35 +172,57 @@
             animation: fadeInUp 1.2s;
         }
         
-        .features {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+        .tools-container {
             margin-bottom: 3rem;
             animation: fadeInUp 1.4s;
         }
-        
+
+        .category-section {
+            margin-bottom: 2rem;
+        }
+
+        .category-header {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
         .feature {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1.5rem 1rem;
+            border-radius: 12px;
+            padding: 1.2rem 0.8rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .feature:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        
+
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            margin-bottom: 0.4rem;
         }
-        
+
         .feature-name {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
         }
         
@@ -423,6 +445,14 @@
             .features {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .category-header {
+                font-size: 1.1rem;
+            }
+
+            .category-section {
+                margin-bottom: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -475,150 +505,231 @@
             to make your digital life easier. No signup required, no cost, 
             just tools that work.
         </p>
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🎬</div>
-                <div class="feature-name" id="textToVideoBtn" style="cursor:pointer; text-decoration:underline;">Text to Video</div>
+        <div class="tools-container">
+            <!-- Developer Tools -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">👨‍💻</span>
+                    <span id="devToolsCategory">Developer Tools</span>
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">📋</div>
+                        <div class="feature-name" id="jsonFormatterBtn" style="cursor:pointer; text-decoration:underline;">JSON Formatter</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-name" id="codeMinifierBtn" style="cursor:pointer; text-decoration:underline;">Code Minifier</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔓</div>
+                        <div class="feature-name" id="jwtDecoderBtn" style="cursor:pointer; text-decoration:underline;">JWT Decoder</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-name" id="sqlFormatterBtn" style="cursor:pointer; text-decoration:underline;">SQL Formatter</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔐</div>
+                        <div class="feature-name" id="base64EncoderBtn" style="cursor:pointer; text-decoration:underline;">Base64 Encoder</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">#️⃣</div>
+                        <div class="feature-name" id="hashGeneratorBtn" style="cursor:pointer; text-decoration:underline;">Hash Generator</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔗</div>
+                        <div class="feature-name" id="urlEncoderBtn" style="cursor:pointer; text-decoration:underline;">URL Encoder</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔤</div>
+                        <div class="feature-name" id="htmlEncoderBtn" style="cursor:pointer; text-decoration:underline;">HTML Encoder</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📝</div>
+                        <div class="feature-name" id="markdownEditorBtn" style="cursor:pointer; text-decoration:underline;">Markdown Editor</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✨</div>
+                        <div class="feature-name" id="codeBeautifierBtn" style="cursor:pointer; text-decoration:underline;">Code Beautifier</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-name" id="diffCheckerBtn" style="cursor:pointer; text-decoration:underline;">Diff Checker</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🆔</div>
+                        <div class="feature-name" id="uuidGeneratorBtn" style="cursor:pointer; text-decoration:underline;">UUID Generator</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-name" id="regexTesterBtn" style="cursor:pointer; text-decoration:underline;">Regex Tester</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-name" id="colorPickerBtn" style="cursor:pointer; text-decoration:underline;">Color Picker</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-name" id="gradientGenBtn" style="cursor:pointer; text-decoration:underline;">Gradient Generator</div>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <div class="feature-icon">🔊</div>
-                <div class="feature-name" id="ttsToolBtn" style="cursor:pointer; text-decoration:underline;">Text to Speech</div>
+
+            <!-- Image Tools -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">🖼️</span>
+                    <span id="imageToolsCategory">Image Tools</span>
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🖼️</div>
+                        <div class="feature-name" id="imageToolsBtn" style="cursor:pointer; text-decoration:underline;">Image Tools</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">✂️</div>
+                        <div class="feature-name" id="imageCropperBtn" style="cursor:pointer; text-decoration:underline;">Image Cropper</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📸</div>
+                        <div class="feature-name" id="imageToTextBtn" style="cursor:pointer; text-decoration:underline;">Image to Text</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-name" id="colorPaletteBtn" style="cursor:pointer; text-decoration:underline;">Color Palette</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">😂</div>
+                        <div class="feature-name" id="memeGenBtn" style="cursor:pointer; text-decoration:underline;">Meme Generator</div>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <div class="feature-icon">📺</div>
-                <div class="feature-name" id="ytThumbnailBtn" style="cursor:pointer; text-decoration:underline;">YouTube Thumbnail</div>
+
+            <!-- Text Tools -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">📝</span>
+                    <span id="textToolsCategory">Text Tools</span>
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">📝</div>
+                        <div class="feature-name" id="wordCounterBtn" style="cursor:pointer; text-decoration:underline;">Word Counter</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📝</div>
+                        <div class="feature-name" id="loremIpsumBtn" style="cursor:pointer; text-decoration:underline;">Lorem Ipsum</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔤</div>
+                        <div class="feature-name" id="caseConverterBtn" style="cursor:pointer; text-decoration:underline;">Case Converter</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📧</div>
+                        <div class="feature-name" id="emailValidatorBtn" style="cursor:pointer; text-decoration:underline;">Email Validator</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔐</div>
+                        <div class="feature-name" id="passwordGenBtn" style="cursor:pointer; text-decoration:underline;">Password Generator</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔊</div>
+                        <div class="feature-name" id="ttsToolBtn" style="cursor:pointer; text-decoration:underline;">Text to Speech</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎬</div>
+                        <div class="feature-name" id="textToVideoBtn" style="cursor:pointer; text-decoration:underline;">Text to Video</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📸</div>
+                        <div class="feature-name" id="screenshotToolBtn" style="cursor:pointer; text-decoration:underline;">Screenshot Tool</div>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <div class="feature-icon">📸</div>
-                <div class="feature-name" id="imageToTextBtn" style="cursor:pointer; text-decoration:underline;">Image to Text</div>
+
+            <!-- Converter Tools -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">🔄</span>
+                    <span id="converterToolsCategory">Converter Tools</span>
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-name" id="unitConverterBtn" style="cursor:pointer; text-decoration:underline;">Unit Converter</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔄</div>
+                        <div class="feature-name" id="csvToJsonBtn" style="cursor:pointer; text-decoration:underline;">CSV to JSON</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-name" id="jsonToXmlBtn" style="cursor:pointer; text-decoration:underline;">JSON to XML</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⏰</div>
+                        <div class="feature-name" id="timestampConverterBtn" style="cursor:pointer; text-decoration:underline;">Timestamp Converter</div>
+                    </div>
+                    <div class="feature" id="pdf-tools">
+                        <div class="feature-icon">📄</div>
+                        <div class="feature-name" id="pdfToolsBtn" style="cursor:pointer; text-decoration:underline;">PDF Tools</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-name" id="qrCodeBtn" style="cursor:pointer; text-decoration:underline;">QR Codes</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📺</div>
+                        <div class="feature-name" id="ytThumbnailBtn" style="cursor:pointer; text-decoration:underline;">YouTube Thumbnail</div>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <div class="feature-icon">🔗</div>
-                <div class="feature-name" id="urlShortenerBtn" style="cursor:pointer; text-decoration:underline;">URL Shortener</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📸</div>
-                <div class="feature-name" id="screenshotToolBtn" style="cursor:pointer; text-decoration:underline;">Screenshot Tool</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🎨</div>
-                <div class="feature-name" id="colorPaletteBtn" style="cursor:pointer; text-decoration:underline;">Color Palette</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔍</div>
-                <div class="feature-name" id="regexTesterBtn" style="cursor:pointer; text-decoration:underline;">Regex Tester</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">😂</div>
-                <div class="feature-name" id="memeGenBtn" style="cursor:pointer; text-decoration:underline;">Meme Generator</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🎨</div>
-                <div class="feature-name" id="gradientGenBtn" style="cursor:pointer; text-decoration:underline;">Gradient Generator</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📝</div>
-                <div class="feature-name" id="loremIpsumBtn" style="cursor:pointer; text-decoration:underline;">Lorem Ipsum</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🖼️</div>
-                <div class="feature-name" id="imageToolsBtn" style="cursor:pointer; text-decoration:underline;">Image Tools</div>
-            </div>
-            <div class="feature" id="pdf-tools">
-                <div class="feature-icon">📄</div>
-                <div class="feature-name" id="pdfToolsBtn" style="cursor:pointer; text-decoration:underline;">PDF Tools</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📱</div>
-                <div class="feature-name" id="qrCodeBtn" style="cursor:pointer; text-decoration:underline;">QR Codes</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔄</div>
-                <div class="feature-name" id="unitConverterBtn" style="cursor:pointer; text-decoration:underline;">Unit Converter</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📝</div>
-                <div class="feature-name" id="wordCounterBtn" style="cursor:pointer; text-decoration:underline;">Word Counter</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔐</div>
-                <div class="feature-name" id="passwordGenBtn" style="cursor:pointer; text-decoration:underline;">Password Generator</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🎨</div>
-                <div class="feature-name" id="colorPickerBtn" style="cursor:pointer; text-decoration:underline;">Color Picker</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📋</div>
-                <div class="feature-name" id="jsonFormatterBtn" style="cursor:pointer; text-decoration:underline;">JSON Formatter</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔐</div>
-                <div class="feature-name" id="base64EncoderBtn" style="cursor:pointer; text-decoration:underline;">Base64 Encoder</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">#️⃣</div>
-                <div class="feature-name" id="hashGeneratorBtn" style="cursor:pointer; text-decoration:underline;">Hash Generator</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔤</div>
-                <div class="feature-name" id="caseConverterBtn" style="cursor:pointer; text-decoration:underline;">Case Converter</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔗</div>
-                <div class="feature-name" id="urlEncoderBtn" style="cursor:pointer; text-decoration:underline;">URL Encoder</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📝</div>
-                <div class="feature-name" id="markdownEditorBtn" style="cursor:pointer; text-decoration:underline;">Markdown Editor</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">✨</div>
-                <div class="feature-name" id="codeBeautifierBtn" style="cursor:pointer; text-decoration:underline;">Code Beautifier</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔍</div>
-                <div class="feature-name" id="diffCheckerBtn" style="cursor:pointer; text-decoration:underline;">Diff Checker</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🆔</div>
-                <div class="feature-name" id="uuidGeneratorBtn" style="cursor:pointer; text-decoration:underline;">UUID Generator</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">⏰</div>
-                <div class="feature-name" id="timestampConverterBtn" style="cursor:pointer; text-decoration:underline;">Timestamp Converter</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔤</div>
-                <div class="feature-name" id="htmlEncoderBtn" style="cursor:pointer; text-decoration:underline;">HTML Encoder</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔄</div>
-                <div class="feature-name" id="csvToJsonBtn" style="cursor:pointer; text-decoration:underline;">CSV to JSON</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🧮</div>
-                <div class="feature-name" id="calculatorBtn" style="cursor:pointer; text-decoration:underline;">Calculator</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">✂️</div>
-                <div class="feature-name" id="imageCropperBtn" style="cursor:pointer; text-decoration:underline;">Image Cropper</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">⏱️</div>
-                <div class="feature-name" id="stopwatchBtn" style="cursor:pointer; text-decoration:underline;">Stopwatch</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📧</div>
-                <div class="feature-name" id="emailValidatorBtn" style="cursor:pointer; text-decoration:underline;">Email Validator</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📊</div>
-                <div class="feature-name" id="jsonToXmlBtn" style="cursor:pointer; text-decoration:underline;">JSON to XML</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📰</div>
-                <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
+
+            <!-- Other Utilities -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">⚙️</span>
+                    <span id="otherUtilitiesCategory">Other Utilities</span>
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🏷️</div>
+                        <div class="feature-name" id="metaTagGenBtn" style="cursor:pointer; text-decoration:underline;">Meta Tag Generator</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌐</div>
+                        <div class="feature-name" id="ipLookupBtn" style="cursor:pointer; text-decoration:underline;">IP Lookup</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎲</div>
+                        <div class="feature-name" id="randomNameBtn" style="cursor:pointer; text-decoration:underline;">Random Name</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-name" id="barcodeGenBtn" style="cursor:pointer; text-decoration:underline;">Barcode Generator</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🔗</div>
+                        <div class="feature-name" id="urlShortenerBtn" style="cursor:pointer; text-decoration:underline;">URL Shortener</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🧮</div>
+                        <div class="feature-name" id="calculatorBtn" style="cursor:pointer; text-decoration:underline;">Calculator</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⏱️</div>
+                        <div class="feature-name" id="stopwatchBtn" style="cursor:pointer; text-decoration:underline;">Stopwatch</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-name" id="feedbackBtn" style="cursor:pointer; text-decoration:underline;">Feedback</div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📰</div>
+                        <div class="feature-name" id="blogBtn" style="cursor:pointer; text-decoration:underline;">Blog</div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Stats Counter -->
@@ -640,23 +751,23 @@
         <!-- Latest Blog Posts -->
         <div class="blog-section">
             <div class="blog-header">
-                <h2 id="blogSectionTitle">📰 Latest Blog Posts</h2>
-                <p id="blogSectionSubtitle">Tips, tutorials and guides for using online tools</p>
+                <h2 id="blogSectionTitle">📰 Bài Viết Mới Nhất</h2>
+                <p id="blogSectionSubtitle">Mẹo, hướng dẫn và tips sử dụng công cụ trực tuyến</p>
             </div>
             <div class="blog-grid">
                 <!-- Blog Post 1 -->
                 <a href="blog/5-cong-cu-mien-phi.html" class="blog-card">
                     <div class="blog-card-header">
                         <div class="blog-icon">⚡</div>
-                        <span class="blog-category" id="blogCat1">Review</span>
+                        <span class="blog-category" id="blogCat1">Đánh Giá</span>
                     </div>
-                    <div class="blog-title" id="blogTitle1">5 Free Tools on ZapTools You Can't Miss</div>
+                    <div class="blog-title" id="blogTitle1">5 Công Cụ Miễn Phí Trên ZapTools Bạn Không Thể Bỏ Qua</div>
                     <div class="blog-excerpt" id="blogExcerpt1">
-                        Discover the 5 best free online tools: TTS, Password Generator, Word Counter, QR Code and Image Compressor!
+                        Khám phá 5 công cụ trực tuyến miễn phí tuyệt vời nhất: TTS, Password Generator, Word Counter, QR Code và Image Compressor!
                     </div>
                     <div class="blog-meta">
-                        <span class="blog-date">📅 <span id="blogDate1">Dec 7, 2024</span></span>
-                        <span class="blog-read-time">⏱️ <span id="blogRead1">8 min</span></span>
+                        <span class="blog-date">📅 <span id="blogDate1">7 Tháng 12, 2024</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead1">8 phút</span></span>
                     </div>
                 </a>
 
@@ -664,15 +775,15 @@
                 <a href="blog/unit-converter-guide.html" class="blog-card">
                     <div class="blog-card-header">
                         <div class="blog-icon">📏</div>
-                        <span class="blog-category" id="blogCat2">Tutorial</span>
+                        <span class="blog-category" id="blogCat2">Hướng dẫn</span>
                     </div>
-                    <div class="blog-title" id="blogTitle2">Complete Unit Converter Guide</div>
+                    <div class="blog-title" id="blogTitle2">Hướng Dẫn Toàn Diện Unit Converter</div>
                     <div class="blog-excerpt" id="blogExcerpt2">
-                        Learn how to convert units quickly and accurately. Master unit conversion with our guide!
+                        Học cách chuyển đổi đơn vị nhanh và chính xác. Làm chủ chuyển đổi đơn vị với hướng dẫn của chúng tôi!
                     </div>
                     <div class="blog-meta">
-                        <span class="blog-date">📅 <span id="blogDate2">Jan 15, 2025</span></span>
-                        <span class="blog-read-time">⏱️ <span id="blogRead2">5 min</span></span>
+                        <span class="blog-date">📅 <span id="blogDate2">15 Tháng 1, 2025</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead2">5 phút</span></span>
                     </div>
                 </a>
 
@@ -680,15 +791,15 @@
                 <a href="blog/image-compression-tips.html" class="blog-card">
                     <div class="blog-card-header">
                         <div class="blog-icon">🖼️</div>
-                        <span class="blog-category" id="blogCat3">Tips & Tricks</span>
+                        <span class="blog-category" id="blogCat3">Mẹo & Thủ thuật</span>
                     </div>
-                    <div class="blog-title" id="blogTitle3">10 Tips to Compress Images</div>
+                    <div class="blog-title" id="blogTitle3">10 Mẹo Nén Ảnh</div>
                     <div class="blog-excerpt" id="blogExcerpt3">
-                        Discover techniques to reduce image file size while maintaining quality for web!
+                        Khám phá kỹ thuật giảm dung lượng ảnh mà vẫn giữ chất lượng cho web!
                     </div>
                     <div class="blog-meta">
-                        <span class="blog-date">📅 <span id="blogDate3">Jan 14, 2025</span></span>
-                        <span class="blog-read-time">⏱️ <span id="blogRead3">7 min</span></span>
+                        <span class="blog-date">📅 <span id="blogDate3">14 Tháng 1, 2025</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead3">7 phút</span></span>
                     </div>
                 </a>
 
@@ -696,20 +807,20 @@
                 <a href="blog/qr-codes-for-business.html" class="blog-card">
                     <div class="blog-card-header">
                         <div class="blog-icon">📱</div>
-                        <span class="blog-category" id="blogCat4">Business</span>
+                        <span class="blog-category" id="blogCat4">Doanh nghiệp</span>
                     </div>
-                    <div class="blog-title" id="blogTitle4">QR Codes for Your Business</div>
+                    <div class="blog-title" id="blogTitle4">QR Code Cho Doanh Nghiệp</div>
                     <div class="blog-excerpt" id="blogExcerpt4">
-                        Learn how to create and use QR codes effectively for business growth!
+                        Học cách tạo và sử dụng QR code hiệu quả cho phát triển doanh nghiệp!
                     </div>
                     <div class="blog-meta">
-                        <span class="blog-date">📅 <span id="blogDate4">Jan 13, 2025</span></span>
-                        <span class="blog-read-time">⏱️ <span id="blogRead4">6 min</span></span>
+                        <span class="blog-date">📅 <span id="blogDate4">13 Tháng 1, 2025</span></span>
+                        <span class="blog-read-time">⏱️ <span id="blogRead4">6 phút</span></span>
                     </div>
                 </a>
             </div>
             <div class="view-all-blogs">
-                <a href="blog.html" class="view-all-btn" id="viewAllBlogsBtn">View All Blog Posts →</a>
+                <a href="blog.html" class="view-all-btn" id="viewAllBlogsBtn">Xem Tất Cả Bài Viết →</a>
             </div>
         </div>
 
@@ -972,6 +1083,55 @@
                         window.location.href = 'json-to-xml.html';
                     };
                 }
+                // New tools
+                var codeMinifierBtn = document.getElementById('codeMinifierBtn');
+                if (codeMinifierBtn) {
+                    codeMinifierBtn.onclick = function() {
+                        window.location.href = 'code-minifier.html';
+                    };
+                }
+                var jwtDecoderBtn = document.getElementById('jwtDecoderBtn');
+                if (jwtDecoderBtn) {
+                    jwtDecoderBtn.onclick = function() {
+                        window.location.href = 'jwt-decoder.html';
+                    };
+                }
+                var sqlFormatterBtn = document.getElementById('sqlFormatterBtn');
+                if (sqlFormatterBtn) {
+                    sqlFormatterBtn.onclick = function() {
+                        window.location.href = 'sql-formatter.html';
+                    };
+                }
+                var metaTagGenBtn = document.getElementById('metaTagGenBtn');
+                if (metaTagGenBtn) {
+                    metaTagGenBtn.onclick = function() {
+                        window.location.href = 'meta-tag-generator.html';
+                    };
+                }
+                var ipLookupBtn = document.getElementById('ipLookupBtn');
+                if (ipLookupBtn) {
+                    ipLookupBtn.onclick = function() {
+                        window.location.href = 'ip-lookup.html';
+                    };
+                }
+                var randomNameBtn = document.getElementById('randomNameBtn');
+                if (randomNameBtn) {
+                    randomNameBtn.onclick = function() {
+                        window.location.href = 'random-name-generator.html';
+                    };
+                }
+                var barcodeGenBtn = document.getElementById('barcodeGenBtn');
+                if (barcodeGenBtn) {
+                    barcodeGenBtn.onclick = function() {
+                        window.location.href = 'barcode-generator.html';
+                    };
+                }
+                var feedbackBtn = document.getElementById('feedbackBtn');
+                if (feedbackBtn) {
+                    feedbackBtn.onclick = function() {
+                        window.location.href = 'feedback.html';
+                    };
+                }
             });
             // Language switcher
             const langData = {
@@ -979,6 +1139,11 @@
                     title: 'ZapTools',
                     tagline: 'Bộ công cụ trực tuyến siêu tốc',
                     desc: 'Chúng tôi xây dựng bộ công cụ miễn phí, nhanh chóng và dễ sử dụng\nđể giúp cuộc sống số của bạn dễ dàng hơn. Không cần đăng ký, không tốn phí,\nchỉ đơn giản là công cụ hữu ích.',
+                    devToolsCategory: 'Công Cụ Lập Trình',
+                    imageToolsCategory: 'Công Cụ Ảnh',
+                    textToolsCategory: 'Công Cụ Văn Bản',
+                    converterToolsCategory: 'Công Cụ Chuyển Đổi',
+                    otherUtilitiesCategory: 'Tiện Ích Khác',
                     image: 'Công cụ ảnh',
                     pdf: 'Công cụ PDF',
                     qr: 'Mã QR',
@@ -1011,7 +1176,11 @@
                     screenshotTool: 'Chụp Màn Hình',
                     colorPalette: 'Bảng Màu',
                     regexTester: 'Test Regex',
-                    more: 'Thêm công cụ',
+                    memeGen: 'Tạo Meme',
+                    gradientGen: 'Tạo Gradient',
+                    loremIpsum: 'Lorem Ipsum',
+                    textToVideo: 'Text sang Video',
+                    feedback: 'Góp Ý',
                     status: '<span class="pulse"></span> Chào mừng bạn đến với ZapTools',
                     blogSectionTitle: '📰 Bài Viết Mới Nhất',
                     blogSectionSubtitle: 'Mẹo, hướng dẫn và tips sử dụng công cụ trực tuyến',
@@ -1041,6 +1210,11 @@
                     title: 'ZapTools',
                     tagline: 'Lightning-Fast Online Tools',
                     desc: "We're building a suite of free, fast, and easy-to-use tools \nto make your digital life easier. No signup required, no cost, \njust tools that work.",
+                    devToolsCategory: 'Developer Tools',
+                    imageToolsCategory: 'Image Tools',
+                    textToolsCategory: 'Text Tools',
+                    converterToolsCategory: 'Converter Tools',
+                    otherUtilitiesCategory: 'Other Utilities',
                     image: 'Image Tools',
                     pdf: 'PDF Tools',
                     qr: 'QR Codes',
@@ -1073,7 +1247,11 @@
                     screenshotTool: 'Screenshot Tool',
                     colorPalette: 'Color Palette',
                     regexTester: 'Regex Tester',
-                    more: 'More Tools',
+                    memeGen: 'Meme Generator',
+                    gradientGen: 'Gradient Generator',
+                    loremIpsum: 'Lorem Ipsum',
+                    textToVideo: 'Text to Video',
+                    feedback: 'Feedback',
                     status: '<span class="pulse"></span> Welcome to ZapTools',
                     blogSectionTitle: '📰 Latest Blog Posts',
                     blogSectionSubtitle: 'Tips, tutorials and guides for using online tools',
@@ -1104,6 +1282,11 @@
                 document.getElementById('title').textContent = langData[lang].title;
                 document.getElementById('tagline').textContent = langData[lang].tagline;
                 document.getElementById('desc').textContent = langData[lang].desc;
+                document.getElementById('devToolsCategory').textContent = langData[lang].devToolsCategory;
+                document.getElementById('imageToolsCategory').textContent = langData[lang].imageToolsCategory;
+                document.getElementById('textToolsCategory').textContent = langData[lang].textToolsCategory;
+                document.getElementById('converterToolsCategory').textContent = langData[lang].converterToolsCategory;
+                document.getElementById('otherUtilitiesCategory').textContent = langData[lang].otherUtilitiesCategory;
                 document.getElementById('imageToolsBtn').textContent = langData[lang].image;
                 document.getElementById('pdfToolsBtn').textContent = langData[lang].pdf;
                 document.getElementById('qrCodeBtn').textContent = langData[lang].qr;
@@ -1136,7 +1319,11 @@
                 document.getElementById('screenshotToolBtn').textContent = langData[lang].screenshotTool;
                 document.getElementById('colorPaletteBtn').textContent = langData[lang].colorPalette;
                 document.getElementById('regexTesterBtn').textContent = langData[lang].regexTester;
-                document.getElementById('moreToolsBtn').textContent = langData[lang].more;
+                document.getElementById('memeGenBtn').textContent = langData[lang].memeGen;
+                document.getElementById('gradientGenBtn').textContent = langData[lang].gradientGen;
+                document.getElementById('loremIpsumBtn').textContent = langData[lang].loremIpsum;
+                document.getElementById('textToVideoBtn').textContent = langData[lang].textToVideo;
+                document.getElementById('feedbackBtn').textContent = langData[lang].feedback;
                 document.getElementById('status').innerHTML = langData[lang].status;
 
                 // Blog section translations

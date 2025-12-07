@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2QEQX2T9JX');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Formatter - Format SQL Queries Online | ZapTools</title>
+    <meta name="description" content="Free online SQL formatter. Beautify and format SQL queries with proper indentation and syntax highlighting.">
+    <meta name="keywords" content="sql formatter, format sql, beautify sql, sql beautifier, sql query formatter">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6389544196145251"
+     crossorigin="anonymous"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: white;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 0.5rem; font-size: 2.5rem; }
+        .subtitle { text-align: center; margin-bottom: 2rem; opacity: 0.9; }
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+        textarea:focus { outline: none; border-color: #667eea; }
+        .button-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        button {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+        .btn-secondary { background: #f0f0f0; color: #333; }
+        .btn-secondary:hover { background: #e0e0e0; }
+        .back-home {
+            position: fixed; top: 2rem; left: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white; padding: 0.75rem 1.5rem;
+            border-radius: 50px; text-decoration: none;
+            font-weight: 600; transition: all 0.3s;
+        }
+        .back-home:hover { background: rgba(255, 255, 255, 0.3); transform: translateX(-5px); }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .back-home { position: static; display: inline-block; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="Index.html" class="back-home">← Home</a>
+    <div class="container">
+        <h1>📊 SQL Formatter</h1>
+        <p class="subtitle">Format and beautify SQL queries</p>
+        <div class="tool-card">
+            <textarea id="inputSQL" placeholder="Paste your SQL query here..."></textarea>
+            <div class="button-group">
+                <button class="btn-primary" onclick="formatSQL()">Format SQL</button>
+                <button class="btn-secondary" onclick="copyOutput()">Copy Result</button>
+                <button class="btn-secondary" onclick="clearAll()">Clear</button>
+            </div>
+            <textarea id="outputSQL" placeholder="Formatted SQL will appear here..." readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        function formatSQL() {
+            let sql = document.getElementById('inputSQL').value.trim();
+            if (!sql) { alert('Please enter SQL query!'); return; }
+
+            // Basic SQL formatting
+            const keywords = ['SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'ORDER BY', 'GROUP BY', 'HAVING', 'JOIN', 'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'FULL JOIN', 'ON', 'INSERT INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE FROM', 'CREATE TABLE', 'ALTER TABLE', 'DROP TABLE', 'LIMIT', 'OFFSET'];
+
+            // Add line breaks before keywords
+            keywords.forEach(keyword => {
+                const regex = new RegExp('\\b' + keyword + '\\b', 'gi');
+                sql = sql.replace(regex, '\n' + keyword);
+            });
+
+            // Clean up extra spaces
+            sql = sql.replace(/\s+/g, ' ');
+
+            // Add proper indentation
+            let formatted = '';
+            let indent = 0;
+            sql.split('\n').forEach(line => {
+                line = line.trim();
+                if (line) {
+                    formatted += '  '.repeat(Math.max(0, indent)) + line + '\n';
+                    if (line.toUpperCase().includes('SELECT')) indent++;
+                    if (line.toUpperCase().includes('FROM')) indent = 1;
+                }
+            });
+
+            document.getElementById('outputSQL').value = formatted.trim();
+        }
+
+        function copyOutput() {
+            const output = document.getElementById('outputSQL');
+            if (!output.value) { alert('Nothing to copy!'); return; }
+            output.select();
+            document.execCommand('copy');
+            alert('Copied to clipboard!');
+        }
+
+        function clearAll() {
+            document.getElementById('inputSQL').value = '';
+            document.getElementById('outputSQL').value = '';
+        }
+    </script>
+</body>
+</html>
