@@ -254,21 +254,18 @@
                 <p><strong>🎯 Your feedback matters!</strong> Help us improve ZapTools by sharing your thoughts, suggestions, or reporting issues.</p>
             </div>
 
-            <!-- Quick Option: Google Form Link -->
-            <div style="text-align: center; margin-bottom: 1.5rem;">
+            <!-- Google Form Button -->
+            <div style="text-align: center; padding: 3rem 2rem;">
                 <a href="https://forms.gle/vRrc4pneJStjQusF7" target="_blank"
-                   style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); color: white; text-decoration: none; border-radius: 10px; font-weight: 600;">
-                    📝 Send Feedback via Google Forms
+                   style="display: inline-block; padding: 1.5rem 3rem; background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); color: white; text-decoration: none; border-radius: 15px; font-weight: 600; font-size: 1.2rem; box-shadow: 0 10px 30px rgba(66, 133, 244, 0.3); transition: all 0.3s;">
+                    📝 Send Us Your Feedback
                 </a>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Quick and easy - No signup required</p>
+                <p style="margin-top: 1rem; font-size: 1rem; color: #666;">Click to open feedback form in Google Forms</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #999;">Your responses are saved securely • No signup required</p>
             </div>
 
-            <div class="success-message" id="successMessage">
-                <strong>✅ Thank you for your feedback!</strong><br>
-                Your message has been received. We appreciate your input and will review it soon.
-            </div>
-
-            <form id="feedbackForm" action="https://api.web3forms.com/submit" method="POST">
+            <div style="display: none;">
+            <form id="feedbackForm" action="#" method="POST">
                 <div class="form-group">
                     <label>Feedback Type: <span class="required">*</span></label>
                     <div class="feedback-type">
