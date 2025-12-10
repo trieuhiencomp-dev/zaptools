@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="google-adsense-account" content="ca-pub-6389544196145251">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QEQX2T9JX"></script>
     <script>
@@ -82,11 +83,73 @@
         .zaptools-logo{font-size:1.5rem;animation:bounce 2s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2));}
         .zaptools-header{position:absolute;top:18px;left:18px;z-index:20;display:flex;align-items:center;gap:8px;}
         .zaptools-header span{font-size:1.1rem;font-weight:600;letter-spacing:-1px;}
+    
+        }
+    
+        /* Ad Styles */
+        .ad-container {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .ad-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .page-wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .sidebar-ad {
+            width: 160px;
+            position: sticky;
+            top: 20px;
+        }
+        .main-content {
+            flex: 1;
+        }
+        .bottom-ad {
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .sidebar-ad {
+                display: none;
+            }
+            .page-wrapper {
+                display: block;
+            }
+        }
     </style>
     <link rel="stylesheet" href="file-history.css">
 </head>
 <body>
-        <div class="zaptools-header">
+            
+    <div class="page-wrapper">
+        <!-- Left Sidebar Ad -->
+        <div class="sidebar-ad">
+            <div class="ad-container">
+                <div class="ad-label">Ad</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6389544196145251"
+                     data-ad-slot="3131107512"
+                     data-ad-format="vertical"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+<div class="zaptools-header">
             <span class="zaptools-logo">⚡</span>
             <span>ZapTools</span>
         </div>
@@ -167,5 +230,37 @@
 </div>
 
 <script src="file-history.js"></script>
+
+            </div>
+
+        <!-- Right Sidebar Ad -->
+        <div class="sidebar-ad">
+            <div class="ad-container">
+                <div class="ad-label">Ad</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6389544196145251"
+                     data-ad-slot="3131107512"
+                     data-ad-format="vertical"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Ad (Mobile only) -->
+    <div class="bottom-ad ad-container">
+        <div class="ad-label">Advertisement</div>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6389544196145251"
+             data-ad-slot="3131107512"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 </body>
 </html>
