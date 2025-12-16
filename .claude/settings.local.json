@@ -28,9 +28,16 @@
       "Bash(netlify status:*)",
       "Bash(netlify deploy:*)",
       "Bash(start:*)",
-      "WebFetch(domain:zaptools.org)"
+      "WebFetch(domain:zaptools.org)",
+      "Bash(cat:*)",
+      "WebFetch(domain:zaptools.tech)",
+      "WebFetch(domain:n8n.trieuhien.synology.me)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "n8n"
+  ],
+  "enableAllProjectMcpServers": true
 }
