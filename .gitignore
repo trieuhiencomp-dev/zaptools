@@ -1,6 +1,10 @@
 # Local Netlify folder
 .netlify
 
+# Node.js
+node_modules/
+.env
+
 # Backend node_modules and cache (backend code is now tracked)
 backend/node_modules/
 backend/.env
@@ -8,3 +12,14 @@ backend/cache/
 
 # n8n MCP credentials
 .env.n8n
+
+# Setup and config files (stored in zaptools-setup/ instead)
+n8n-workflows/
+*-workflow.json
+SETUP-GUIDE.md
+*.config.json
+
+# Temp and local files
+*.log
+*.tmp
+.DS_Store

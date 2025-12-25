@@ -165,41 +165,287 @@
       <span style="font-size:1.1rem;font-weight:600;letter-spacing:-1px;">ZapTools</span>
     </div>
     <script>
+        // Netlify Function Endpoint (CloudConvert API key hidden in environment variables)
+        const CONVERT_API_URL = '/.netlify/functions/pdf-to-pptx';
+
         const langData = {
             vi: {
                 title: 'PDF sang PowerPoint',
                 file: 'Chọn file PDF:',
                 convert: 'Chuyển đổi',
-                result: 'Chức năng chuyển đổi PDF sang PowerPoint sẽ cập nhật sau!',
-                back: '← Quay lại PDF Tools'
+                converting: '⏳ Đang chuyển đổi...',
+                success: '✅ Chuyển đổi thành công! Đang tải xuống...',
+                error: '❌ Lỗi: ',
+                fileTooBig: 'File quá lớn! Tối đa 10MB.',
+                noFile: 'Vui lòng chọn file PDF!',
+                back: '← Quay lại PDF Tools',
+                howToTitle: 'Hướng dẫn sử dụng',
+                featuresTitle: 'Tính năng nổi bật',
+                feature1Title: 'Nhanh chóng',
+                feature1Desc: 'Chuyển đổi hoàn tất trong vài giây',
+                feature2Title: 'Bảo mật',
+                feature2Desc: 'Files được xóa sau khi xử lý',
+                feature3Title: 'Chất lượng cao',
+                feature3Desc: 'Giữ nguyên định dạng và hình ảnh',
+                feature4Title: 'Miễn phí',
+                feature4Desc: 'Không cần đăng ký, hoàn toàn free',
+                tipsTitle: 'Mẹo & Lưu ý',
+                faqTitle: 'Câu hỏi thường gặp',
+                faq1Q: 'Công cụ này có miễn phí không?',
+                faq1A: 'Có, hoàn toàn miễn phí! Bạn không cần đăng ký tài khoản hay trả bất kỳ khoản phí nào.',
+                faq2Q: 'File của tôi có an toàn không?',
+                faq2A: 'Có, file của bạn được xử lý an toàn và sẽ tự động xóa sau khi chuyển đổi hoàn tất.',
+                faq3Q: 'Tôi có thể chuyển file bao nhiêu MB?',
+                faq3A: 'Hiện tại công cụ hỗ trợ file tối đa 10MB. Nếu file lớn hơn, bạn có thể nén PDF trước khi chuyển đổi.',
+                faq4Q: 'Chất lượng file PowerPoint có giống PDF không?',
+                faq4A: 'Công cụ cố gắng giữ nguyên định dạng tối đa. Tuy nhiên, bạn có thể cần chỉnh sửa nhỏ sau khi chuyển đổi.',
+                faq5Q: 'Tôi cần cài đặt phần mềm gì không?',
+                faq5A: 'Không! Công cụ hoạt động 100% trên trình duyệt. Bạn chỉ cần kết nối internet.'
             },
             en: {
                 title: 'PDF to PowerPoint',
                 file: 'Select PDF file:',
                 convert: 'Convert',
-                result: 'PDF to PowerPoint conversion feature will be updated soon!',
-                back: '← Back to PDF Tools'
+                converting: '⏳ Converting...',
+                success: '✅ Conversion successful! Downloading...',
+                error: '❌ Error: ',
+                fileTooBig: 'File too large! Max 10MB.',
+                noFile: 'Please select a PDF file!',
+                back: '← Back to PDF Tools',
+                howToTitle: 'How to Use',
+                featuresTitle: 'Key Features',
+                feature1Title: 'Fast',
+                feature1Desc: 'Convert in seconds',
+                feature2Title: 'Secure',
+                feature2Desc: 'Files deleted after processing',
+                feature3Title: 'High Quality',
+                feature3Desc: 'Preserve formatting and images',
+                feature4Title: 'Free',
+                feature4Desc: 'No signup, completely free',
+                tipsTitle: 'Tips & Notes',
+                faqTitle: 'Frequently Asked Questions',
+                faq1Q: 'Is this tool free?',
+                faq1A: 'Yes, completely free! No account registration or payment required.',
+                faq2Q: 'Is my file safe?',
+                faq2A: 'Yes, your files are processed securely and automatically deleted after conversion.',
+                faq3Q: 'What is the maximum file size?',
+                faq3A: 'Currently supports files up to 10MB. For larger files, compress your PDF first.',
+                faq4Q: 'Will the PowerPoint quality match the PDF?',
+                faq4A: 'The tool preserves formatting as much as possible. However, minor adjustments may be needed after conversion.',
+                faq5Q: 'Do I need to install any software?',
+                faq5A: 'No! The tool works 100% in your browser. Just need internet connection.'
             }
         };
+
         function setLang(lang) {
-            document.getElementById('title').textContent = langData[lang].title;
-            document.getElementById('fileLabel').textContent = langData[lang].file;
-            document.getElementById('convertBtn').textContent = langData[lang].convert;
-            document.getElementById('btnBack').textContent = langData[lang].back;
+            const setIfExists = (id, text) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            };
+
+            setIfExists('title', langData[lang].title);
+            setIfExists('fileLabel', langData[lang].file);
+            setIfExists('convertBtn', langData[lang].convert);
+            setIfExists('btnBack', langData[lang].back);
+            setIfExists('howToTitle', langData[lang].howToTitle);
+            setIfExists('featuresTitle', langData[lang].featuresTitle);
+            setIfExists('feature1Title', langData[lang].feature1Title);
+            setIfExists('feature1Desc', langData[lang].feature1Desc);
+            setIfExists('feature2Title', langData[lang].feature2Title);
+            setIfExists('feature2Desc', langData[lang].feature2Desc);
+            setIfExists('feature3Title', langData[lang].feature3Title);
+            setIfExists('feature3Desc', langData[lang].feature3Desc);
+            setIfExists('feature4Title', langData[lang].feature4Title);
+            setIfExists('feature4Desc', langData[lang].feature4Desc);
+            setIfExists('tipsTitle', langData[lang].tipsTitle);
+            setIfExists('faqTitle', langData[lang].faqTitle);
+            setIfExists('faq1Q', langData[lang].faq1Q);
+            setIfExists('faq1A', langData[lang].faq1A);
+            setIfExists('faq2Q', langData[lang].faq2Q);
+            setIfExists('faq2A', langData[lang].faq2A);
+            setIfExists('faq3Q', langData[lang].faq3Q);
+            setIfExists('faq3A', langData[lang].faq3A);
+            setIfExists('faq4Q', langData[lang].faq4Q);
+            setIfExists('faq4A', langData[lang].faq4A);
+            setIfExists('faq5Q', langData[lang].faq5Q);
+            setIfExists('faq5A', langData[lang].faq5A);
         }
+
         document.getElementById('langSwitcher').addEventListener('change', function(e) {
             setLang(e.target.value);
             localStorage.setItem('zaptools_lang', e.target.value);
         });
-        // Khởi tạo ngôn ngữ theo localStorage hoặc mặc định
+
         const savedLang = localStorage.getItem('zaptools_lang') || 'vi';
         document.getElementById('langSwitcher').value = savedLang;
         setLang(savedLang);
-        document.getElementById('pdfForm').onsubmit = function(e) {
+
+        // Convert functionality with n8n Webhook (More secure!)
+        document.getElementById('pdfForm').onsubmit = async function(e) {
             e.preventDefault();
-            document.getElementById('result').textContent = langData[savedLang].result;
+
+            const fileInput = document.getElementById('pdfFile');
+            const resultDiv = document.getElementById('result');
+            const convertBtn = document.getElementById('convertBtn');
+
+            if (!fileInput.files[0]) {
+                resultDiv.textContent = langData[savedLang].noFile;
+                return;
+            }
+
+            const file = fileInput.files[0];
+
+            // Validate file size (10MB max)
+            if (file.size > 10 * 1024 * 1024) {
+                resultDiv.textContent = langData[savedLang].fileTooBig;
+                return;
+            }
+
+            // Show converting message
+            resultDiv.textContent = langData[savedLang].converting;
+            convertBtn.disabled = true;
+            convertBtn.style.opacity = '0.5';
+
+            try {
+                // Convert file to base64
+                const base64File = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const base64 = reader.result.split(',')[1]; // Remove data:application/pdf;base64, prefix
+                        resolve(base64);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                // Send to Netlify Function
+                const response = await fetch(CONVERT_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        file: base64File,
+                        filename: file.name
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || (savedLang === 'en' ? 'Conversion failed!' : 'Chuyển đổi thất bại!'));
+                }
+
+                // Download the converted file
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name.replace('.pdf', '.pptx');
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                resultDiv.textContent = langData[savedLang].success;
+
+                // Save to history
+                if (typeof saveToHistory === 'function') {
+                    saveToHistory(file.name, file.size, 'PDF to PowerPoint');
+                }
+
+            } catch (error) {
+                resultDiv.textContent = langData[savedLang].error + error.message;
+            } finally {
+                convertBtn.disabled = false;
+                convertBtn.style.opacity = '1';
+            }
         };
     </script>
+
+    <!-- Educational Content Section -->
+    <div style="max-width: 900px; margin: 3rem auto; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 20px;">
+
+        <!-- How to Use Section -->
+        <div style="margin-bottom: 3rem;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">📖 <span id="howToTitle">Hướng dẫn sử dụng</span></h2>
+            <div style="background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 15px; line-height: 1.8;">
+                <ol id="howToSteps" style="padding-left: 1.5rem; margin: 0;">
+                    <li style="margin-bottom: 0.8rem;"><strong>Chọn file PDF:</strong> Click vào nút "Chọn file PDF" và chọn file bạn muốn chuyển đổi</li>
+                    <li style="margin-bottom: 0.8rem;"><strong>Nhấn Convert:</strong> Click nút "Chuyển đổi" để bắt đầu quá trình</li>
+                    <li style="margin-bottom: 0.8rem;"><strong>Đợi xử lý:</strong> File sẽ được xử lý trong vài giây</li>
+                    <li><strong>Tải xuống:</strong> File PowerPoint (.pptx) sẽ tự động tải về máy bạn</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div style="margin-bottom: 3rem;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">✨ <span id="featuresTitle">Tính năng nổi bật</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div style="background: rgba(74, 222, 128, 0.1); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(74, 222, 128, 0.3);">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚀</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;" id="feature1Title">Nhanh chóng</h3>
+                    <p style="opacity: 0.9; font-size: 0.9rem; margin: 0;" id="feature1Desc">Chuyển đổi hoàn tất trong vài giây</p>
+                </div>
+                <div style="background: rgba(74, 222, 128, 0.1); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(74, 222, 128, 0.3);">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;" id="feature2Title">Bảo mật</h3>
+                    <p style="opacity: 0.9; font-size: 0.9rem; margin: 0;" id="feature2Desc">Files được xóa sau khi xử lý</p>
+                </div>
+                <div style="background: rgba(74, 222, 128, 0.1); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(74, 222, 128, 0.3);">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">💯</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;" id="feature3Title">Chất lượng cao</h3>
+                    <p style="opacity: 0.9; font-size: 0.9rem; margin: 0;" id="feature3Desc">Giữ nguyên định dạng và hình ảnh</p>
+                </div>
+                <div style="background: rgba(74, 222, 128, 0.1); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(74, 222, 128, 0.3);">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🆓</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;" id="feature4Title">Miễn phí</h3>
+                    <p style="opacity: 0.9; font-size: 0.9rem; margin: 0;" id="feature4Desc">Không cần đăng ký, hoàn toàn free</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tips Section -->
+        <div style="margin-bottom: 3rem;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">💡 <span id="tipsTitle">Mẹo & Lưu ý</span></h2>
+            <div style="background: rgba(251, 191, 36, 0.1); padding: 1.5rem; border-radius: 15px; border-left: 4px solid #fbbf24;">
+                <ul id="tipsList" style="padding-left: 1.5rem; margin: 0; line-height: 1.8;">
+                    <li style="margin-bottom: 0.8rem;">File PDF có văn bản rõ ràng sẽ cho kết quả tốt hơn</li>
+                    <li style="margin-bottom: 0.8rem;">Tránh PDF scan (ảnh chụp) vì chất lượng sẽ kém</li>
+                    <li style="margin-bottom: 0.8rem;">File dưới 10MB để đảm bảo tốc độ xử lý nhanh</li>
+                    <li style="margin-bottom: 0.8rem;">Kiểm tra file PowerPoint sau khi chuyển đổi để chỉnh sửa nếu cần</li>
+                    <li>Lưu file gốc PDF để phòng trường hợp cần chuyển lại</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div>
+            <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">❓ <span id="faqTitle">Câu hỏi thường gặp</span></h2>
+            <div style="background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 15px;">
+                <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: #4ade80;" id="faq1Q">Công cụ này có miễn phí không?</h3>
+                    <p style="opacity: 0.9; margin: 0; line-height: 1.6;" id="faq1A">Có, hoàn toàn miễn phí! Bạn không cần đăng ký tài khoản hay trả bất kỳ khoản phí nào.</p>
+                </div>
+                <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: #4ade80;" id="faq2Q">File của tôi có an toàn không?</h3>
+                    <p style="opacity: 0.9; margin: 0; line-height: 1.6;" id="faq2A">Có, file của bạn được xử lý an toàn và sẽ tự động xóa sau khi chuyển đổi hoàn tất.</p>
+                </div>
+                <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: #4ade80;" id="faq3Q">Tôi có thể chuyển file bao nhiêu MB?</h3>
+                    <p style="opacity: 0.9; margin: 0; line-height: 1.6;" id="faq3A">Hiện tại công cụ hỗ trợ file tối đa 10MB. Nếu file lớn hơn, bạn có thể nén PDF trước khi chuyển đổi.</p>
+                </div>
+                <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: #4ade80;" id="faq4Q">Chất lượng file PowerPoint có giống PDF không?</h3>
+                    <p style="opacity: 0.9; margin: 0; line-height: 1.6;" id="faq4A">Công cụ cố gắng giữ nguyên định dạng tối đa. Tuy nhiên, bạn có thể cần chỉnh sửa nhỏ sau khi chuyển đổi.</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: #4ade80;" id="faq5Q">Tôi cần cài đặt phần mềm gì không?</h3>
+                    <p style="opacity: 0.9; margin: 0; line-height: 1.6;" id="faq5A">Không! Công cụ hoạt động 100% trên trình duyệt. Bạn chỉ cần kết nối internet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Feedback Widget -->
 <!-- File History Widget -->

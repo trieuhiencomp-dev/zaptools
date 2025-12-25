@@ -1,43 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl:*)",
-      "Bash(gcloud app logs read:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(netlify api listSiteDeploys:*)",
-      "Bash(gcloud app deploy:*)",
-      "Bash(python add-feedback-widget.py:*)",
-      "Bash(python:*)",
-      "Bash(if [ ! -d \"Y:/zaptools/blog\" ])",
-      "Bash(then mkdir -p \"Y:/zaptools/blog\")",
-      "Bash(fi)",
-      "Bash(grep:*)",
-      "Bash(ls:*)",
-      "Bash(iconv:*)",
-      "Bash(echo:*)",
-      "WebFetch(domain:tiengdong.com)",
-      "WebFetch(domain:zaptools.pro)",
-      "Bash(npm start)",
-      "Bash(netstat:*)",
-      "Bash(taskkill:*)",
-      "Bash(node tts-api.js:*)",
-      "Bash(start Y:zaptoolstts-tool.html)",
-      "Bash(start \"Y:/zaptools/tts-tool.html\")",
-      "Bash(netlify status:*)",
-      "Bash(netlify deploy:*)",
-      "Bash(start:*)",
-      "WebFetch(domain:zaptools.org)",
-      "Bash(cat:*)",
-      "WebFetch(domain:zaptools.tech)",
-      "WebFetch(domain:n8n.trieuhien.synology.me)"
-    ],
-    "deny": [],
-    "ask": []
-  },
-  "enabledMcpjsonServers": [
-    "n8n"
-  ],
-  "enableAllProjectMcpServers": true
+      "Bash(git add:*)"
+    ]
+  }
 }
