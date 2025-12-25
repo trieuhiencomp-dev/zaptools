@@ -1,4 +1,4 @@
-const CloudConvert = require('@cloudconvert/client').default;
+const CloudConvert = require('cloudconvert');
 const fetch = require('node-fetch');
 
 exports.handler = async (event, context) => {

@@ -9,7 +9,7 @@
     "deploy": "netlify deploy --prod"
   },
   "dependencies": {
-    "@cloudconvert/client": "^2.1.0",
+    "cloudconvert": "^3.0.0",
     "node-fetch": "^2.6.7",
     "form-data": "^4.0.0"
   },
