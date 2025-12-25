@@ -44,7 +44,6 @@ exports.handler = async (event, context) => {
           operation: 'convert',
           input: 'import-pdf',
           output_format: 'pptx',
-          engine: 'office'
         },
         'export-pptx': {
           operation: 'export/url',
