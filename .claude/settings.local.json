@@ -5,7 +5,12 @@
       "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd Blog Kinh Nghiệm Hay with automated content generation\n\n- New blog section: blog-kinh-nghiem-hay.html \\(4-column layout\\)\n- 20 blog posts \\(manual + n8n automation\\)\n- Fixed header with ZapTools logo\n- Updated Index.html with latest 6 posts section\n- Optimized sitemap.xml \\(99 pages\\)\n- Moved config files to zaptools-setup/\n\n🤖 Generated with Claude Code\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git push:*)",
       "Bash(git commit:*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:api.netlify.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(ls:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)"
     ]
   }
 }
