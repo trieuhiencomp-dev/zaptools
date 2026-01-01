@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZapTools Quality Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .tool-breakdown {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        .tool-breakdown h2 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+        }
+        .tool-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #764ba2;
+        }
+        .tool-item strong {
+            color: #333;
+        }
+        .tool-item span {
+            color: #667eea;
+            font-weight: 600;
+        }
+        .actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102,126,234,0.4);
+        }
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .error-section {
+            background: #fff5f5;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            border-left: 4px solid #dc3545;
+        }
+        .error-section h2 {
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+        .error-item {
+            padding: 0.75rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .logs-table {
+            width: 100%;
+            margin-top: 2rem;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .logs-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        .logs-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .logs-table tr:hover {
+            background: #f8f9fa;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ZapTools Quality Dashboard</h1>
+        <p class="subtitle">Monitor tool performance, track errors, and analyze user experience</p>
+
+        <div class="stats-grid" id="statsGrid">
+            <!-- Stats will be populated here -->
+        </div>
+
+        <div class="tool-breakdown" id="toolBreakdown">
+            <h2>Tool Usage Breakdown</h2>
+            <div id="toolList"></div>
+        </div>
+
+        <div class="error-section" id="errorSection">
+            <h2>Error Analysis</h2>
+            <div id="errorList"></div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" onclick="refreshDashboard()">🔄 Refresh Data</button>
+            <button class="btn btn-secondary" onclick="exportLogs()">📥 Export Logs (JSON)</button>
+            <button class="btn btn-danger" onclick="clearAllLogs()">🗑️ Clear All Logs</button>
+        </div>
+
+        <h2 style="margin-top: 2rem; color: #667eea;">Recent Activity</h2>
+        <table class="logs-table" id="logsTable">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Tool</th>
+                    <th>Event</th>
+                    <th>Duration</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="logsTableBody">
+                <!-- Logs will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="tool-usage-logger.js"></script>
+    <script>
+        function refreshDashboard() {
+            const stats = ToolUsageLogger.getUsageStatistics();
+
+            if (!stats) {
+                document.getElementById('statsGrid').innerHTML = '<div class="empty-state">No usage data available yet</div>';
+                return;
+            }
+
+            // Populate stats cards
+            const statsHTML = `
+                <div class="stat-card">
+                    <h3>${stats.totalSessions}</h3>
+                    <p>Total Sessions</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${stats.totalConversions}</h3>
+                    <p>Successful Conversions</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${stats.totalErrors}</h3>
+                    <p>Total Errors</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${stats.successRate}%</h3>
+                    <p>Success Rate</p>
+                    ${stats.successRate >= 90 ? '<span class="badge badge-success">Excellent</span>' :
+                      stats.successRate >= 70 ? '<span class="badge badge-warning">Good</span>' :
+                      '<span class="badge badge-danger">Needs Improvement</span>'}
+                </div>
+                <div class="stat-card">
+                    <h3>${(stats.avgConversionTime / 1000).toFixed(2)}s</h3>
+                    <p>Avg Conversion Time</p>
+                </div>
+            `;
+            document.getElementById('statsGrid').innerHTML = statsHTML;
+
+            // Populate tool breakdown
+            let toolHTML = '';
+            Object.entries(stats.toolUsageBreakdown).forEach(([tool, count]) => {
+                toolHTML += `
+                    <div class="tool-item">
+                        <strong>${tool}</strong>
+                        <span>${count} conversions</span>
+                    </div>
+                `;
+            });
+            document.getElementById('toolList').innerHTML = toolHTML || '<p>No tool data available</p>';
+
+            // Populate error analysis
+            let errorHTML = '';
+            Object.entries(stats.errorTypes).forEach(([type, count]) => {
+                errorHTML += `
+                    <div class="error-item">
+                        <strong>${type}</strong>
+                        <span class="badge badge-danger">${count} errors</span>
+                    </div>
+                `;
+            });
+            document.getElementById('errorList').innerHTML = errorHTML || '<p style="color: #28a745;">No errors recorded! 🎉</p>';
+
+            // Populate recent logs
+            const logs = JSON.parse(localStorage.getItem('zaptools_usage_logs') || '[]');
+            const recentLogs = logs.slice(-20).reverse();
+
+            let logsHTML = '';
+            recentLogs.forEach(log => {
+                const time = new Date(log.timestamp).toLocaleTimeString();
+                const eventBadge = log.eventType === 'CONVERSION_SUCCESS' ? 'badge-success' :
+                                  log.eventType === 'CONVERSION_ERROR' ? 'badge-danger' : 'badge-warning';
+
+                logsHTML += `
+                    <tr>
+                        <td>${time}</td>
+                        <td>${log.toolName}</td>
+                        <td><span class="badge ${eventBadge}">${log.eventType}</span></td>
+                        <td>${log.duration ? (log.duration / 1000).toFixed(2) + 's' : '-'}</td>
+                        <td>${log.errorMessage || log.fileName || log.outputFileName || '-'}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('logsTableBody').innerHTML = logsHTML || '<tr><td colspan="5" class="empty-state">No logs available</td></tr>';
+        }
+
+        function exportLogs() {
+            if (ToolUsageLogger.exportLogs()) {
+                alert('Logs exported successfully!');
+            } else {
+                alert('Failed to export logs');
+            }
+        }
+
+        function clearAllLogs() {
+            if (confirm('Are you sure you want to clear all logs? This action cannot be undone.')) {
+                if (ToolUsageLogger.clearLogs()) {
+                    alert('All logs cleared successfully!');
+                    refreshDashboard();
+                } else {
+                    alert('Failed to clear logs');
+                }
+            }
+        }
+
+        // Initial load
+        refreshDashboard();
+
+        // Auto-refresh every 30 seconds
+        setInterval(refreshDashboard, 30000);
+    </script>
+</body>
+</html>
