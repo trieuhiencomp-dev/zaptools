@@ -23,3 +23,4 @@ SETUP-GUIDE.md
 *.log
 *.tmp
 .DS_Store
+.claude/settings.local.json
