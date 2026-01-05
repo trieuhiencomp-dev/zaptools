@@ -24,3 +24,8 @@ SETUP-GUIDE.md
 *.tmp
 .DS_Store
 .claude/settings.local.json
+
+# Google indexing utility files (use locally only)
+google-index-batch.json
+submit-to-google.py
+urls-to-submit.txt
