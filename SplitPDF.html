@@ -170,12 +170,20 @@
                         <label id="fileLabel" for="pdfFile">📄 Select PDF File:</label>
                         <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required>
                     </div>
+
+                    <div class="form-group" id="pagesInputGroup" style="display: none;">
+                        <label id="pagesLabel" for="pagesInput">📑 Pages to Extract (e.g., 1-3, 5, 7-10):</label>
+                        <input type="text" id="pagesInput" placeholder="1-3, 5, 7-10" style="width: 100%; padding: 0.8rem; border: 2px solid #667eea; border-radius: 10px; font-size: 1rem;">
+                        <small id="pageInfo" style="color: #666; display: block; margin-top: 0.5rem;"></small>
+                    </div>
+
                     <button type="submit" class="tool-btn" id="splitBtn">✂️ Split PDF Now</button>
                 </form>
 
                 <div class="instructions">
-                    <strong>📋 How to Use:</strong>
-                    <ul>
+                    <strong id="instructionsTitle">📋 How to Use:</strong>
+                    <ul id="instructionsList">
+                        <li>Select PDF file to see total pages</li>
                         <li>Enter pages to extract: e.g., <strong>1-3, 5, 7-10</strong></li>
                         <li>Max file size: <strong>50MB</strong></li>
                         <li>Max pages: <strong>500 pages</strong></li>
@@ -461,17 +469,57 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script>
         const langData = {
-            vi: { title: 'Tách PDF Miễn Phí - Chia & Trích Xuất Trang PDF', subtitle: 'Trích xuất trang cụ thể hoặc chia PDF thành nhiều file. Nhanh, bảo mật và hoàn toàn miễn phí!', fileLabel: '📄 Chọn File PDF:', splitBtn: '✂️ Tách PDF Ngay', result: 'Chức năng tách PDF đang được phát triển!', back: '← Quay lại PDF Tools' },
-            en: { title: 'Split PDF Free - Extract & Divide PDF Pages', subtitle: 'Extract specific pages or split your PDF into multiple files. Fast, secure, and completely free!', fileLabel: '📄 Select PDF File:', splitBtn: '✂️ Split PDF Now', result: 'Split PDF feature is under development!', back: '← Back to PDF Tools' }
+            vi: {
+                title: 'Tách PDF Miễn Phí - Chia & Trích Xuất Trang PDF',
+                subtitle: 'Trích xuất trang cụ thể hoặc chia PDF thành nhiều file. Nhanh, bảo mật và hoàn toàn miễn phí!',
+                fileLabel: '📄 Chọn File PDF:',
+                pagesLabel: '📑 Trang cần trích xuất (VD: 1-3, 5, 7-10):',
+                splitBtn: '✂️ Tách PDF Ngay',
+                processing: 'Đang xử lý... Vui lòng đợi',
+                success: 'Tách PDF thành công! Đang tải xuống...',
+                error: 'Lỗi: ',
+                back: '← Quay lại PDF Tools',
+                instructionsTitle: '📋 Hướng dẫn sử dụng:',
+                instructions: [
+                    'Chọn file PDF để xem tổng số trang',
+                    'Nhập trang cần trích xuất: VD, <strong>1-3, 5, 7-10</strong>',
+                    'Kích thước tối đa: <strong>50MB</strong>',
+                    'Số trang tối đa: <strong>500 trang</strong>',
+                    'Kết quả: File PDF mới chỉ chứa các trang đã chọn'
+                ]
+            },
+            en: {
+                title: 'Split PDF Free - Extract & Divide PDF Pages',
+                subtitle: 'Extract specific pages or split your PDF into multiple files. Fast, secure, and completely free!',
+                fileLabel: '📄 Select PDF File:',
+                pagesLabel: '📑 Pages to Extract (e.g., 1-3, 5, 7-10):',
+                splitBtn: '✂️ Split PDF Now',
+                processing: 'Processing... Please wait',
+                success: 'PDF split successful! Downloading...',
+                error: 'Error: ',
+                back: '← Back to PDF Tools',
+                instructionsTitle: '📋 How to Use:',
+                instructions: [
+                    'Select PDF file to see total pages',
+                    'Enter pages to extract: e.g., <strong>1-3, 5, 7-10</strong>',
+                    'Max file size: <strong>50MB</strong>',
+                    'Max pages: <strong>500 pages</strong>',
+                    'Result: New PDF file with selected pages only'
+                ]
+            }
         };
 
         function setLang(lang) {
             document.getElementById('title').textContent = langData[lang].title;
             document.getElementById('subtitle').textContent = langData[lang].subtitle;
             document.getElementById('fileLabel').textContent = langData[lang].fileLabel;
+            document.getElementById('pagesLabel').textContent = langData[lang].pagesLabel;
             document.getElementById('splitBtn').innerHTML = langData[lang].splitBtn;
+            document.getElementById('instructionsTitle').textContent = langData[lang].instructionsTitle;
+            document.getElementById('instructionsList').innerHTML = langData[lang].instructions.map(item => `<li>${item}</li>`).join('');
         }
 
         document.getElementById('langSwitcher').addEventListener('change', function(e) {
@@ -483,12 +531,153 @@
         document.getElementById('langSwitcher').value = savedLang;
         setLang(savedLang);
 
+        let totalPages = 0;
+
+        // Show page input when PDF is selected
+        document.getElementById('pdfFile').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                totalPages = pdfDoc.getPageCount();
+
+                document.getElementById('pagesInputGroup').style.display = 'block';
+                document.getElementById('pageInfo').textContent = savedLang === 'vi'
+                    ? `PDF có ${totalPages} trang. Nhập trang cần trích xuất (VD: 1-3, 5, 7-10)`
+                    : `PDF has ${totalPages} pages. Enter pages to extract (e.g., 1-3, 5, 7-10)`;
+            } catch (error) {
+                console.error('Error reading PDF:', error);
+            }
+        });
+
+        // Parse page range input (e.g., "1-3, 5, 7-10" => [0, 1, 2, 4, 6, 7, 8, 9])
+        function parsePageRange(input, maxPages) {
+            const pages = new Set();
+            const parts = input.split(',').map(p => p.trim());
+
+            for (const part of parts) {
+                if (part.includes('-')) {
+                    const [start, end] = part.split('-').map(n => parseInt(n.trim()));
+                    if (isNaN(start) || isNaN(end) || start < 1 || end > maxPages || start > end) {
+                        throw new Error(`Invalid range: ${part}`);
+                    }
+                    for (let i = start; i <= end; i++) {
+                        pages.add(i - 1); // Convert to 0-indexed
+                    }
+                } else {
+                    const pageNum = parseInt(part);
+                    if (isNaN(pageNum) || pageNum < 1 || pageNum > maxPages) {
+                        throw new Error(`Invalid page: ${part}`);
+                    }
+                    pages.add(pageNum - 1); // Convert to 0-indexed
+                }
+            }
+
+            return Array.from(pages).sort((a, b) => a - b);
+        }
+
+        async function splitPDF(file, pagesToExtract) {
+            const resultDiv = document.getElementById('result');
+            const submitBtn = document.getElementById('splitBtn');
+
+            try {
+                resultDiv.textContent = langData[savedLang].processing;
+                resultDiv.className = 'success';
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+
+                // Load PDF
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+
+                // Create new PDF with selected pages
+                const newPdfDoc = await PDFLib.PDFDocument.create();
+
+                for (const pageIndex of pagesToExtract) {
+                    const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pageIndex]);
+                    newPdfDoc.addPage(copiedPage);
+                }
+
+                // Save new PDF
+                const pdfBytes = await newPdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+                // Download
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name.replace('.pdf', '') + '_split.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                resultDiv.textContent = langData[savedLang].success;
+                resultDiv.className = 'success';
+
+                // Add to history
+                const fileHistory = JSON.parse(localStorage.getItem('zaptools_file_history') || '[]');
+                fileHistory.unshift({
+                    name: file.name,
+                    date: new Date().toLocaleString()
+                });
+                if (fileHistory.length > 10) fileHistory.pop();
+                localStorage.setItem('zaptools_file_history', JSON.stringify(fileHistory));
+                updateHistoryDisplay();
+
+                if (typeof logToolUsage === 'function') {
+                    logToolUsage('SplitPDF');
+                }
+
+            } catch (error) {
+                resultDiv.textContent = langData[savedLang].error + error.message;
+                resultDiv.className = 'error';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }
+        }
+
         document.getElementById('pdfForm').onsubmit = function(e) {
             e.preventDefault();
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = langData[savedLang].result;
-            resultDiv.className = 'error';
-            if (typeof logToolUsage === 'function') { logToolUsage('SplitPDF'); }
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+            const pagesInput = document.getElementById('pagesInput').value.trim();
+
+            if (!file) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = savedLang === 'vi' ? 'Vui lòng chọn file PDF!' : 'Please select a PDF file!';
+                resultDiv.className = 'error';
+                return;
+            }
+
+            if (!pagesInput) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = savedLang === 'vi' ? 'Vui lòng nhập trang cần trích xuất!' : 'Please enter pages to extract!';
+                resultDiv.className = 'error';
+                return;
+            }
+
+            if (file.size > 50 * 1024 * 1024) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = savedLang === 'vi' ? 'File quá lớn! (Tối đa 50MB)' : 'File too large! (Max 50MB)';
+                resultDiv.className = 'error';
+                return;
+            }
+
+            try {
+                const pagesToExtract = parsePageRange(pagesInput, totalPages);
+                if (pagesToExtract.length === 0) {
+                    throw new Error(savedLang === 'vi' ? 'Không có trang nào được chọn!' : 'No pages selected!');
+                }
+                splitPDF(file, pagesToExtract);
+            } catch (error) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = langData[savedLang].error + error.message;
+                resultDiv.className = 'error';
+            }
         };
 
         const fileHistory = JSON.parse(localStorage.getItem('zaptools_file_history') || '[]');

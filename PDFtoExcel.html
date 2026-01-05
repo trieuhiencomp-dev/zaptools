@@ -90,6 +90,7 @@
         #result { margin-top: 1.5rem; padding: 1rem; border-radius: 10px; text-align: center; font-weight: 600; display: none; }
         #result.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
         #result.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
+        #result.info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; display: block; }
         .content-section { background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 3rem; }
         .content-section h2 { color: #667eea; font-size: 2rem; margin-bottom: 1.5rem; border-bottom: 3px solid #667eea; padding-bottom: 0.5rem; }
         .content-section h3 { color: #764ba2; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; }
@@ -169,16 +170,28 @@
                         <label id="fileLabel" for="pdfFile">📄 Select PDF File:</label>
                         <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required>
                     </div>
+
+                    <div class="form-group" id="ocrOptions" style="display: none;">
+                        <label id="ocrLangLabel" for="ocrLanguage">🔍 PDF scan detected! Choose OCR language:</label>
+                        <select id="ocrLanguage">
+                            <option value="eng">🇬🇧 English</option>
+                            <option value="vie">🇻🇳 Tiếng Việt</option>
+                            <option value="vie+eng">🌍 Vietnamese + English</option>
+                        </select>
+                    </div>
+
                     <button type="submit" class="tool-btn" id="convertBtn">📊 Convert to Excel Now</button>
+                    <button type="button" class="tool-btn" id="ocrBtn" style="display: none; background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);">🔍 OCR First, Then Convert</button>
                 </form>
 
                 <div class="instructions">
-                    <strong>📋 How to Use:</strong>
-                    <ul>
-                        <li>Only PDFs with <strong>data tables</strong> can be converted</li>
-                        <li>Max file size: <strong>50MB</strong></li>
-                        <li>Max pages: <strong>50 pages</strong></li>
-                        <li>Scanned PDFs need OCR before conversion</li>
+                    <strong id="instructionsTitle">📋 Hướng dẫn sử dụng:</strong>
+                    <ul id="instructionsList">
+                        <li><strong>⭐ Khuyên dùng cho PDF phức tạp:</strong> Mở bằng <a href="#wordGuideDetail" style="color: #667eea; text-decoration: underline; font-weight: bold;">Microsoft Word (2016+)</a> → Copy bảng → Paste vào Excel (Độ chính xác 95-99%)</li>
+                        <li><strong>PDF đơn giản:</strong> Tool này tự động chuyển PDF text sang Excel</li>
+                        <li><strong>PDF scan:</strong> Tool sẽ tự động phát hiện và bật OCR (Tiếng Việt, English - giới hạn 5 trang)</li>
+                        <li><strong>⚠️ Lưu ý:</strong> PDF có bảng phức tạp (merge cells, nhiều cột) → Kết quả có thể sai format → <a href="#wordGuideDetail" style="color: #667eea; text-decoration: underline;">Xem hướng dẫn dùng Word bên dưới</a></li>
+                        <li>Kích thước: <strong>50MB</strong> | Số trang: <strong>50 trang</strong> (text) / <strong>5 trang</strong> (OCR)</li>
                     </ul>
                 </div>
 
@@ -229,23 +242,108 @@
             </div>
 
             <div class="content-section">
-                <h2>📖 How to Convert PDF to Excel</h2>
+                <h2>📖 Hướng Dẫn Chuyển PDF sang Excel</h2>
                 <ol>
-                    <li><strong>Upload your PDF</strong> - Click the file selector and choose your document with tables</li>
-                    <li><strong>Click Convert</strong> - Processing starts instantly in your browser</li>
-                    <li><strong>Download Excel</strong> - Get your XLSX file with editable spreadsheets</li>
-                    <li><strong>Edit & Analyze</strong> - Open in Excel, Google Sheets, or any spreadsheet app</li>
+                    <li><strong>Tải PDF lên</strong> - Chọn file PDF có bảng dữ liệu</li>
+                    <li><strong>Nhấn Convert</strong> - Quá trình xử lý diễn ra ngay trong trình duyệt</li>
+                    <li><strong>Tải Excel xuống</strong> - Nhận file XLSX có thể chỉnh sửa</li>
+                    <li><strong>Chỉnh sửa & Phân tích</strong> - Mở bằng Excel, Google Sheets hoặc ứng dụng bảng tính</li>
                 </ol>
 
                 <div class="tips-box">
-                    <h4>💡 Best Practices for PDF to Excel Conversion</h4>
+                    <h4>💡 Mẹo Chuyển Đổi Hiệu Quả</h4>
                     <ul>
-                        <li>PDFs with clear table structures convert best</li>
-                        <li>Ensure tables have visible borders or gridlines</li>
-                        <li>For scanned PDFs, use OCR tools first</li>
-                        <li>Multi-page PDFs will create multiple Excel sheets</li>
-                        <li>Review converted data for accuracy</li>
+                        <li>PDF có cấu trúc bảng rõ ràng sẽ chuyển đổi tốt nhất</li>
+                        <li>Bảng có viền hoặc đường kẻ rõ ràng cho kết quả tốt hơn</li>
+                        <li>PDF nhiều trang sẽ tạo nhiều sheet Excel tương ứng</li>
+                        <li>Kiểm tra lại dữ liệu sau khi chuyển đổi để đảm bảo chính xác</li>
                     </ul>
+                </div>
+
+                <div class="tips-box" id="wordGuideSection" style="background: linear-gradient(135deg, #fff4e6 0%, #ffe8cc 100%); border-left: 4px solid #ff9800;">
+                    <h4 style="color: #ff9800;">⚠️ PDF Phức Tạp? Kết Quả Không Đúng Format?</h4>
+                    <p style="margin-bottom: 1rem; font-weight: 600;">Nếu PDF có bảng phức tạp (nhiều cột, merged cells, layout phức tạp) và tool này không cho kết quả tốt, hãy dùng <strong>Microsoft Word</strong> (MIỄN PHÍ, Tốt nhất!):</p>
+
+                    <h4 id="wordGuideDetail" style="color: #ff9800; font-size: 1rem;">📝 Hướng Dẫn Chi Tiết - Dùng Microsoft Word:</h4>
+                    <ol style="margin: 1rem 0 1rem 1.5rem; line-height: 2;">
+                        <li><strong>Mở PDF bằng Word:</strong>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                <li>Chuột phải vào file PDF → Mở bằng → Microsoft Word (2016 trở lên)</li>
+                                <li>Hoặc: Mở Word → File → Open → Chọn file PDF</li>
+                                <li>Word sẽ hỏi "convert PDF to Word" → Nhấn <strong>OK</strong></li>
+                            </ul>
+                        </li>
+                        <li><strong>Chờ Word convert:</strong> Word sẽ tự động convert PDF thành Word format (giữ nguyên bảng + format)</li>
+                        <li><strong>Copy bảng:</strong>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                <li>Click vào bảng → Chọn toàn bộ bảng (Ctrl+A hoặc drag chuột)</li>
+                                <li>Copy (Ctrl+C)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Paste vào Excel:</strong>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                <li>Mở Excel mới</li>
+                                <li>Paste (Ctrl+V)</li>
+                                <li>Bảng sẽ giữ nguyên format, cột, hàng!</li>
+                            </ul>
+                        </li>
+                        <li><strong>Chỉnh sửa:</strong> Format lại một chút (độ rộng cột, merge cells) là hoàn tất!</li>
+                    </ol>
+
+                    <h4 style="color: #ff9800; font-size: 1rem; margin-top: 1.5rem;">✅ Ưu Điểm Của Cách Này:</h4>
+                    <ul>
+                        <li>✅ <strong>Miễn phí 100%</strong> (nếu có Word 2016+)</li>
+                        <li>✅ <strong>Độ chính xác 95-99%</strong> - giữ nguyên cấu trúc bảng</li>
+                        <li>✅ <strong>Giữ format:</strong> merged cells, borders, colors</li>
+                        <li>✅ <strong>Nhanh chóng:</strong> 1-2 phút cho 1 file</li>
+                        <li>✅ <strong>Không cần internet</strong></li>
+                    </ul>
+
+                    <h4 style="color: #ff9800; font-size: 1rem; margin-top: 1.5rem;">🆚 So Sánh Các Công Cụ:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem;">
+                        <tr style="background: #fff; border-bottom: 2px solid #ff9800;">
+                            <th style="padding: 0.5rem; text-align: left; color: #ff9800;">Công cụ</th>
+                            <th style="padding: 0.5rem; text-align: center; color: #ff9800;">Độ chính xác</th>
+                            <th style="padding: 0.5rem; text-align: center; color: #ff9800;">Giá</th>
+                            <th style="padding: 0.5rem; text-align: center; color: #ff9800;">Dễ dùng</th>
+                        </tr>
+                        <tr style="background: #fff; border-bottom: 1px solid #eee;">
+                            <td style="padding: 0.5rem;"><strong>Microsoft Word</strong></td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐⭐⭐</td>
+                            <td style="padding: 0.5rem; text-align: center;">Miễn phí*</td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr style="background: #fff; border-bottom: 1px solid #eee;">
+                            <td style="padding: 0.5rem;">Adobe Acrobat Pro</td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐⭐⭐</td>
+                            <td style="padding: 0.5rem; text-align: center;">Trả phí</td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr style="background: #fff; border-bottom: 1px solid #eee;">
+                            <td style="padding: 0.5rem;">ZapTools (tool này)</td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐</td>
+                            <td style="padding: 0.5rem; text-align: center;">Miễn phí</td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr style="background: #fff;">
+                            <td style="padding: 0.5rem;">Google Docs OCR</td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐</td>
+                            <td style="padding: 0.5rem; text-align: center;">Miễn phí</td>
+                            <td style="padding: 0.5rem; text-align: center;">⭐⭐⭐</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">* Miễn phí nếu đã có Word 2016 trở lên</p>
+                </div>
+
+                <div class="tips-box" style="background: linear-gradient(135deg, #e6f7ff 0%, #ccedff 100%); border-left: 4px solid #1890ff;">
+                    <h4 style="color: #1890ff;">🔍 OCR Tích Hợp - Cho PDF Scan</h4>
+                    <p style="margin-bottom: 1rem;">Tool này có OCR tích hợp sẵn cho PDF scan (không có text):</p>
+                    <ul>
+                        <li><strong>Tự động phát hiện:</strong> Khi chọn PDF scan, tool sẽ tự động hiện nút OCR</li>
+                        <li><strong>Chọn ngôn ngữ:</strong> Tiếng Việt, English hoặc cả hai</li>
+                        <li><strong>Giới hạn:</strong> 5 trang đầu tiên (mỗi trang ~10-30 giây)</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>⚠️ Lưu ý:</strong> OCR browser không hoàn hảo với bảng phức tạp. Dùng Word như hướng dẫn bên trên để được kết quả tốt nhất!</p>
                 </div>
             </div>
 
@@ -430,10 +528,49 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
         const langData = {
-            vi: { title: 'PDF sang Excel Miễn Phí - Chuyển Bảng PDF sang Spreadsheet', subtitle: 'Trích xuất bảng từ PDF và chuyển sang file Excel có thể chỉnh sửa. Nhanh, chính xác, hoàn toàn miễn phí!', fileLabel: '📄 Chọn File PDF:', convertBtn: '📊 Chuyển sang Excel Ngay', result: 'Chức năng chuyển đổi đang được phát triển!', back: '← Quay lại PDF Tools' },
-            en: { title: 'PDF to Excel Free - Convert PDF Tables to Spreadsheets', subtitle: 'Extract tables from PDFs and convert to editable Excel files. Fast, accurate, and completely free!', fileLabel: '📄 Select PDF File:', convertBtn: '📊 Convert to Excel Now', result: 'PDF to Excel conversion is under development!', back: '← Back to PDF Tools' }
+            vi: {
+                title: 'PDF sang Excel Miễn Phí - Chuyển Bảng PDF sang Spreadsheet',
+                subtitle: 'Trích xuất bảng từ PDF và chuyển sang file Excel có thể chỉnh sửa. Nhanh, chính xác, hoàn toàn miễn phí!',
+                fileLabel: '📄 Chọn File PDF:',
+                convertBtn: '📊 Chuyển sang Excel Ngay',
+                processing: 'Đang xử lý... Vui lòng đợi',
+                success: 'Chuyển đổi thành công! Đang tải xuống...',
+                error: 'Lỗi: ',
+                back: '← Quay lại PDF Tools',
+                instructionsTitle: '📋 Hướng dẫn sử dụng:',
+                instructions: [
+                    '<strong>⭐ Khuyên dùng cho PDF phức tạp:</strong> Mở bằng <a href="#wordGuideDetail" style="color: #667eea; text-decoration: underline; font-weight: bold;">Microsoft Word (2016+)</a> → Copy bảng → Paste vào Excel (Độ chính xác 95-99%)',
+                    '<strong>PDF đơn giản:</strong> Tool này tự động chuyển PDF text sang Excel',
+                    '<strong>PDF scan:</strong> Tool sẽ tự động phát hiện và bật OCR (Tiếng Việt, English - giới hạn 5 trang)',
+                    '<strong>⚠️ Lưu ý:</strong> PDF có bảng phức tạp (merge cells, nhiều cột) → Kết quả có thể sai format → <a href="#wordGuideDetail" style="color: #667eea; text-decoration: underline;">Xem hướng dẫn dùng Word bên dưới</a>',
+                    'Kích thước: <strong>50MB</strong> | Số trang: <strong>50 trang</strong> (text) / <strong>5 trang</strong> (OCR)'
+                ]
+            },
+            en: {
+                title: 'PDF to Excel Free - Convert PDF Tables to Spreadsheets',
+                subtitle: 'Extract tables from PDFs and convert to editable Excel files. Fast, accurate, and completely free!',
+                fileLabel: '📄 Select PDF File:',
+                convertBtn: '📊 Convert to Excel Now',
+                processing: 'Processing... Please wait',
+                success: 'Conversion successful! Downloading...',
+                error: 'Error: ',
+                back: '← Back to PDF Tools',
+                instructionsTitle: '📋 How to Use:',
+                instructions: [
+                    '<strong>⭐ Recommended for complex PDFs:</strong> Open with <a href="#wordGuideDetail" style="color: #667eea; text-decoration: underline; font-weight: bold;">Microsoft Word (2016+)</a> → Copy table → Paste to Excel (95-99% accuracy)',
+                    '<strong>Simple PDFs:</strong> This tool auto-converts text PDFs to Excel',
+                    '<strong>Scanned PDFs:</strong> Auto-detects and enables OCR (Vietnamese, English - 5 pages limit)',
+                    '<strong>⚠️ Note:</strong> Complex tables (merged cells, multi-columns) → May have format issues → <a href="#wordGuideDetail" style="color: #667eea; text-decoration: underline;">See Word guide below</a>',
+                    'Size: <strong>50MB</strong> | Pages: <strong>50 pages</strong> (text) / <strong>5 pages</strong> (OCR)'
+                ]
+            }
         };
 
         function setLang(lang) {
@@ -441,6 +578,8 @@
             document.getElementById('subtitle').textContent = langData[lang].subtitle;
             document.getElementById('fileLabel').textContent = langData[lang].fileLabel;
             document.getElementById('convertBtn').innerHTML = langData[lang].convertBtn;
+            document.getElementById('instructionsTitle').textContent = langData[lang].instructionsTitle;
+            document.getElementById('instructionsList').innerHTML = langData[lang].instructions.map(item => `<li>${item}</li>`).join('');
         }
 
         document.getElementById('langSwitcher').addEventListener('change', function(e) {
@@ -452,12 +591,402 @@
         document.getElementById('langSwitcher').value = savedLang;
         setLang(savedLang);
 
+        async function convertPDFtoExcel(file) {
+            const resultDiv = document.getElementById('result');
+            const submitBtn = document.getElementById('convertBtn');
+
+            try {
+                // Show processing message
+                resultDiv.textContent = langData[savedLang].processing;
+                resultDiv.className = 'success';
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+
+                // Read PDF file
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const numPages = pdf.numPages;
+
+                // Check limits
+                if (numPages > 50) {
+                    throw new Error('PDF has too many pages (max 50)');
+                }
+
+                // Create workbook
+                const workbook = XLSX.utils.book_new();
+                let totalTextItems = 0;
+
+                // Process each page
+                for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                    resultDiv.textContent = `${langData[savedLang].processing} (${pageNum}/${numPages})`;
+
+                    const page = await pdf.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+
+                    // Extract text items
+                    const items = textContent.items;
+                    totalTextItems += items.length;
+
+                    if (items.length === 0) {
+                        // Empty page - might be scanned PDF
+                        const warningData = savedLang === 'vi' ? [
+                            ['⚠️ Không tìm thấy text trên trang này'],
+                            ['Đây có thể là PDF scan (dạng hình ảnh)'],
+                            ['Vui lòng dùng công cụ OCR để trích xuất text trước'],
+                            ['Hoặc thử công cụ PDF to Image của chúng tôi']
+                        ] : [
+                            ['⚠️ No text found on this page'],
+                            ['This might be a scanned PDF (image-based)'],
+                            ['Please use OCR tool first to extract text'],
+                            ['Or try our PDF to Image tool instead']
+                        ];
+                        const worksheet = XLSX.utils.aoa_to_sheet(warningData);
+                        XLSX.utils.book_append_sheet(workbook, worksheet, `Page ${pageNum}`);
+                        continue;
+                    }
+
+                    // Group items by Y position (rows) with tolerance
+                    const tolerance = 5; // pixels tolerance for same row
+                    const rows = {};
+
+                    items.forEach(item => {
+                        if (!item.str || item.str.trim() === '') return; // Skip empty items
+
+                        const y = Math.round(item.transform[5]);
+                        const x = Math.round(item.transform[4]);
+
+                        // Find existing row within tolerance
+                        let foundRow = null;
+                        for (let existingY in rows) {
+                            if (Math.abs(existingY - y) <= tolerance) {
+                                foundRow = existingY;
+                                break;
+                            }
+                        }
+
+                        const rowKey = foundRow || y;
+                        if (!rows[rowKey]) rows[rowKey] = [];
+                        rows[rowKey].push({
+                            text: item.str.trim(),
+                            x: x,
+                            width: item.width
+                        });
+                    });
+
+                    // Sort rows by Y position (top to bottom)
+                    const sortedYPositions = Object.keys(rows).map(y => parseInt(y)).sort((a, b) => b - a);
+
+                    // Create worksheet data with better column detection
+                    const wsData = [];
+                    const allXPositions = new Set();
+
+                    // Collect all X positions to determine column structure
+                    sortedYPositions.forEach(y => {
+                        rows[y].forEach(item => {
+                            allXPositions.add(item.x);
+                        });
+                    });
+
+                    // Sort X positions to create column boundaries
+                    const sortedXPositions = Array.from(allXPositions).sort((a, b) => a - b);
+
+                    // Create column boundaries with tolerance
+                    const colTolerance = 20;
+                    const columns = [];
+                    sortedXPositions.forEach(x => {
+                        if (columns.length === 0 || x - columns[columns.length - 1] > colTolerance) {
+                            columns.push(x);
+                        }
+                    });
+
+                    // Process each row
+                    sortedYPositions.forEach(y => {
+                        const rowItems = rows[y].sort((a, b) => a.x - b.x);
+                        const rowData = new Array(columns.length).fill('');
+
+                        rowItems.forEach(item => {
+                            // Find which column this item belongs to
+                            let colIdx = 0;
+                            for (let i = 0; i < columns.length; i++) {
+                                if (Math.abs(item.x - columns[i]) <= colTolerance) {
+                                    colIdx = i;
+                                    break;
+                                }
+                            }
+
+                            // Concatenate if cell already has content
+                            if (rowData[colIdx]) {
+                                rowData[colIdx] += ' ' + item.text;
+                            } else {
+                                rowData[colIdx] = item.text;
+                            }
+                        });
+
+                        // Only add non-empty rows
+                        if (rowData.some(cell => cell !== '')) {
+                            wsData.push(rowData);
+                        }
+                    });
+
+                    // If no data extracted, add a message
+                    if (wsData.length === 0) {
+                        wsData.push(['No data could be extracted from this page']);
+                    }
+
+                    // Create worksheet
+                    const worksheet = XLSX.utils.aoa_to_sheet(wsData);
+
+                    // Auto-size columns based on content
+                    const colWidths = [];
+                    wsData.forEach(row => {
+                        row.forEach((cell, colIdx) => {
+                            const cellLen = cell ? cell.toString().length : 10;
+                            if (!colWidths[colIdx] || colWidths[colIdx] < cellLen) {
+                                colWidths[colIdx] = cellLen;
+                            }
+                        });
+                    });
+                    worksheet['!cols'] = colWidths.map(w => ({ wch: Math.min(Math.max(w + 2, 10), 50) }));
+
+                    // Add worksheet to workbook
+                    const sheetName = `Page ${pageNum}`;
+                    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+                }
+
+                // Check if PDF had any text
+                if (totalTextItems === 0) {
+                    const warningMsg = savedLang === 'vi'
+                        ? '⚠️ PDF này không có text! Đây là PDF scan (hình ảnh). Vui lòng dùng công cụ OCR trước hoặc thử PDF to Image.'
+                        : '⚠️ This PDF contains no text! It\'s a scanned PDF (image). Please use OCR tool first or try PDF to Image.';
+                    throw new Error(warningMsg);
+                }
+
+                // Generate Excel file
+                const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                // Download file
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name.replace('.pdf', '') + '.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                // Show success message
+                resultDiv.textContent = langData[savedLang].success;
+                resultDiv.className = 'success';
+
+                // Add to file history
+                const fileHistory = JSON.parse(localStorage.getItem('zaptools_file_history') || '[]');
+                fileHistory.unshift({
+                    name: file.name,
+                    date: new Date().toLocaleString()
+                });
+                if (fileHistory.length > 10) fileHistory.pop();
+                localStorage.setItem('zaptools_file_history', JSON.stringify(fileHistory));
+                updateHistoryDisplay();
+
+                // Log usage
+                if (typeof logToolUsage === 'function') {
+                    logToolUsage('PDFtoExcel');
+                }
+
+            } catch (error) {
+                resultDiv.textContent = langData[savedLang].error + error.message;
+                resultDiv.className = 'error';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }
+        }
+
+        // OCR function
+        async function performOCRAndConvert(file) {
+            const resultDiv = document.getElementById('result');
+            const ocrBtn = document.getElementById('ocrBtn');
+            const ocrLanguage = document.getElementById('ocrLanguage').value;
+
+            try {
+                ocrBtn.disabled = true;
+                ocrBtn.style.opacity = '0.5';
+
+                resultDiv.textContent = savedLang === 'vi' ? '🔍 Đang OCR... Vui lòng đợi (có thể mất vài phút)' : '🔍 OCR in progress... Please wait (may take a few minutes)';
+                resultDiv.className = 'info';
+
+                // Read PDF
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const numPages = Math.min(pdf.numPages, 5); // Limit to 5 pages for OCR
+
+                let allText = '';
+
+                for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                    resultDiv.textContent = savedLang === 'vi'
+                        ? `🔍 Đang OCR trang ${pageNum}/${numPages}...`
+                        : `🔍 OCR page ${pageNum}/${numPages}...`;
+
+                    const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 2.0 });
+
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    await page.render({ canvasContext: context, viewport: viewport }).promise;
+
+                    const { data: { text } } = await Tesseract.recognize(
+                        canvas,
+                        ocrLanguage,
+                        { logger: () => {} }
+                    );
+
+                    allText += text + '\n\n';
+                }
+
+                // Create Excel with OCR text - parse into structured data
+                const workbook = XLSX.utils.book_new();
+                const lines = allText.split('\n').filter(line => line.trim() !== '');
+
+                // Try to detect key-value pairs and structure
+                const wsData = [];
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line) return;
+
+                    // Try to split by common separators: : or multiple spaces
+                    if (line.includes(':')) {
+                        const parts = line.split(':').map(p => p.trim());
+                        if (parts.length === 2) {
+                            wsData.push(parts);
+                        } else if (parts.length > 2) {
+                            // Multiple colons, group first part as key
+                            wsData.push([parts[0], parts.slice(1).join(':')]);
+                        } else {
+                            wsData.push([line]);
+                        }
+                    } else if (line.match(/\s{3,}/)) {
+                        // Multiple spaces might indicate columns
+                        const parts = line.split(/\s{3,}/).map(p => p.trim()).filter(p => p);
+                        wsData.push(parts);
+                    } else {
+                        // Single column data
+                        wsData.push([line]);
+                    }
+                });
+
+                const worksheet = XLSX.utils.aoa_to_sheet(wsData);
+
+                // Auto-size columns
+                const maxLengths = [];
+                wsData.forEach(row => {
+                    row.forEach((cell, idx) => {
+                        const len = cell ? cell.toString().length : 0;
+                        maxLengths[idx] = Math.max(maxLengths[idx] || 0, len);
+                    });
+                });
+                worksheet['!cols'] = maxLengths.map(len => ({ wch: Math.min(Math.max(len + 2, 15), 80) }));
+
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'OCR Text');
+
+                // Generate Excel file
+                const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+                const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                // Download file
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name.replace('.pdf', '') + '_OCR.xlsx';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                resultDiv.textContent = savedLang === 'vi' ? '✅ OCR thành công! File Excel đã tải xuống.' : '✅ OCR successful! Excel file downloaded.';
+                resultDiv.className = 'success';
+
+                if (typeof logToolUsage === 'function') {
+                    logToolUsage('PDFtoExcel_OCR');
+                }
+
+            } catch (error) {
+                resultDiv.textContent = langData[savedLang].error + error.message;
+                resultDiv.className = 'error';
+            } finally {
+                ocrBtn.disabled = false;
+                ocrBtn.style.opacity = '1';
+            }
+        }
+
+        // Check if PDF has text on file selection
+        document.getElementById('pdfFile').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+                if (pdf.numPages > 0) {
+                    const page = await pdf.getPage(1);
+                    const textContent = await page.getTextContent();
+
+                    if (textContent.items.length === 0) {
+                        // No text found - probably scanned PDF
+                        document.getElementById('ocrOptions').style.display = 'block';
+                        document.getElementById('convertBtn').style.display = 'none';
+                        document.getElementById('ocrBtn').style.display = 'block';
+
+                        const resultDiv = document.getElementById('result');
+                        resultDiv.textContent = savedLang === 'vi'
+                            ? '⚠️ PDF scan phát hiện! Vui lòng chọn ngôn ngữ và nhấn OCR.'
+                            : '⚠️ Scanned PDF detected! Please select language and click OCR.';
+                        resultDiv.className = 'info';
+                    } else {
+                        // Has text - normal conversion
+                        document.getElementById('ocrOptions').style.display = 'none';
+                        document.getElementById('convertBtn').style.display = 'block';
+                        document.getElementById('ocrBtn').style.display = 'none';
+                        document.getElementById('result').style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking PDF:', error);
+            }
+        });
+
+        document.getElementById('ocrBtn').addEventListener('click', function() {
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+            if (file) {
+                performOCRAndConvert(file);
+            }
+        });
+
         document.getElementById('pdfForm').onsubmit = function(e) {
             e.preventDefault();
-            const resultDiv = document.getElementById('result');
-            resultDiv.textContent = langData[savedLang].result;
-            resultDiv.className = 'error';
-            if (typeof logToolUsage === 'function') { logToolUsage('PDFtoExcel'); }
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = savedLang === 'vi' ? 'Vui lòng chọn file PDF!' : 'Please select a PDF file!';
+                resultDiv.className = 'error';
+                return;
+            }
+
+            if (file.size > 50 * 1024 * 1024) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = savedLang === 'vi' ? 'File quá lớn! (Tối đa 50MB)' : 'File too large! (Max 50MB)';
+                resultDiv.className = 'error';
+                return;
+            }
+
+            convertPDFtoExcel(file);
         };
 
         const fileHistory = JSON.parse(localStorage.getItem('zaptools_file_history') || '[]');
